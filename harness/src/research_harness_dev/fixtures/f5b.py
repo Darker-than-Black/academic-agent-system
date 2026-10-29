@@ -201,3 +201,50 @@ def build_f5b(dest: Path) -> Path:
     _wj(dest / "approvals" / "AP-0001.json", approval)
     store.checkpoint(by="human", note="F5b approval (synthetic)")
     return dest
+
+
+def _set_stages(folder: Path, current: str) -> None:
+    """Mark stages before ``current`` completed, ``current`` active (A16 waiting)."""
+    from research_harness.lifecycle.stages import stage_ids
+
+    obj = json.loads((folder / "object.json").read_text(encoding="utf-8"))
+    ids = stage_ids(obj["kind"])
+    states: dict[str, Any] = {}
+    reached = False
+    for sid in ids:
+        if sid == current:
+            states[sid] = {
+                "state": "waiting" if sid == "A16" else "active",
+                "updated_at": "2026-01-01T00:00:00Z",
+            }
+            reached = True
+        elif not reached:
+            states[sid] = {"state": "completed", "updated_at": "2026-01-01T00:00:00Z"}
+        else:
+            states[sid] = {"state": "pending", "updated_at": "2026-01-01T00:00:00Z"}
+    obj["stages"] = states
+    _wj(folder / "object.json", obj)
+
+
+def build_f5b_lifecycle(dest: Path) -> Path:
+    """Five synthetic article objects at A0, A2, A12 (open G3), A14, A16 (T29a)."""
+    from research_harness.gates import requests
+    from research_harness.state.store import Store
+    from research_harness.workspace.objects import create_object
+    from research_harness.workspace.workspace import Workspace
+
+    ws = Workspace.init(dest / "Projects")
+    layout = {
+        "A0": "Нульовий",
+        "A2": "Структурний",
+        "A12": "Видання",
+        "A14": "Рецензії",
+        "A16": "Опублікований",
+    }
+    for current, title in layout.items():
+        _oid, folder = create_object(ws, title=title, kind="article", document_kind="article")
+        _set_stages(folder, current)
+        Store(folder).checkpoint(by="human", note=f"F5b stage {current}")
+        if current == "A12":
+            requests.request_gate(folder, "G3", "uk")
+    return dest

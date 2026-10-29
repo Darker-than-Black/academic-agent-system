@@ -96,6 +96,20 @@ class Workspace:
                 return child
         raise InvalidInputError("error.no_object")
 
+    def list_objects(self) -> list[dict[str, Any]]:
+        """Index objects enriched with the title from each object.json (FR-41)."""
+        out: list[dict[str, Any]] = []
+        for o in self.load().get("objects", []):
+            entry = dict(o)
+            try:
+                folder = self.object_folder(o["id"])
+                obj = json.loads((folder / "object.json").read_text(encoding="utf-8"))
+                entry["title"] = obj.get("title", "")
+            except (InvalidInputError, json.JSONDecodeError, OSError):
+                entry["title"] = ""
+            out.append(entry)
+        return out
+
     def reindex(self) -> list[dict[str, Any]]:
         """Rebuild the object index from folders on disk (folders win, 02 §3.1)."""
         data = self.load()

@@ -84,7 +84,8 @@ def _register_more(sub: argparse._SubParsersAction) -> None:
 
 def _emit(envelope: dict[str, Any], fmt: str) -> None:
     if fmt == "text":
-        print(envelope["message"])
+        rendered = envelope.get("data", {}).get("_text")
+        print(rendered if rendered else envelope["message"])
     else:
         json.dump(envelope, sys.stdout, ensure_ascii=False, indent=2)
         sys.stdout.write("\n")

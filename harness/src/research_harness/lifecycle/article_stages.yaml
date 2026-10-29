@@ -1,0 +1,46 @@
+schema_version: "0.2"
+kind: article
+stages:
+  - id: A0
+    name: {uk: "Анкетування", en: "Intake"}
+    gate: G0
+    dod: [intake.required_missing, intake.unknown_without_consequence]
+  - id: A1
+    name: {uk: "Визначення обсягу", en: "Scoping"}
+  - id: A2
+    name: {uk: "Структура", en: "Structure"}
+  - id: A3
+    name: {uk: "Джерела", en: "Sources"}
+  - id: A4
+    name: {uk: "Протокол", en: "Protocol"}
+    gate: G1
+  - id: A5
+    name: {uk: "Етика", en: "Ethics"}
+    gate: GE
+    not_applicable_when: "Q7 == false"
+  - id: A6
+    name: {uk: "Збір доказів", en: "Evidence"}
+    gate: G2
+  - id: A7
+    name: {uk: "Аналіз", en: "Analysis"}
+  - id: A8
+    name: {uk: "Твердження", en: "Claims"}
+  - id: A9
+    name: {uk: "Чернетка", en: "Drafting"}
+  - id: A10
+    name: {uk: "Внутрішній огляд", en: "Internal review"}
+  - id: A11
+    name: {uk: "Доопрацювання", en: "Revision"}
+  - id: A12
+    name: {uk: "Вибір видання", en: "Venue selection"}
+    gate: G3
+  - id: A13
+    name: {uk: "Подання", en: "Submission"}
+  - id: A14
+    name: {uk: "Рецензії", en: "Reviews"}
+    gate: G3
+  - id: A15
+    name: {uk: "Прийняття", en: "Acceptance"}
+  - id: A16
+    name: {uk: "Після публікації", en: "After publication"}
+    terminal_state: waiting
