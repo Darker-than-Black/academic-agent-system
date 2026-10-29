@@ -11,6 +11,7 @@ BUILDERS = {
     "F5f": ("f5f", "build_f5f"),
     "F7-structure": ("f7_structure", "build_f7_structure"),
     "F5a": ("f5a_rules", "build_f5a"),
+    "F4-W": ("f4w_metadata", "build_f4w_metadata"),
 }
 
 
