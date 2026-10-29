@@ -72,6 +72,17 @@ def recover(root: Path, *, repair: bool) -> list[dict[str, Any]]:
                 )
             )
 
+    # 1b. Interrupted two-phase structure rename (02 §7.3).
+    if repair and (rhd / "structure-journal.json").exists():
+        from research_harness.structure.ops import complete_journal
+
+        if complete_journal(root):
+            findings.append(
+                _finding(
+                    "state.structure_rename_completed", "minor", "finished an interrupted rename"
+                )
+            )
+
     # 2. Orphaned staging directories.
     staging = rhd / "staging"
     if staging.is_dir():
