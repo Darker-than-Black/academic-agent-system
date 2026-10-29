@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/claim.schema.json",
+  "title": "Claim v0.2 (02 §12; extends v0.1 schemas/claim.schema.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "inputs", "unit_id", "text", "kind", "materiality", "location", "evidence", "support", "dependencies"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^C-[0-9]+$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "unit_id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+    "text": { "type": "string", "minLength": 1 },
+    "kind": { "enum": ["external", "own_numeric", "interpretation", "hypothesis", "definition", "premise", "novelty"] },
+    "materiality": { "enum": ["critical", "material", "background"] },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_id", "text_sha256"],
+      "properties": {
+        "unit_id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+        "paragraph_id": { "type": "string" },
+        "char_start": { "type": "integer" },
+        "char_end": { "type": "integer" },
+        "text_sha256": { "$ref": "common.schema.json#/$defs/hash" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "id"],
+        "properties": {
+          "type": { "enum": ["excerpt", "result_row", "premise", "definition", "source"] },
+          "id": { "type": "string" }
+        }
+      }
+    },
+    "support": { "$ref": "common.schema.json#/$defs/support" },
+    "assessments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["support", "rationale", "by", "at"],
+        "properties": {
+          "support": { "$ref": "common.schema.json#/$defs/support" },
+          "rationale": { "type": "string" },
+          "by": { "type": "string" },
+          "at": { "$ref": "common.schema.json#/$defs/datetime" },
+          "check_run_id": { "type": "string" }
+        }
+      }
+    },
+    "expected_tuple": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "split_id", "condition", "metric_id", "unit", "aggregation"],
+      "properties": {
+        "dataset_id": { "type": "string" },
+        "split_id": { "type": "string" },
+        "condition": { "type": "string" },
+        "metric_id": { "type": "string" },
+        "unit": { "type": "string" },
+        "aggregation": { "type": "string" }
+      }
+    },
+    "result_ref": { "type": "string" },
+    "dependencies": { "$ref": "common.schema.json#/$defs/inputs" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "own_numeric" } } },
+      "then": { "required": ["result_ref", "expected_tuple"] }
+    },
+    {
+      "if": { "properties": { "support": { "const": "supported" } } },
+      "then": {
+        "properties": {
+          "evidence": { "minItems": 1 },
+          "dependencies": { "minItems": 1 }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.2",
+  "hosts": {
+    "claude-code": {
+      "flagship": {
+        "model": "claude-fable-5-1"
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "gate": "G0",
+  "title": {
+    "uk": "x",
+    "en": "y"
+  },
+  "purpose": {
+    "uk": "x",
+    "en": "y"
+  },
+  "what_to_check": [
+    {
+      "uk": "x",
+      "en": "y"
+    },
+    {
+      "uk": "x",
+      "en": "y"
+    },
+    {
+      "uk": "x",
+      "en": "y"
+    }
+  ],
+  "if_approved": {
+    "uk": "x",
+    "en": "y"
+  },
+  "if_rejected": {
+    "uk": "x",
+    "en": "y"
+  },
+  "if_conditions": {
+    "uk": "x",
+    "en": "y"
+  },
+  "reversible": {
+    "uk": "x",
+    "en": "y"
+  },
+  "typical_time": {
+    "uk": "x",
+    "en": "y"
+  },
+  "__bogus__": 1
+}

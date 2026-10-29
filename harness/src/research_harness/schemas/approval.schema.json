@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/approval.schema.json",
+  "title": "approval record, approvals/approvals.jsonl (02 §9.3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "gate", "target", "decision", "reason", "actor_role", "actor_label", "channel", "producer"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^AP-[0-9]{4,}$" },
+    "request_id": { "type": "string", "pattern": "^AR-[0-9]{4,}$" },
+    "gate": { "$ref": "common.schema.json#/$defs/gate" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_id", "manifest_sha256", "refs"],
+      "properties": {
+        "snapshot_id": { "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" },
+        "manifest_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "refs": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ref" } }
+      }
+    },
+    "decision": { "$ref": "common.schema.json#/$defs/decision" },
+    "conditions": { "type": "string" },
+    "reason": { "type": "string" },
+    "actor_role": { "$ref": "common.schema.json#/$defs/actor_role" },
+    "actor_label": { "type": "string" },
+    "channel": { "enum": ["tty_confirmation", "external_document"] },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "description", "date"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "description": { "type": "string" },
+        "date": { "type": "string" }
+      }
+    },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "channel": { "const": "external_document" } } },
+      "then": { "required": ["document"] }
+    }
+  ]
+}

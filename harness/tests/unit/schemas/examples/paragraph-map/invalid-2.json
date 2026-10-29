@@ -1,0 +1,10 @@
+{
+  "unit_id": "U-0123456H",
+  "paragraphs": [
+    {
+      "id": "PG-012345",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "origin": "author"
+    }
+  ]
+}

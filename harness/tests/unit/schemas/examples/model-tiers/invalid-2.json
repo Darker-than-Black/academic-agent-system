@@ -1,0 +1,9 @@
+{
+  "hosts": {
+    "claude-code": {
+      "flagship": {
+        "model": "claude-fable-5-1"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/structure.schema.json",
+  "title": "structure.yaml (02 §7.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_id", "labels", "units"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "object_id": { "type": "string", "pattern": "^[AT]-[0-9]{4}-[0-9]{3,}$" },
+    "labels": { "type": "object", "additionalProperties": { "type": "string" } },
+    "units": { "type": "array", "items": { "$ref": "#/$defs/unit" } }
+  },
+  "$defs": {
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+        "kind": {
+          "enum": ["abstract", "introduction", "conclusions", "references", "appendices", "section", "chapter", "subsection", "chapter_conclusions"]
+        },
+        "title": { "type": ["string", "null"] },
+        "generated": { "type": "boolean" },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/unit" } }
+      }
+    }
+  }
+}

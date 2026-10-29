@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/event.schema.json",
+  "title": ".rh/events.jsonl line (02 §5.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "at", "type"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^ev-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "type": { "type": "string", "minLength": 1 },
+    "operation_id": { "type": "string", "pattern": "^op-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "snapshot_id": { "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "recovered": { "type": "boolean" },
+    "data": { "type": "object" }
+  }
+}

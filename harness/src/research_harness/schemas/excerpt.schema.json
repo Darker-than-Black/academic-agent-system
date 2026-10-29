@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/excerpt.schema.json",
+  "title": "Excerpt (02 §12, def M1 / impl M2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "source_id", "source_sha256", "text", "locator", "access_level", "extraction_method"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^E-[0-9]{5,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "source_id": { "type": "string", "pattern": "^S-[0-9]{4,}$" },
+    "source_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "text": { "type": "string", "minLength": 1 },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pdf_page": { "type": "integer" },
+        "printed_page": { "type": "string" },
+        "section": { "type": "string" },
+        "paragraph": { "type": "string" },
+        "char_start": { "type": "integer" },
+        "char_end": { "type": "integer" },
+        "table": { "type": "string" }
+      }
+    },
+    "access_level": { "$ref": "common.schema.json#/$defs/access_level" },
+    "extraction_method": { "enum": ["manual", "pdf_text", "ocr", "api_abstract"] },
+    "quote_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "checked_at"],
+      "properties": {
+        "result": { "$ref": "common.schema.json#/$defs/check_result" },
+        "checked_at": { "type": "string" }
+      }
+    }
+  }
+}

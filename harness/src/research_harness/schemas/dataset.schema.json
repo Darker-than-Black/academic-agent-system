@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/dataset.schema.json",
+  "title": "Dataset (02 §12, def M1 / impl M3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "name", "version", "terms", "sha256", "storage", "synthetic"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^D-[0-9]{3,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "url": { "type": "string" },
+    "terms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text_or_url", "verified_at"],
+      "properties": {
+        "text_or_url": { "type": "string" },
+        "verified_at": { "type": "string" }
+      }
+    },
+    "downloaded_at": { "type": "string" },
+    "sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "const": "unknown" }] },
+    "variables_doc": { "type": "string" },
+    "storage": { "enum": ["copy", "no_copy"] },
+    "synthetic": { "type": "boolean" }
+  }
+}

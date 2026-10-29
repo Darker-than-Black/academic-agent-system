@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/check-run.schema.json",
+  "title": "check run (02 §9.4)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "checks", "snapshot_id", "inputs", "coverage", "results", "started_at", "finished_at", "tool_failures"],
+  "properties": {
+    "id": { "type": "string" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version"],
+        "properties": { "id": { "type": "string" }, "version": { "type": "string" } }
+      }
+    },
+    "snapshot_id": { "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["denominator", "checked", "pass", "fail", "unknown", "not_applicable"],
+      "properties": {
+        "denominator": { "type": "integer", "minimum": 0 },
+        "checked": { "type": "integer", "minimum": 0 },
+        "pass": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "unknown": { "type": "integer", "minimum": 0 },
+        "not_applicable": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "item_ref", "result"],
+        "properties": {
+          "check_id": { "type": "string" },
+          "item_ref": { "$ref": "common.schema.json#/$defs/ref" },
+          "result": { "$ref": "common.schema.json#/$defs/check_result" },
+          "finding_id": { "type": "string" }
+        }
+      }
+    },
+    "started_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "finished_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "tool_failures": { "type": "array", "items": { "type": "string" } }
+  }
+}

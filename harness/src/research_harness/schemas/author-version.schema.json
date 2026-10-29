@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/author-version.schema.json",
+  "title": "_author/versions.jsonl line (02 §3.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "file", "version", "sha256", "created_at", "producer"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^author:.+@v[0-9]+$" },
+    "file": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" }
+  }
+}

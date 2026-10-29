@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.2",
+  "id": "snap-0123456789ABCDEFGHJKMNPQRS",
+  "created_at": "2026-10-29T12:00:00Z",
+  "producer": {
+    "kind": "tool",
+    "name": "x",
+    "version": "1"
+  },
+  "parent": null,
+  "operation": {
+    "id": "op-0123456789ABCDEFGHJKMNPQRS",
+    "command": "start",
+    "args_normalized": {},
+    "idempotency_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "files": [
+    {
+      "path": "object.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "size": 10,
+      "stored": true
+    }
+  ],
+  "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "tags": [],
+  "__bogus__": 1
+}

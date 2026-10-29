@@ -1,0 +1,21 @@
+{
+  "id": "A-2026-001",
+  "created_at": "2026-10-29T12:00:00Z",
+  "kind": "article",
+  "title": "T",
+  "document_kind": "article",
+  "operation_mode": "create",
+  "study_kind": "literature",
+  "languages": {
+    "main": "uk"
+  },
+  "autonomy": "gates",
+  "author_pins": {},
+  "stages": {
+    "A0": {
+      "state": "active",
+      "updated_at": "2026-10-29T12:00:00Z"
+    }
+  },
+  "counters": {}
+}

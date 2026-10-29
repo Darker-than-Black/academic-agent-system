@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/unit-frontmatter.schema.json",
+  "title": "unit text.md front matter (02 §7.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "kind"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+    "title": { "type": ["string", "null"] },
+    "kind": {
+      "enum": ["abstract", "introduction", "conclusions", "references", "appendices", "section", "chapter", "subsection", "chapter_conclusions"]
+    }
+  }
+}

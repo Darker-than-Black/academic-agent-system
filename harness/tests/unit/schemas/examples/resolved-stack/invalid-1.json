@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.2",
+  "resolved_at": "2026-10-29T12:00:00Z",
+  "inputs": [],
+  "packs": [
+    {
+      "id": "core",
+      "version": "v",
+      "layer": 0,
+      "status": "verified",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "CORE-01",
+      "pack": "core",
+      "key": "k",
+      "effective": true,
+      "freshness": "current",
+      "effective_severity": "blocker"
+    }
+  ],
+  "findings": [],
+  "__bogus__": 1
+}

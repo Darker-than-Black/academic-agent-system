@@ -1,0 +1,15 @@
+{
+  "id": "mc-0123456789ABCDEFGHJKMNPQRS",
+  "at": "2026-10-29T12:00:00Z",
+  "host": "claude-code",
+  "role": "researcher",
+  "tier_required": "flagship",
+  "model_id": "claude-fable-5-1",
+  "purpose": "p",
+  "tokens_in": "unknown",
+  "tokens_out": "unknown",
+  "cost": "unknown",
+  "duration_s": 0.4,
+  "status": "ok",
+  "__bogus__": 1
+}

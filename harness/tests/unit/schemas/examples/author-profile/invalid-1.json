@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.2",
+  "name": "Dmytro",
+  "languages": [
+    "uk"
+  ],
+  "ui_language": "uk",
+  "default_autonomy": "gates",
+  "voice": "impersonal",
+  "__bogus__": 1
+}

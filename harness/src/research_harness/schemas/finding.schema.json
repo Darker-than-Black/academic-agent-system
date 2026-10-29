@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/finding.schema.json",
+  "title": "finding (02 §9.4)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "check_id", "severity", "status", "location", "observed", "expected", "reason", "evidence_refs", "proposed_action", "check_run_id"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^F-[0-9]{5,}$" },
+    "check_id": { "type": "string" },
+    "rule_id": { "type": "string" },
+    "severity": { "$ref": "common.schema.json#/$defs/severity" },
+    "status": { "$ref": "common.schema.json#/$defs/finding_status" },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref"],
+      "properties": {
+        "ref": { "$ref": "common.schema.json#/$defs/ref" },
+        "unit_id": { "type": "string" },
+        "locator": { "type": "string" }
+      }
+    },
+    "observed": {},
+    "expected": {},
+    "reason": { "type": "string" },
+    "evidence_refs": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ref" } },
+    "proposed_action": { "type": "string" },
+    "check_run_id": { "type": "string" },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "reason", "by", "at"],
+      "properties": {
+        "decision": { "enum": ["accepted", "rejected"] },
+        "reason": { "type": "string" },
+        "by": { "type": "string" },
+        "at": { "$ref": "common.schema.json#/$defs/datetime" }
+      }
+    }
+  }
+}

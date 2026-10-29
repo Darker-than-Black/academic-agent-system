@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/adoption-manifest.schema.json",
+  "title": "third_party/manifest.json (02 §13, 06 §2.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["adoptions"],
+  "properties": {
+    "adoptions": { "type": "array", "items": { "$ref": "#/$defs/record" } }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "origin_repo", "commit", "path", "license", "notice", "mode", "changes", "acceptance_tests", "update_policy", "adopted_at", "adopted_by"],
+      "allOf": [
+        {
+          "if": { "properties": { "mode": { "enum": ["copy", "adapt"] } } },
+          "then": { "required": ["destination", "original_copy", "original_sha256", "adapted_sha256", "license_file"] }
+        }
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ADP-[0-9]+$" },
+        "origin_repo": { "type": "string" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "path": { "type": "string" },
+        "license": { "enum": ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "PSF-2.0", "ISC"] },
+        "license_file": { "type": "string" },
+        "notice": { "type": "string" },
+        "destination": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "original_copy": { "type": "string" },
+        "original_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "adapted_sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "type": "null" }] },
+        "mode": { "enum": ["copy", "adapt", "idea"] },
+        "changes": { "type": "array", "items": { "type": "string" } },
+        "acceptance_tests": { "type": "array", "items": { "type": "string" } },
+        "update_policy": { "enum": ["pinned"] },
+        "adopted_at": { "type": "string" },
+        "adopted_by": { "type": "string" }
+      }
+    }
+  }
+}

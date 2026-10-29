@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/status-report.schema.json",
+  "title": "rh status data payload (03 §3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["object", "stage", "gates", "blockers", "unknowns", "dirty", "stale", "locks_and_recovery", "next_action"],
+  "properties": {
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "title"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "enum": ["article", "thesis"] },
+        "title": { "type": "string" },
+        "folder": { "type": "string" },
+        "mode": { "$ref": "common.schema.json#/$defs/operation_mode" },
+        "document_kind": { "$ref": "common.schema.json#/$defs/document_kind" },
+        "study_kind": { "$ref": "common.schema.json#/$defs/study_kind" },
+        "languages": { "type": "object" },
+        "autonomy": { "$ref": "common.schema.json#/$defs/autonomy" }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current", "states"],
+      "properties": {
+        "current": { "type": "string" },
+        "states": { "type": "object", "additionalProperties": { "$ref": "common.schema.json#/$defs/stage_state" } }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate", "required", "request_open", "approval_valid"],
+        "properties": {
+          "gate": { "$ref": "common.schema.json#/$defs/gate" },
+          "required": { "type": "boolean" },
+          "request_open": { "type": "boolean" },
+          "approval_valid": { "$ref": "common.schema.json#/$defs/tristate" }
+        }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "object" } },
+    "unknowns": { "type": "array", "items": { "type": "object" } },
+    "dirty": { "type": "array", "items": { "type": "string" } },
+    "stale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 0 },
+        "examples": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "locks_and_recovery": { "type": "object" },
+    "next_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "who"],
+      "properties": {
+        "command": { "type": "string" },
+        "who": { "enum": ["agent", "author"] },
+        "why": { "type": "string" }
+      }
+    }
+  }
+}

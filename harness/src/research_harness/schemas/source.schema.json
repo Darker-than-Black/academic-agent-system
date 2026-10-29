@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/source.schema.json",
+  "title": "Source (02 §12, def M1 / impl M2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "title", "type", "metadata_status", "access_level", "retraction", "bib_key"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^S-[0-9]{4,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "title": { "type": "string" },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["family"],
+        "properties": {
+          "family": { "type": "string" },
+          "given": { "type": "string" },
+          "orcid": { "type": "string" }
+        }
+      }
+    },
+    "year": { "type": ["integer", "null"] },
+    "container": { "type": "string" },
+    "volume": { "type": "string" },
+    "issue": { "type": "string" },
+    "pages": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "first": { "type": "string" }, "last": { "type": "string" } }
+    },
+    "doi": { "type": "string" },
+    "url": { "type": "string" },
+    "issn": { "type": "array", "items": { "type": "string" } },
+    "language": { "type": "string" },
+    "type": { "type": "string" },
+    "identifiers": { "type": "object" },
+    "metadata_status": { "$ref": "common.schema.json#/$defs/metadata_status" },
+    "metadata_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource", "record_id", "retrieved_at"],
+        "properties": {
+          "resource": { "type": "string" },
+          "record_id": { "type": "string" },
+          "retrieved_at": { "type": "string" }
+        }
+      }
+    },
+    "access_level": { "$ref": "common.schema.json#/$defs/access_level" },
+    "fulltext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["local_path", "sha256", "version", "obtained_via"],
+      "properties": {
+        "local_path": { "type": "string" },
+        "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "license": { "type": "string" },
+        "version": { "enum": ["published", "accepted", "preprint", "unknown"] },
+        "obtained_via": { "type": "string" }
+      }
+    },
+    "page_map": { "type": "object" },
+    "retraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "checked_at"],
+      "properties": {
+        "status": { "$ref": "common.schema.json#/$defs/retraction_status" },
+        "checked_at": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["relation", "source_id"],
+        "properties": {
+          "relation": { "enum": ["duplicate_of", "preprint_of", "published_version_of"] },
+          "source_id": { "type": "string" }
+        }
+      }
+    },
+    "bib_key": { "type": "string" }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/materials-manifest.schema.json",
+  "title": "materials/manifest.json (02 §9.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "materials"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "materials": { "type": "array", "items": { "$ref": "#/$defs/material" } }
+  },
+  "$defs": {
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "sha256", "origin", "permissions"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^M-[0-9]{4,}$" },
+        "kind": { "enum": ["file", "bibtex", "ris", "doi_list", "url_list", "manuscript", "dataset", "git_repo", "notes"] },
+        "path": { "type": "string" },
+        "locator": { "type": "string" },
+        "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "origin": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provided_as", "original_name", "provided_at"],
+          "properties": {
+            "provided_as": { "type": "string" },
+            "original_name": { "type": "string" },
+            "provided_at": { "type": "string" }
+          }
+        },
+        "permissions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["external_api", "personal_data", "coauthor_unpublished", "private"],
+          "properties": {
+            "external_api": { "enum": ["allowed", "forbidden", "unknown"] },
+            "personal_data": { "$ref": "common.schema.json#/$defs/tristate" },
+            "coauthor_unpublished": { "$ref": "common.schema.json#/$defs/tristate" },
+            "private": { "type": "boolean" }
+          }
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["bib_key", "metadata_status"],
+            "properties": {
+              "bib_key": { "type": "string" },
+              "doi": { "type": "string" },
+              "metadata_status": { "$ref": "common.schema.json#/$defs/metadata_status" },
+              "duplicate_of": { "type": "string" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

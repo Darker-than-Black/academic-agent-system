@@ -1,0 +1,12 @@
+{
+  "id": "author:profile@v3",
+  "file": "profile.yaml",
+  "version": 3,
+  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "created_at": "2026-10-29T12:00:00Z",
+  "producer": {
+    "kind": "tool",
+    "name": "x",
+    "version": "1"
+  }
+}

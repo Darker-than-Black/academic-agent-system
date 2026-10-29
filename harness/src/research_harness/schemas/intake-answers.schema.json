@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/intake-answers.schema.json",
+  "title": "intake/answers.json (02 §9.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "mode", "answers", "consequences"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "mode": { "$ref": "common.schema.json#/$defs/operation_mode" },
+    "answers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["value", "source", "confirmed"],
+        "properties": {
+          "value": {},
+          "source": { "enum": ["asked", "prefilled_author", "prefilled_previous", "derived_from_material"] },
+          "confirmed": { "type": "boolean" }
+        }
+      }
+    },
+    "consequences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question", "blocks", "unknown_checks", "note"],
+        "properties": {
+          "question": { "type": "string" },
+          "blocks": { "type": "array", "items": { "type": "string" } },
+          "unknown_checks": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

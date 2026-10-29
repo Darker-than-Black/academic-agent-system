@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/result-row.schema.json",
+  "title": "Result row (02 §12, def M1 / impl M3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "run_id", "variable_or_metric", "value", "unit", "aggregation"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^RR-[0-9]{4,}-[0-9]{4,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "run_id": { "type": "string", "pattern": "^R-[0-9]{4,}$" },
+    "dataset_id": { "type": "string" },
+    "subset": { "type": "string" },
+    "condition": { "type": "string" },
+    "variable_or_metric": { "type": "string" },
+    "value": {},
+    "unit": { "type": "string" },
+    "aggregation": { "type": "string" },
+    "weights": { "type": "string" },
+    "n": { "type": "integer" },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "value"],
+      "properties": { "method": { "type": "string" }, "value": {} }
+    },
+    "output_locator": { "type": "string" }
+  }
+}

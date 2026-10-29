@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/object.schema.json",
+  "title": "object.json (02 §4.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "id", "created_at", "kind", "title",
+    "document_kind", "operation_mode", "study_kind", "languages",
+    "autonomy", "author_pins", "stages", "counters"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^[AT]-[0-9]{4}-[0-9]{3,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "kind": { "enum": ["article", "thesis"] },
+    "title": { "type": "string", "minLength": 1 },
+    "document_kind": { "$ref": "common.schema.json#/$defs/document_kind" },
+    "operation_mode": { "$ref": "common.schema.json#/$defs/operation_mode" },
+    "study_kind": { "$ref": "common.schema.json#/$defs/study_kind" },
+    "study_subtype": { "type": "string" },
+    "languages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["main"],
+      "properties": {
+        "main": { "type": "string" },
+        "abstracts": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "autonomy": { "$ref": "common.schema.json#/$defs/autonomy" },
+    "author_pins": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "sha256"],
+        "properties": {
+          "ref": { "$ref": "common.schema.json#/$defs/ref" },
+          "sha256": { "$ref": "common.schema.json#/$defs/hash" }
+        }
+      }
+    },
+    "stages": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state", "updated_at"],
+        "properties": {
+          "state": { "$ref": "common.schema.json#/$defs/stage_state" },
+          "updated_at": { "$ref": "common.schema.json#/$defs/datetime" },
+          "reason": { "type": "string" },
+          "next_action": { "type": "string" },
+          "gate": { "$ref": "common.schema.json#/$defs/gate" }
+        }
+      }
+    },
+    "counters": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "rename_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from_title", "to_title", "at"],
+        "properties": {
+          "from_title": { "type": "string" },
+          "to_title": { "type": "string" },
+          "at": { "$ref": "common.schema.json#/$defs/datetime" }
+        }
+      }
+    }
+  }
+}

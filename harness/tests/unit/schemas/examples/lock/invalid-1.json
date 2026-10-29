@@ -1,0 +1,8 @@
+{
+  "operation_id": "op-0123456789ABCDEFGHJKMNPQRS",
+  "pid": 1,
+  "hostname": "h",
+  "command": "start",
+  "started_at": "2026-10-29T12:00:00Z",
+  "__bogus__": 1
+}

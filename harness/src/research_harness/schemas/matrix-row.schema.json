@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/matrix-row.schema.json",
+  "title": "Synthesis matrix row (02 §12, def M1 / impl M2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "source_id", "question_id", "statement", "data_basis", "limitations", "excerpt_ids"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "source_id": { "type": "string", "pattern": "^S-[0-9]{4,}$" },
+    "question_id": { "type": "string" },
+    "statement": { "type": "string" },
+    "data_basis": { "type": "string" },
+    "limitations": { "type": "string" },
+    "excerpt_ids": { "type": "array", "items": { "type": "string", "pattern": "^E-[0-9]{5,}$" } },
+    "position": { "type": "string" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "F-00001",
+  "check_id": "c",
+  "severity": "blocker",
+  "status": "open",
+  "location": {
+    "ref": "unit:U-0123456H/text"
+  },
+  "observed": "o",
+  "expected": "e",
+  "reason": "r",
+  "evidence_refs": [],
+  "proposed_action": "a",
+  "check_run_id": "cr"
+}
