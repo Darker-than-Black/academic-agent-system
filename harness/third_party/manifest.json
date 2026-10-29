@@ -27,6 +27,55 @@
       "update_policy": "pinned",
       "adopted_at": "2026-10-29",
       "adopted_by": "Rybachek Dmytro"
+    },
+    {
+      "id": "ADP-002",
+      "origin_repo": "https://github.com/aiming-lab/AutoResearchClaw",
+      "commit": "be4ba4755bf1b52220f25e13b2293b5956590070",
+      "path": "researchclaw/pipeline/contracts.py",
+      "license": "MIT",
+      "license_file": "third_party/autoresearchclaw/LICENSE",
+      "notice": "Copyright (c) 2026 Aiming Lab",
+      "destination": "src/research_harness/state/contracts.py",
+      "original_copy": "third_party/autoresearchclaw/researchclaw/pipeline/contracts.py",
+      "original_sha256": "97476afe65b0274ac9e22595c326583d893075da520dfbc831a4eabbae92806c",
+      "adapted_sha256": "14501a0dd093d2c246120c6a6b8fbe70ca1a556371ed87a5d09c542891e78328",
+      "mode": "adapt",
+      "changes": [
+        "kept the frozen-dataclass StageContract shape (inputs, outputs, DoD, error code, retries)",
+        "renamed input_files/output_files to inputs/outputs carrying artifact refs",
+        "dod is a tuple of deterministic check IDs rather than a prose sentence; added a gate field",
+        "dropped the 23 hard-coded ResearchClaw CONTRACTS (our stages are data, M1-11)"
+      ],
+      "acceptance_tests": ["tests/unit/state/test_contracts.py", "T10"],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-29",
+      "adopted_by": "Rybachek Dmytro"
+    },
+    {
+      "id": "ADP-003",
+      "origin_repo": "https://github.com/aiming-lab/AutoResearchClaw",
+      "commit": "be4ba4755bf1b52220f25e13b2293b5956590070",
+      "path": "researchclaw/pipeline/runner.py",
+      "license": "MIT",
+      "license_file": "third_party/autoresearchclaw/LICENSE",
+      "notice": "Copyright (c) 2026 Aiming Lab",
+      "destination": "src/research_harness/state/snapshot.py",
+      "original_copy": "third_party/autoresearchclaw/researchclaw/pipeline/runner.py",
+      "original_sha256": "d57c549605a02a95a32b135b616cc0cb02ac8bb3a00afe3c958f34bdb269e693",
+      "adapted_sha256": "ea5692e1de9ca39acd77d30fa7100f603a4cd4e009548fd3f5fc1835c7be10cf",
+      "mode": "adapt",
+      "changes": [
+        "adapted functions _write_checkpoint, _write_heartbeat, read_checkpoint, resume_from_checkpoint (not the 1864-line file)",
+        "kept the temp-file-in-same-dir -> fsync -> atomic rename write pattern",
+        "replaced the per-stage checkpoint.json with a snapshot manifest and a content-addressed blob store",
+        "moved heartbeat metadata to the lock (state/lock.py) and resume resolution to state/recovery.py",
+        "no silent rerun of side effects (idempotency key)"
+      ],
+      "acceptance_tests": ["tests/fault/test_commit_interrupts.py", "T10"],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-29",
+      "adopted_by": "Rybachek Dmytro"
     }
   ]
 }
