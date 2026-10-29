@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/holdout/**)",
+      "Read(./research-harness-spec/holdout/**)",
+      "Read(**/.env)",
+      "Read(**/*.local.yaml)",
+      "Glob(**/holdout/**)",
+      "Grep(**/holdout/**)"
+    ]
+  },
+  "env": {
+    "RH_AGENT_SESSION": "1",
+    "RH_HOST": "claude-code"
+  }
+}
