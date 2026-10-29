@@ -1,0 +1,33 @@
+[project]
+name = "research-harness"
+version = "0.1.0"
+description = "rh — runtime-neutral CLI that keeps scientific articles and dissertations traceable to evidence."
+requires-python = ">=3.12"
+license = "Apache-2.0"
+authors = [{ name = "Rybachek Dmytro" }]
+dependencies = []
+
+[project.scripts]
+rh = "research_harness.cli.main:main"
+rh-dev = "research_harness_dev.check:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.14"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/research_harness", "src/research_harness_dev"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

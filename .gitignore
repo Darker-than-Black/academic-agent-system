@@ -1,0 +1,46 @@
+# === Research Harness — what never enters git (01 §5) ===
+
+# Holdout evaluation data (hard rule H1)
+**/holdout/**
+
+# Foreign full texts (NFR-11)
+Projects/**/sources/inbox/**
+Projects/**/sources/fulltext/**
+Projects/**/sources/pagetext/**
+
+# Private materials (NFR-11)
+Projects/**/materials/private/**
+
+# Secrets and local configs (H8)
+.env
+*.local.yaml
+**/secrets/**
+source-policy.local.yaml
+
+# Transient object state
+Projects/**/.rh/staging/**
+Projects/**/.rh/quarantine/**
+Projects/**/.rh/lock
+Projects/**/work/**
+
+# Rebuildable full-text index of foreign texts
+Projects/**/.rh/library.sqlite
+
+# Datasets with storage: no_copy (FR-57)
+Projects/**/analysis/data/**
+
+# NOTE: .rh/objects/, .rh/snapshots/ and .rh/events.jsonl ARE committed (01 §5, §7 Q2).
+
+# === Python / tooling ===
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# === macOS ===
+.DS_Store
