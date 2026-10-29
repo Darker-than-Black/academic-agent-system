@@ -1,0 +1,197 @@
+{
+  "suite": "M1",
+  "date": "2026-10-30",
+  "total": 17,
+  "passed": 17,
+  "failed": 0,
+  "all_pass": true,
+  "results": [
+    {
+      "id": "T01",
+      "title": "unknown intake answers keep a consequence; nothing fabricated",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_intake.py::test_unknown_always_has_consequence_and_no_fabrication"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_intake.py::test_unknown_always_has_consequence_and_no_fabrication → exit 0"
+    },
+    {
+      "id": "T09",
+      "title": "freshness: stale propagates only to dependents",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/state/test_freshness.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/state/test_freshness.py → exit 0"
+    },
+    {
+      "id": "T10",
+      "title": "state store: atomic 9-step commit protocol",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/state/test_store.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/state/test_store.py → exit 0"
+    },
+    {
+      "id": "T11",
+      "title": "portability: moved object keeps hashes, no absolute paths",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_portability.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_portability.py → exit 0"
+    },
+    {
+      "id": "T15",
+      "title": "import guard: core package imports no LLM SDK or host (H5)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/core/test_guards.py::test_real_package_has_no_forbidden_imports"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/core/test_guards.py::test_real_package_has_no_forbidden_imports → exit 0"
+    },
+    {
+      "id": "T24",
+      "title": "adoption records valid (H4)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/core/test_guards.py::test_adoption_records_valid"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/core/test_guards.py::test_adoption_records_valid → exit 0"
+    },
+    {
+      "id": "T26",
+      "title": "intake questionnaire records answers and consequences",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_intake.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_intake.py → exit 0"
+    },
+    {
+      "id": "T27",
+      "title": "second object prefills author ORCID/affiliation/autonomy",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_intake.py::test_second_object_prefills_author_fields"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_intake.py::test_second_object_prefills_author_fields → exit 0"
+    },
+    {
+      "id": "T28",
+      "title": "rule composition: structure/integrity/conflicts",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/rules/test_resolver.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/rules/test_resolver.py → exit 0"
+    },
+    {
+      "id": "T29",
+      "title": "rule composition: expired/secondary/core-override",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/rules/test_resolver.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/rules/test_resolver.py → exit 0"
+    },
+    {
+      "id": "T29a",
+      "title": "status report across lifecycle states",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_status.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_status.py → exit 0"
+    },
+    {
+      "id": "T37",
+      "title": "gates: human-only records, external document, validity",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_gates.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_gates.py → exit 0"
+    },
+    {
+      "id": "T38",
+      "title": "materials: duplicate linked, malformed DOI, private",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_materials.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_materials.py → exit 0"
+    },
+    {
+      "id": "T40",
+      "title": "migration: new snapshot, tagged snapshot immutable",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_migrate.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_migrate.py → exit 0"
+    },
+    {
+      "id": "T44",
+      "title": "entry routing: start and continue",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_routing.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_routing.py → exit 0"
+    },
+    {
+      "id": "T45",
+      "title": "workspace: ids, folders, pins, reindex",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_workspace.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_workspace.py → exit 0"
+    },
+    {
+      "id": "T50",
+      "title": "structure: build, renumber, crash-safe rename",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_structure.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_structure.py → exit 0"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+id: T40
+kind: pytest
+title: "migration: new snapshot, tagged snapshot immutable"
+nodes:
+  - tests/integration/test_migrate.py

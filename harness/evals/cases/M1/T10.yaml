@@ -1,0 +1,5 @@
+id: T10
+kind: pytest
+title: "state store: atomic 9-step commit protocol"
+nodes:
+  - tests/unit/state/test_store.py

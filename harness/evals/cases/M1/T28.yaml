@@ -1,0 +1,5 @@
+id: T28
+kind: pytest
+title: "rule composition: structure/integrity/conflicts"
+nodes:
+  - tests/unit/rules/test_resolver.py

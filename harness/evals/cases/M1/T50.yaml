@@ -1,0 +1,5 @@
+id: T50
+kind: pytest
+title: "structure: build, renumber, crash-safe rename"
+nodes:
+  - tests/integration/test_structure.py

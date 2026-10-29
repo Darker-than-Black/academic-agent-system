@@ -1,0 +1,5 @@
+id: T37
+kind: pytest
+title: "gates: human-only records, external document, validity"
+nodes:
+  - tests/integration/test_gates.py

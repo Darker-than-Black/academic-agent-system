@@ -1,0 +1,5 @@
+id: T11
+kind: pytest
+title: "portability: moved object keeps hashes, no absolute paths"
+nodes:
+  - tests/integration/test_portability.py

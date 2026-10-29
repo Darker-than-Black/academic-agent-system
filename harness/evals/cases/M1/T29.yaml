@@ -1,0 +1,5 @@
+id: T29
+kind: pytest
+title: "rule composition: expired/secondary/core-override"
+nodes:
+  - tests/unit/rules/test_resolver.py

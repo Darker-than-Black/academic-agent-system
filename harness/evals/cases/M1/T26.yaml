@@ -1,0 +1,5 @@
+id: T26
+kind: pytest
+title: "intake questionnaire records answers and consequences"
+nodes:
+  - tests/integration/test_intake.py

@@ -1,0 +1,5 @@
+id: T29a
+kind: pytest
+title: "status report across lifecycle states"
+nodes:
+  - tests/integration/test_status.py
