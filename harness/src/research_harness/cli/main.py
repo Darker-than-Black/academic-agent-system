@@ -29,6 +29,7 @@ def _build_parser() -> argparse.ArgumentParser:
     v.add_argument("--schema", help="Schema name to validate --file against.")
     v.add_argument("--file", action="append", help="File(s) to validate; repeatable.")
     v.add_argument("--known", action="append", help="Known artifact ref(s) for ref checks.")
+    v.add_argument("--root", help="Object root for freshness (default: nearest parent with .rh/).")
 
     cp = sub.add_parser("checkpoint", help="Record a snapshot of the current changes.")
     cp.add_argument("--by", choices=("human", "agent"), required=True)

@@ -292,7 +292,7 @@ class Store:
         )
 
     def history(self) -> list[dict[str, Any]]:
-        snaps = sorted(snap.all_snapshots(self.root), key=lambda s: s["created_at"])
+        snaps = sorted(snap.all_snapshots(self.root), key=lambda s: (s["created_at"], s["id"]))
         out = []
         for s in snaps:
             op = s.get("operation", {})

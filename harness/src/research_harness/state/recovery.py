@@ -47,7 +47,7 @@ def recover(root: Path, *, repair: bool) -> list[dict[str, Any]]:
     # 1. Snapshot committed but CURRENT still older → roll forward.
     children = [s for s in snaps if s.get("parent") == cur and s["id"] != cur]
     if children:
-        target = sorted(children, key=lambda s: s["created_at"])[-1]
+        target = sorted(children, key=lambda s: (s["created_at"], s["id"]))[-1]
         if repair:
             if snap.missing_blobs(root, target):
                 raise CorruptStateError("error.corrupt")
