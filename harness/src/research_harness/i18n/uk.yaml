@@ -1,0 +1,7 @@
+# Ukrainian message catalog. Flat dotted keys; values are str.format templates.
+version.message: "Research Harness, версія {version}."
+cli.no_command: "Не вказано команду. Спробуйте `rh version`."
+error.invalid: "Неправильні вхідні дані або використання."
+error.blocked: "Дію заблоковано: потрібне рішення людини або не виконано умову."
+error.failed: "Збій інструмента."
+error.corrupt: "Пошкоджений стан."

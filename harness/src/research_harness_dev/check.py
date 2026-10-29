@@ -19,6 +19,14 @@ import sys
 from collections.abc import Iterable
 from pathlib import Path
 
+from research_harness_dev.guards import (
+    check_i18n_catalogs,
+    scan_envelope_literals,
+    scan_forbidden_imports,
+    scan_lockfile,
+    validate_adoptions,
+)
+
 # Patterns that must never be tracked by git (01 §5). A pattern without a slash
 # is matched against each path's basename (gitignore semantics); a pattern with
 # a slash or `**` is matched against the full POSIX path relative to the repo
@@ -135,15 +143,24 @@ def main(argv: list[str] | None = None) -> int:
         if not _run(label, cmd, cwd):
             failures.append(label)
 
-    print("==> forbidden-path scan (01 §5)")
-    hits = scan_forbidden_paths(repo)
-    if hits:
-        failures.append("forbidden-path scan")
-        print("    FAIL: forbidden-path scan — these files must not be tracked:")
-        for path in hits:
-            print(f"      {path}")
-    else:
-        print("    PASS: forbidden-path scan")
+    def _static(label: str, section: str, problems: list[str]) -> None:
+        print(f"==> {label} ({section})", flush=True)
+        if problems:
+            failures.append(label)
+            print(f"    FAIL: {label}")
+            for problem in problems:
+                print(f"      {problem}")
+        else:
+            print(f"    PASS: {label}")
+
+    _static("forbidden-path scan", "01 §5", scan_forbidden_paths(repo))
+
+    package_root = cwd / "src" / "research_harness"
+    _static("import guard", "H5, T15", scan_forbidden_imports(package_root))
+    _static("envelope-literal guard", "02 §1.6", scan_envelope_literals(package_root))
+    _static("i18n catalog guard", "02 §1.6", check_i18n_catalogs(package_root / "i18n"))
+    _static("lockfile guard", "01 §3", scan_lockfile(cwd / "uv.lock"))
+    _static("adoption records", "H4, T24", validate_adoptions(repo))
 
     if failures:
         print(f"\nrh-dev check: FAILED ({', '.join(failures)})")

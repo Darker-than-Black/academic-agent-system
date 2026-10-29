@@ -1,1 +1,32 @@
-{"adoptions": []}
+{
+  "adoptions": [
+    {
+      "id": "ADP-001",
+      "origin_repo": "https://github.com/aiming-lab/AutoResearchClaw",
+      "commit": "be4ba4755bf1b52220f25e13b2293b5956590070",
+      "path": "researchclaw/hitl/checksums.py",
+      "license": "MIT",
+      "license_file": "third_party/autoresearchclaw/LICENSE",
+      "notice": "Copyright (c) 2026 Aiming Lab",
+      "destination": "src/research_harness/core/hashing.py",
+      "original_copy": "third_party/autoresearchclaw/researchclaw/hitl/checksums.py",
+      "original_sha256": "3bfface802bc3732304863b34165650097af9c678dde3143b370f3d2c06d0f54",
+      "adapted_sha256": "9b1066bbdcfa5895b967a856a9d30f6b2f7548598f477c49ff8b9ddf1c76cfa0",
+      "mode": "adapt",
+      "changes": [
+        "kept the streaming SHA-256 read loop (8192-byte chunks)",
+        "added canonical-JSON hashing: sorted keys, compact separators, UTF-8, reject NaN/Infinity",
+        "added text-file normalization: strip UTF-8 BOM, convert CRLF/CR to LF before hashing (02 §1.3)",
+        "added extension-based file-hash dispatch (text vs binary)",
+        "dropped the stage-manifest helpers (generate/write/verify/write_run manifest) — not used here"
+      ],
+      "acceptance_tests": [
+        "tests/unit/core/test_hashing.py",
+        "T24"
+      ],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-29",
+      "adopted_by": "Rybachek Dmytro"
+    }
+  ]
+}
