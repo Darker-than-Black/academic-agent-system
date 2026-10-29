@@ -33,7 +33,7 @@ def build_object_with_checkpoints(dest: Path) -> Path:
     unit = dest / "manuscript" / "01 Вступ"
     unit.mkdir(parents=True, exist_ok=True)
     (unit / "text.md").write_text("# Вступ\n\nsynthetic\n", encoding="utf-8")
-    store.checkpoint(by="human", message="add intro (synthetic)")
+    store.checkpoint(by="human", note="add intro (synthetic)")
 
     (unit / "text.md").write_text("# Вступ\n\nsynthetic, revised\n", encoding="utf-8")
     store.checkpoint(by="agent", request="розшир вступ (synthetic)")
@@ -180,7 +180,7 @@ def build_f5b(dest: Path) -> Path:
     # Commit S1 (the approval's target), then add a G3 approval bound to it.
     store = Store(dest)
     store.init(HUMAN)
-    s1 = store.checkpoint(by="human", message="F5b baseline (synthetic)").snapshot_id
+    s1 = store.checkpoint(by="human", note="F5b baseline (synthetic)").snapshot_id
     s1_manifest = snap.load_snapshot(dest, s1)["manifest_sha256"]
     approval = {
         "schema_version": "0.2",
@@ -199,5 +199,5 @@ def build_f5b(dest: Path) -> Path:
         "producer": HUMAN,
     }
     _wj(dest / "approvals" / "AP-0001.json", approval)
-    store.checkpoint(by="human", message="F5b approval (synthetic)")
+    store.checkpoint(by="human", note="F5b approval (synthetic)")
     return dest

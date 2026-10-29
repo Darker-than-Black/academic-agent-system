@@ -13,7 +13,7 @@ HUMAN = {"kind": "human", "name": "t", "version": "0.1.0"}
 
 
 def _checkpoint(root: Path) -> None:
-    Store(root).checkpoint(by="human", message="mutation (synthetic)")
+    Store(root).checkpoint(by="human", note="mutation (synthetic)")
 
 
 def _edit_json(path: Path, mutate) -> None:

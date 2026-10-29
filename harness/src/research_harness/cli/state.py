@@ -28,7 +28,7 @@ def checkpoint(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         by=args.by,
         request=args.request,
         units=args.units,
-        message=args.message,
+        note=args.message,
     )
     key = "checkpoint.reused" if result.reused else "checkpoint.created"
     env = build_envelope(
