@@ -5,7 +5,7 @@ description = "rh — runtime-neutral CLI that keeps scientific articles and dis
 requires-python = ">=3.12"
 license = "Apache-2.0"
 authors = [{ name = "Rybachek Dmytro" }]
-dependencies = []
+dependencies = ["PyYAML>=6.0"]
 
 [project.scripts]
 rh = "research_harness.cli.main:main"
@@ -24,6 +24,8 @@ packages = ["src/research_harness", "src/research_harness_dev"]
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
+# Vendored originals are stored unchanged for diffing; never format/lint them.
+extend-exclude = ["third_party"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B"]

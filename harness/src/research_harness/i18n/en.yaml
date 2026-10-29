@@ -1,0 +1,7 @@
+# English message catalog. Flat dotted keys; values are str.format templates.
+version.message: "Research Harness, version {version}."
+cli.no_command: "No command given. Try `rh version`."
+error.invalid: "Invalid input or usage."
+error.blocked: "Blocked: a human decision is needed or a condition is unmet."
+error.failed: "Tool failure."
+error.corrupt: "Corrupt state."
