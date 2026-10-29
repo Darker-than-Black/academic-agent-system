@@ -65,6 +65,22 @@ def open_request(
     return ar_id
 
 
+def request_gate(root: Path, gate: str, lang: str, *, refs: list[str] | None = None) -> str:
+    """Render the full briefing for ``gate`` and open (or reuse) its request."""
+    from research_harness.gates.briefing import render
+
+    summary_path = "intake/summary.md" if gate == "G0" else ""
+    return open_request(
+        root, gate, briefing_text=render(root, gate, lang), summary_path=summary_path, refs=refs
+    )
+
+
+def find_open_request(root: Path, gate: str) -> dict[str, Any] | None:
+    for rec in open_requests(root, gate):
+        return rec
+    return None
+
+
 def open_requests(root: Path, gate: str | None = None) -> list[dict[str, Any]]:
     d = requests_dir(root)
     if not d.is_dir():

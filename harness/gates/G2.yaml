@@ -1,0 +1,29 @@
+gate: G2
+title:
+  uk: "G2 — Схвалення повної чернетки"
+  en: "G2 — Approve the full draft"
+purpose:
+  uk: "Ви підтверджуєте, що повна чернетка готова до внутрішнього огляду: кожне твердження спирається на доказ, структура повна."
+  en: "You confirm the full draft is ready for internal review: every claim rests on evidence and the structure is complete."
+what_to_check:
+  - uk: "Усі розділи заповнені, немає пропусків-заглушок."
+    en: "All sections are filled in, with no placeholder gaps."
+  - uk: "Кожне ключове твердження має посилання на доказ або джерело."
+    en: "Every key claim links to evidence or a source."
+  - uk: "Немає невирішених блокерів доброчесності."
+    en: "There are no unresolved integrity blockers."
+if_approved:
+  uk: "Агент готує текст до подання (оформлення, вимоги видання)."
+  en: "The agent prepares the text for submission (formatting, venue rules)."
+if_rejected:
+  uk: "Робота повертається до доопрацювання чернетки."
+  en: "Work returns to revising the draft."
+if_conditions:
+  uk: "Агент продовжує з вашими умовами."
+  en: "The agent proceeds with your conditions."
+reversible:
+  uk: "Так: запишіть нове рішення для G2."
+  en: "Yes: record a new G2 decision."
+typical_time:
+  uk: "20–40 хвилин"
+  en: "20–40 minutes"

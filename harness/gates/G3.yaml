@@ -1,0 +1,29 @@
+gate: G3
+title:
+  uk: "G3 — Схвалення подання"
+  en: "G3 — Approve submission"
+purpose:
+  uk: "Ви підтверджуєте, що роботу можна подавати до обраного видання: усі вимоги видання виконано, свіжість доказів чинна."
+  en: "You confirm the work can be submitted to the chosen venue: all venue requirements are met and evidence freshness is valid."
+what_to_check:
+  - uk: "Видання обрано й вимоги його оформлення виконано."
+    en: "The venue is chosen and its formatting requirements are met."
+  - uk: "Жоден доказ чи схвалення не застаріли від останньої зміни."
+    en: "No evidence or approval has gone stale since the last change."
+  - uk: "Супровідні матеріали (анотації, заява про використання ШІ) на місці."
+    en: "Accompanying materials (abstracts, AI-use statement) are in place."
+if_approved:
+  uk: "Роботу позначено як готову до подання; подання виконуєте ви."
+  en: "The work is marked submission-ready; the submission itself is done by you."
+if_rejected:
+  uk: "Робота повертається до виправлення зауважень."
+  en: "Work returns to fixing the issues raised."
+if_conditions:
+  uk: "Агент продовжує з вашими умовами."
+  en: "The agent proceeds with your conditions."
+reversible:
+  uk: "Так: запишіть нове рішення для G3."
+  en: "Yes: record a new G3 decision."
+typical_time:
+  uk: "15–30 хвилин"
+  en: "15–30 minutes"
