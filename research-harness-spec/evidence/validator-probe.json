@@ -1,0 +1,17 @@
+{
+  "scope": "Isolated existing _verify_numerical method, not full pipeline",
+  "input_summary": {
+    "training_seconds": 95,
+    "test_accuracy": 0.51
+  },
+  "claim": {
+    "text": "Our model achieves 95% test accuracy.",
+    "claim_type": "numerical",
+    "source_line": 0,
+    "grounded": true,
+    "evidence": "Number 95 found in experiment data",
+    "confidence": 0.9
+  },
+  "expected": "must not mark accuracy claim supported by training_seconds",
+  "observed_false_positive": true
+}

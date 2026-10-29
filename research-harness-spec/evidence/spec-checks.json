@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "schema_valid": true,
+  "example_schema_valid": true,
+  "negative_schema_cases_rejected": 2,
+  "local_links_resolved": 12,
+  "pinned_source_files_hash_verified": 32,
+  "test_references_resolved": true,
+  "harness_implemented": false,
+  "T01_T16_executed": false,
+  "analogs_end_to_end_executed": false,
+  "isolated_third_party_probe": "false positive reproduced; see validator-probe.json"
+}

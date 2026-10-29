@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "id": "C-001",
+  "text": "PLACEHOLDER: результат буде сформульовано після імпорту реального run.",
+  "kind": "own_numeric",
+  "materiality": "critical",
+  "manuscript": {
+    "path": "manuscript/draft.md",
+    "locator": "Results/paragraph-1",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "evidence": [],
+  "support": "unreviewed",
+  "dependencies": [],
+  "result_ref": "R-placeholder",
+  "expected_tuple": {
+    "dataset_id": "D-placeholder",
+    "split_id": "test-v1",
+    "condition": "baseline",
+    "metric_id": "accuracy",
+    "unit": "fraction",
+    "aggregation": "mean"
+  },
+  "created_at": "2026-10-13T00:00:00Z",
+  "producer": {
+    "kind": "tool",
+    "name": "spec-example",
+    "version": "0.1"
+  },
+  "inputs": []
+}

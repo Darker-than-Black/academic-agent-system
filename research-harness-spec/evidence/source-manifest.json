@@ -1,0 +1,232 @@
+{
+  "audit_date": "2026-10-13",
+  "scope": "Selected code and prompt paths; no whole-repository execution",
+  "repositories": [
+    {
+      "repo": "aiming-lab/AutoResearchClaw",
+      "sha": "be4ba4755bf1b52220f25e13b2293b5956590070",
+      "inspected_files": [
+        {
+          "path": "researchclaw/pipeline/runner.py",
+          "sha256": "d57c549605a02a95a32b135b616cc0cb02ac8bb3a00afe3c958f34bdb269e693",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "researchclaw/pipeline/contracts.py",
+          "sha256": "97476afe65b0274ac9e22595c326583d893075da520dfbc831a4eabbae92806c",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "researchclaw/pipeline/paper_verifier.py",
+          "sha256": "aaef0c9cf156f158f80aa496a685ae9df2c3765116ff9a2383abba7273d90b75",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "researchclaw/hitl/claim_verifier.py",
+          "sha256": "43d3e085385becca452fb0b0bc993867cd7fc494275888fc35aaeb3782b1b15b",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "prompts.default.yaml",
+          "sha256": "93fd9370c01dd3ee9bdeaf6d0767556805cdb5e283231febc701913f783267a5",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "TobiasBlask/open-paper-machine",
+      "sha": "160df4d13d266411f0850c4de7ecdbd93e8b40be",
+      "inspected_files": [
+        {
+          "path": "agents/paper-machine.md",
+          "sha256": "8889c830dfbd69648cbff49b96b69da5529a95a54b72f0b19241ac1f473b0d1c",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "skills/verification-engine/SKILL.md",
+          "sha256": "fca0d90c898e39f02de75751e411a9f338c327c3d49b59df227a1731d0ac9e02",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "skills/audit-engine/SKILL.md",
+          "sha256": "fee725c48cf6ad0532399f0e66618d7bf2300900d0cd0445e8a2212ef398efd5",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "SamuelSchmidgall/AgentLaboratory",
+      "sha": "d9017d90e329112d2a80b7712f37ee9094d2cd27",
+      "inspected_files": [
+        {
+          "path": "ai_lab_repo.py",
+          "sha256": "799a3c078d835cd632487f52ed5b8e9f155bb9514ca104a30442ecfbcb7765ff",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "agents.py",
+          "sha256": "d8d1eda040eb1fa897d84596a1b36f277e83da75433c1a9ac2d9efe5be5c749a",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "SakanaAI/AI-Scientist-v2",
+      "sha": "96bd51617cfdbb494a9fc283af00fe090edfae48",
+      "inspected_files": [
+        {
+          "path": "ai_scientist/treesearch/agent_manager.py",
+          "sha256": "3abbc08428be8345baa106045bcbc82fcff115634579b11436a8181707208c89",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "ai_scientist/treesearch/parallel_agent.py",
+          "sha256": "57d17fcf00509fef1756ac14b22992f9da66447c4ed97cb7b5a4fec031d6ed4e",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "ai_scientist/perform_llm_review.py",
+          "sha256": "1dbca6776334270867703fd4f3369ceae9adb085ec8a45f07f7b191ffa20fab5",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "SakanaAI/AI-Scientist",
+      "sha": "1de1dbc1f4ee2c5f61e9c94348d55eb51d7fa2eb",
+      "inspected_files": [
+        {
+          "path": "ai_scientist/perform_experiments.py",
+          "sha256": "85361e35a9575a88a242e0a338143b2d2e8a07f917c996c293458329abcb87bf",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "ai_scientist/perform_review.py",
+          "sha256": "903380395f0f28993e432ab2abd59f300010fc8e9057b1aedeb54c4396dca004",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "HKUDS/AI-Researcher",
+      "sha": "f9a6f8480860c193afff600eeffe3defcee8a978",
+      "inspected_files": [
+        {
+          "path": "main_ai_researcher.py",
+          "sha256": "c13c1986c32a0a610b67d7ec3aa5636f15dda36b70bfc3d203746fd818736102",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "research_agent/run_infer_plan.py",
+          "sha256": "d4707ccc5cc21d907430c8eed4df4624b9e49a1370d2652f2395528e97ccef15",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "paper_agent/section_composer.py",
+          "sha256": "e0591c892b3946725b06f4729a4dd2f4185e110b5cfe5155e434b4c45aedef99",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "MorMar7/opendraft-paperwriter",
+      "sha": "89128b30d9857cf9b871cbebc88ec07832260b9a",
+      "inspected_files": [
+        {
+          "path": "engine/draft_generator.py",
+          "sha256": "185d3966e22b743f6ae488c0ead01951616e907288339ad56db0cdfbbb7531ef",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "engine/utils/citation_claim_verifier.py",
+          "sha256": "8cda7212a41a5c73742c89903b18b5a1f5d5f3fbbe9e03ce2eaa6eabea4f48ec",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "EVALUATION.md",
+          "sha256": "ce78073f5cf8dd5ef33a606bc02234bc2f281ef68ec0111ac13437674da0fa54",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "Future-House/paper-qa",
+      "sha": "57e89f7223b0960d5ee5ea048c69e3c47e088572",
+      "inspected_files": [
+        {
+          "path": "src/paperqa/prompts.py",
+          "sha256": "48a504fd09feb608b647b574461f68c2cc4a98cc1a468d7c0e7741f81d199181",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "src/paperqa/agents/tools.py",
+          "sha256": "622c48b4a96efa99267d6e833b0e1d10078ec05da4f4a29fa1a1e9e8fae5fe7d",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "src/paperqa/clients/retractions.py",
+          "sha256": "ef3cb524101a73c186beb2760c96d9dc0a39809ced88dcddab97106dfb836313",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "AkariAsai/OpenScholar",
+      "sha": "0e9b8fb912273d3dae39e593da86e4f6d3bf8de1",
+      "inspected_files": [
+        {
+          "path": "src/open_scholar.py",
+          "sha256": "873d2e84c3519a435475a17286e3805412c3fe25ba83967af52cf81b66776dd0",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "src/instructions.py",
+          "sha256": "0d91df1bfe364688faa7ecf19143f873221c9e1b5544f9659d5a3263ca4b0405",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "stanford-oval/storm",
+      "sha": "fb951af7744dab086e34962e9bc6fe878e145f83",
+      "inspected_files": [
+        {
+          "path": "knowledge_storm/storm_wiki/engine.py",
+          "sha256": "80dc4a50dbb793b28f11563909dae2a72104228bea22484b01585f362aceb011",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "knowledge_storm/storm_wiki/modules/knowledge_curation.py",
+          "sha256": "c3f037dc808287631825e6e9bb4dd0b51b9ca43f1c790a713d41513b7ae2c7e0",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    },
+    {
+      "repo": "damonwan1/AutoScholarLoop",
+      "sha": "8206c7581049a78cab9cf20723d70a846b43e7df",
+      "inspected_files": [
+        {
+          "path": "src/open_research_agent/core/pipeline.py",
+          "sha256": "72c03f4972ea5bdeb1ed482ea0841690f59f5fa825d201ba909d0368a295d5d3",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "src/open_research_agent/stages/review.py",
+          "sha256": "dee29f181bd2daa4e6f8d437b838d66629ce9356f9bf141c0283d2b356c936de",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "src/open_research_agent/stages/release.py",
+          "sha256": "fe7921ed627fc37d7620160eb742a42cb442845365655563d6280dc0da9936f5",
+          "inspection": "selected sections/symbols, not exhaustive"
+        },
+        {
+          "path": "LICENSE.md",
+          "sha256": "d548db3d1a87d32841afc5710fe385cba21b65eef7e1c8cd66ce446ccef0b86c",
+          "inspection": "selected sections/symbols, not exhaustive"
+        }
+      ]
+    }
+  ]
+}
