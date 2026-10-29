@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/model-tiers.schema.json",
+  "title": "config/model-tiers.yaml — host → tier → model (02 §10)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "hosts"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "hosts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["model"],
+          "properties": {
+            "model": { "type": "string", "minLength": 1 },
+            "alternatives": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

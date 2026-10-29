@@ -1,0 +1,24 @@
+{
+  "pack": "core",
+  "version": "2026-10-29",
+  "key": "integrity.no_invent",
+  "kind": "integrity",
+  "applies_to": [
+    "A11"
+  ],
+  "check": [
+    "deterministic"
+  ],
+  "severity": "blocker",
+  "overridable": false,
+  "statement": "No invented sources.",
+  "source": {
+    "title": "t",
+    "url": "u",
+    "evidence_level": "primary",
+    "accessed_at": "2026-10-29"
+  },
+  "checked_at": "2026-10-29",
+  "valid_from": "2026-01-01",
+  "review_after": "2027-01-01"
+}

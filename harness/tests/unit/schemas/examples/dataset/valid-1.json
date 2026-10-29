@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.2",
+  "id": "D-001",
+  "created_at": "2026-10-29T12:00:00Z",
+  "producer": {
+    "kind": "tool",
+    "name": "x",
+    "version": "1"
+  },
+  "name": "n",
+  "version": "1",
+  "terms": {
+    "text_or_url": "u",
+    "verified_at": "2026-10-29T12:00:00Z"
+  },
+  "sha256": "unknown",
+  "storage": "no_copy",
+  "synthetic": true
+}

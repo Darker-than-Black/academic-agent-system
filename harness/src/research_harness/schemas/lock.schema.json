@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/lock.schema.json",
+  "title": ".rh/lock (02 §5.4)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operation_id", "pid", "hostname", "command", "started_at"],
+  "properties": {
+    "operation_id": { "type": "string", "pattern": "^op-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "pid": { "type": "integer", "minimum": 0 },
+    "hostname": { "type": "string" },
+    "command": { "type": "string" },
+    "started_at": { "$ref": "common.schema.json#/$defs/datetime" }
+  }
+}

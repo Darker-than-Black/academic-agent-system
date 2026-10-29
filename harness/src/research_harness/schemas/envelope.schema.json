@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/envelope.schema.json",
+  "title": "CLI envelope (03 §1.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "command", "status", "lang", "message", "data"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "command": { "type": "string" },
+    "status": { "enum": ["ok", "partial", "blocked", "invalid", "failed", "corrupt"] },
+    "lang": { "enum": ["uk", "en"] },
+    "message": { "type": "string" },
+    "operation_id": { "type": "string", "pattern": "^op-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "object_id": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "sha256"],
+        "properties": {
+          "ref": { "$ref": "common.schema.json#/$defs/ref" },
+          "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+          "path": { "type": "string" }
+        }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "object" } },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "who"],
+        "properties": {
+          "command": { "type": "string" },
+          "who": { "enum": ["agent", "author"] },
+          "why": { "type": "string" },
+          "briefing": { "type": "string" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "who": { "const": "author" } } },
+            "then": { "required": ["why"] }
+          }
+        ]
+      }
+    },
+    "usage": { "type": "object" },
+    "data": { "type": "object" }
+  }
+}

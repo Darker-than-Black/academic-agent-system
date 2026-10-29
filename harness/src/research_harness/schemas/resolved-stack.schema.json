@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/resolved-stack.schema.json",
+  "title": "profiles/resolved-stack.json (02 §8.5)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "resolved_at", "inputs", "packs", "rules", "findings"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "resolved_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "inputs": { "$ref": "common.schema.json#/$defs/inputs" },
+    "packs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "layer", "status", "sha256"],
+        "properties": {
+          "id": { "type": "string" },
+          "version": { "type": "string" },
+          "layer": { "type": "integer", "minimum": 0, "maximum": 7 },
+          "status": { "$ref": "common.schema.json#/$defs/pack_status" },
+          "sha256": { "$ref": "common.schema.json#/$defs/hash" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule_id", "pack", "key", "effective", "freshness", "effective_severity"],
+        "properties": {
+          "rule_id": { "type": "string" },
+          "pack": { "type": "string" },
+          "key": { "type": "string" },
+          "effective": { "type": "boolean" },
+          "overridden_by": { "type": "string" },
+          "freshness": { "$ref": "common.schema.json#/$defs/rule_freshness" },
+          "effective_severity": { "$ref": "common.schema.json#/$defs/severity" },
+          "effective_value": {}
+        }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "string" } }
+  }
+}

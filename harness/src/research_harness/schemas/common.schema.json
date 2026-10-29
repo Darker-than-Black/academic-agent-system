@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/common.schema.json",
+  "title": "Common base fields, refs and enums (02 §1, §2)",
+  "$defs": {
+    "schema_version": { "const": "0.2" },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "id": { "type": "string", "minLength": 1 },
+    "datetime": { "type": "string", "format": "date-time", "minLength": 1 },
+    "ref": { "type": "string", "pattern": "^[a-z_]+:[^\\s]+$" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "version"],
+      "properties": {
+        "kind": { "enum": ["human", "tool", "model", "unattributed"] },
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "role": { "type": "string" },
+        "model_id": { "type": "string" },
+        "model_tier": { "type": "string" }
+      }
+    },
+    "input_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": { "$ref": "#/$defs/ref" },
+        "sha256": { "$ref": "#/$defs/hash" }
+      }
+    },
+    "inputs": { "type": "array", "items": { "$ref": "#/$defs/input_item" } },
+    "check_result": { "enum": ["pass", "fail", "unknown", "not_applicable"] },
+    "freshness": { "enum": ["current", "stale"] },
+    "stage_state": {
+      "enum": ["pending", "active", "blocked", "completed", "failed", "stale", "waiting", "not_applicable"]
+    },
+    "severity": { "enum": ["blocker", "major", "minor", "info"] },
+    "gate": { "enum": ["G0", "G1", "G2", "G3", "GE"] },
+    "decision": { "enum": ["approved", "rejected", "approved_with_conditions"] },
+    "actor_role": {
+      "enum": ["author", "co_author", "supervisor", "ethics_committee", "editorial_office", "department", "academic_council", "defense_council"]
+    },
+    "autonomy": { "enum": ["step", "gates", "batch"] },
+    "operation_mode": { "enum": ["create", "revise", "extend", "respond_to_reviewers"] },
+    "document_kind": { "enum": ["article", "thesis", "conference_abstract", "report", "unknown"] },
+    "study_kind": {
+      "enum": ["literature", "conceptual", "empirical_quantitative", "empirical_qualitative", "computational_ml", "mixed", "unknown"]
+    },
+    "metadata_status": { "enum": ["unresolved", "matched", "ambiguous", "not_found", "lookup_failed"] },
+    "access_level": { "enum": ["metadata", "abstract", "fulltext", "local_original"] },
+    "support": {
+      "enum": ["unreviewed", "supported", "partial", "insufficient", "contradicted", "not_found", "unverifiable"]
+    },
+    "retraction_status": { "enum": ["unknown", "no_notice_found", "notice_found"] },
+    "resource_status": { "enum": ["ok", "unavailable", "blocked", "budget_exhausted", "not_checked"] },
+    "run_origin": { "enum": ["executed", "imported", "simulated"] },
+    "run_status": { "enum": ["planned", "running", "succeeded", "failed", "cancelled"] },
+    "paragraph_origin": { "enum": ["author", "agent_edited_by_author", "agent"] },
+    "rule_evidence_level": { "enum": ["primary", "secondary"] },
+    "rule_freshness": { "enum": ["current", "expired", "not_yet_valid"] },
+    "pack_status": { "enum": ["draft", "verified", "deprecated"] },
+    "finding_status": { "enum": ["open", "accepted", "rejected", "fixed", "unresolved"] },
+    "tristate": { "enum": [true, false, "unknown"] },
+    "i18n_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uk", "en"],
+      "properties": { "uk": { "type": "string" }, "en": { "type": "string" } }
+    }
+  }
+}

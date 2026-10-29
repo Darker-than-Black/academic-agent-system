@@ -23,6 +23,12 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--lang", choices=("uk", "en"), default=None)
     sub = parser.add_subparsers(dest="command", metavar="command")
     sub.add_parser("version", help="Print the harness version envelope.")
+
+    v = sub.add_parser("validate", help="Run read-only validation checks.")
+    v.add_argument("--scope", choices=sorted({"schema", "refs", "structure", "freshness", "all"}))
+    v.add_argument("--schema", help="Schema name to validate --file against.")
+    v.add_argument("--file", action="append", help="File(s) to validate; repeatable.")
+    v.add_argument("--known", action="append", help="Known artifact ref(s) for ref checks.")
     return parser
 
 
@@ -54,6 +60,13 @@ def main(argv: list[str] | None = None) -> int:
         )
         _emit(envelope, args.format)
         return 0
+
+    if args.command == "validate":
+        from research_harness.cli.validate import run as run_validate
+
+        envelope, code = run_validate(args, lang)
+        _emit(envelope, args.format)
+        return code
 
     parser.print_help(sys.stderr)
     return 2

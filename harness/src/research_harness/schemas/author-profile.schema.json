@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/author-profile.schema.json",
+  "title": "_author/profile.yaml (02 §3.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": { "^x-": {} },
+  "required": ["schema_version", "name", "languages", "ui_language", "default_autonomy", "voice"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "name": { "type": "string", "minLength": 1 },
+    "name_latin": { "type": "string" },
+    "orcid": { "oneOf": [{ "type": "string" }, { "const": "unknown" }] },
+    "affiliations": { "type": "array", "items": { "type": "string" } },
+    "languages": { "type": "array", "items": { "enum": ["uk", "en"] }, "minItems": 1 },
+    "ui_language": { "enum": ["uk", "en"] },
+    "default_autonomy": { "$ref": "common.schema.json#/$defs/autonomy" },
+    "voice": { "enum": ["I", "we", "impersonal"] },
+    "contact_email": { "type": "string" }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/gate-definition.schema.json",
+  "title": "gate definition, harness/gates/<gate>.yaml (02 §9.3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["gate", "title", "purpose", "what_to_check", "if_approved", "if_rejected", "if_conditions", "reversible", "typical_time"],
+  "properties": {
+    "gate": { "$ref": "common.schema.json#/$defs/gate" },
+    "title": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "purpose": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "what_to_check": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 7,
+      "items": { "$ref": "common.schema.json#/$defs/i18n_text" }
+    },
+    "if_approved": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "if_rejected": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "if_conditions": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "reversible": { "$ref": "common.schema.json#/$defs/i18n_text" },
+    "typical_time": { "$ref": "common.schema.json#/$defs/i18n_text" }
+  }
+}

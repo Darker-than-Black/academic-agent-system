@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.2",
+  "materials": [
+    {
+      "id": "M-0001",
+      "kind": "file",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "origin": {
+        "provided_as": "file",
+        "original_name": "a.pdf",
+        "provided_at": "2026-10-29T12:00:00Z"
+      },
+      "permissions": {
+        "external_api": "unknown",
+        "personal_data": "unknown",
+        "coauthor_unpublished": "unknown",
+        "private": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/paragraph-map.schema.json",
+  "title": "Paragraph map (02 §12, def M1 / impl M2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "unit_id", "paragraphs"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "unit_id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+    "paragraphs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sha256", "origin"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^PG-[0-9A-HJKMNP-TV-Z]{6}$" },
+          "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+          "origin": { "$ref": "common.schema.json#/$defs/paragraph_origin" },
+          "history": { "type": "array", "items": { "type": "object" } }
+        }
+      }
+    }
+  }
+}

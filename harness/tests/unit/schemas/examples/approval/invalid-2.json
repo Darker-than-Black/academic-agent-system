@@ -1,0 +1,18 @@
+{
+  "gate": "G0",
+  "target": {
+    "snapshot_id": "snap-0123456789ABCDEFGHJKMNPQRS",
+    "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "refs": []
+  },
+  "decision": "approved",
+  "reason": "ok",
+  "actor_role": "author",
+  "actor_label": "Dmytro",
+  "channel": "tty_confirmation",
+  "producer": {
+    "kind": "human",
+    "name": "Dmytro",
+    "version": "1"
+  }
+}

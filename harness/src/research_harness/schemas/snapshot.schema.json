@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/snapshot.schema.json",
+  "title": "snapshot manifest (02 §5.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "parent", "operation", "files", "manifest_sha256", "tags"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "parent": { "oneOf": [{ "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" }, { "type": "null" }] },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "command", "args_normalized", "idempotency_key"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^op-[0-9A-HJKMNP-TV-Z]{26}$" },
+        "command": { "type": "string" },
+        "args_normalized": { "type": "object" },
+        "idempotency_key": { "$ref": "common.schema.json#/$defs/hash" },
+        "request": { "type": "string" }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "size", "stored"],
+        "properties": {
+          "path": { "type": "string" },
+          "ref": { "$ref": "common.schema.json#/$defs/ref" },
+          "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+          "size": { "type": "integer", "minimum": 0 },
+          "stored": { "type": "boolean" }
+        }
+      }
+    },
+    "manifest_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/intake-questions.schema.json",
+  "title": "intake/questions.yaml (02 §9.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "questions"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "questions": { "type": "array", "items": { "$ref": "#/$defs/question" }, "minItems": 1 }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "core", "text", "help", "type", "unknown_consequence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^Q[0-9]+[a-z]?$" },
+        "core": { "type": "boolean" },
+        "text": { "$ref": "common.schema.json#/$defs/i18n_text" },
+        "help": { "$ref": "common.schema.json#/$defs/i18n_text" },
+        "type": { "enum": ["choice", "multi", "text", "date", "bool", "list"] },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "condition": { "type": "string" },
+        "prefill_from": { "type": "string" },
+        "unknown_consequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["blocks", "unknown_checks", "note"],
+          "properties": {
+            "blocks": { "type": "array", "items": { "type": "string" } },
+            "unknown_checks": { "type": "array", "items": { "type": "string" } },
+            "note": { "$ref": "common.schema.json#/$defs/i18n_text" }
+          }
+        },
+        "modes": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/operation_mode" } }
+      }
+    }
+  }
+}

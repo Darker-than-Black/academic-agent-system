@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/i18n-catalog.schema.json",
+  "title": "i18n catalog uk.yaml / en.yaml (02 §1.6)",
+  "type": "object",
+  "minProperties": 1,
+  "additionalProperties": { "type": "string" },
+  "propertyNames": { "pattern": "^[a-z0-9]+(\\.[a-z0-9_]+)+$" }
+}

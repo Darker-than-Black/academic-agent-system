@@ -1,0 +1,24 @@
+{
+  "adoptions": [
+    {
+      "id": "ADP-001",
+      "origin_repo": "r",
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "p",
+      "license": "MIT",
+      "license_file": "lf",
+      "notice": "n",
+      "destination": "d",
+      "original_copy": "oc",
+      "original_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "adapted_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "mode": "adapt",
+      "changes": [],
+      "acceptance_tests": [],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-29",
+      "adopted_by": "x"
+    }
+  ],
+  "__bogus__": 1
+}

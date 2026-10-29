@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.2",
+  "id": "S-0001",
+  "created_at": "2026-10-29T12:00:00Z",
+  "producer": {
+    "kind": "tool",
+    "name": "x",
+    "version": "1"
+  },
+  "title": "t",
+  "type": "article-journal",
+  "metadata_status": "unresolved",
+  "access_level": "metadata",
+  "retraction": {
+    "status": "unknown",
+    "checked_at": "2026-10-29T12:00:00Z"
+  },
+  "bib_key": "smith2020"
+}

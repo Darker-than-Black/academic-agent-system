@@ -1,0 +1,13 @@
+{
+  "id": "AR-0001",
+  "gate": "G0",
+  "target": {
+    "snapshot_id": "snap-0123456789ABCDEFGHJKMNPQRS",
+    "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "refs": []
+  },
+  "summary_path": "intake/summary.md",
+  "briefing_path": "approvals/requests/AR-0001.md",
+  "status": "open",
+  "__bogus__": 1
+}

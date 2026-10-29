@@ -1,0 +1,16 @@
+{
+  "id": "W-0123456789ABCDEFGHJKMNPQRS",
+  "created_at": "2026-10-29T12:00:00Z",
+  "counters": {
+    "A": {
+      "2026": 3
+    }
+  },
+  "objects": [
+    {
+      "id": "A-2026-001",
+      "kind": "article",
+      "folder": "X__A-2026-001"
+    }
+  ]
+}

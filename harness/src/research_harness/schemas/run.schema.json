@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/run.schema.json",
+  "title": "Run (02 §12, def M1 / impl M3 / M6)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "origin", "status", "network"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^R-[0-9]{4,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "origin": { "$ref": "common.schema.json#/$defs/run_origin" },
+    "status": { "$ref": "common.schema.json#/$defs/run_status" },
+    "protocol_ref": { "$ref": "common.schema.json#/$defs/ref" },
+    "code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": { "path": { "type": "string" }, "sha256": { "$ref": "common.schema.json#/$defs/hash" } }
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dataset_id", "sha256"],
+        "properties": { "dataset_id": { "type": "string" }, "sha256": { "$ref": "common.schema.json#/$defs/hash" } }
+      }
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lockfile_sha256", "python", "platform"],
+      "properties": {
+        "lockfile_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "python": { "type": "string" },
+        "platform": { "type": "string" }
+      }
+    },
+    "config_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "seeds": { "type": "array", "items": { "type": "integer" } },
+    "argv": { "type": "array", "items": { "type": "string" } },
+    "network": { "enum": ["disabled", "allowed"] },
+    "started_at": { "type": "string" },
+    "finished_at": { "type": "string" },
+    "exit_code": { "type": "integer" },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": { "path": { "type": "string" }, "sha256": { "$ref": "common.schema.json#/$defs/hash" } }
+      }
+    },
+    "missing_fingerprints": { "type": "array", "items": { "type": "string" } }
+  }
+}

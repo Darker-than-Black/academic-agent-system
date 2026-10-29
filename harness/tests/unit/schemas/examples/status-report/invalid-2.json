@@ -1,0 +1,20 @@
+{
+  "stage": {
+    "current": "A0",
+    "states": {
+      "A0": "active"
+    }
+  },
+  "gates": [],
+  "blockers": [],
+  "unknowns": [],
+  "dirty": [],
+  "stale": {
+    "count": 0
+  },
+  "locks_and_recovery": {},
+  "next_action": {
+    "command": "rh status",
+    "who": "agent"
+  }
+}

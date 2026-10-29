@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/approval-request.schema.json",
+  "title": "approval request (02 §9.3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "gate", "target", "summary_path", "briefing_path", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^AR-[0-9]{4,}$" },
+    "gate": { "$ref": "common.schema.json#/$defs/gate" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_id", "manifest_sha256", "refs"],
+      "properties": {
+        "snapshot_id": { "type": "string", "pattern": "^snap-[0-9A-HJKMNP-TV-Z]{26}$" },
+        "manifest_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+        "refs": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ref" } }
+      }
+    },
+    "summary_path": { "type": "string" },
+    "briefing_path": { "type": "string" },
+    "status": { "enum": ["open", "answered", "withdrawn"] }
+  }
+}

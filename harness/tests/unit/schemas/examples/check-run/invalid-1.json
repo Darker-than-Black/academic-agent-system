@@ -1,0 +1,30 @@
+{
+  "id": "cr-1",
+  "checks": [
+    {
+      "id": "c",
+      "version": "1"
+    }
+  ],
+  "snapshot_id": "snap-0123456789ABCDEFGHJKMNPQRS",
+  "inputs": [],
+  "coverage": {
+    "denominator": 1,
+    "checked": 1,
+    "pass": 1,
+    "fail": 0,
+    "unknown": 0,
+    "not_applicable": 0
+  },
+  "results": [
+    {
+      "check_id": "c",
+      "item_ref": "unit:U-0123456H/text",
+      "result": "pass"
+    }
+  ],
+  "started_at": "2026-10-29T12:00:00Z",
+  "finished_at": "2026-10-29T12:00:00Z",
+  "tool_failures": [],
+  "__bogus__": 1
+}

@@ -1,0 +1,25 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "core": true,
+      "text": {
+        "uk": "x",
+        "en": "y"
+      },
+      "help": {
+        "uk": "x",
+        "en": "y"
+      },
+      "type": "text",
+      "unknown_consequence": {
+        "blocks": [],
+        "unknown_checks": [],
+        "note": {
+          "uk": "x",
+          "en": "y"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/rule.schema.json",
+  "title": "rule (02 §8.2)",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": { "^x-": {} },
+  "required": ["id", "pack", "version", "key", "kind", "applies_to", "check", "severity", "overridable", "statement", "source", "checked_at", "valid_from", "review_after"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "pack": { "type": "string" },
+    "version": { "type": "string" },
+    "key": { "type": "string" },
+    "kind": { "enum": ["integrity", "counting", "structure", "format", "process"] },
+    "applies_to": { "type": "array", "items": { "type": "string" } },
+    "check": {
+      "type": "array",
+      "items": { "enum": ["deterministic", "semantic", "human"] },
+      "minItems": 1
+    },
+    "severity": { "$ref": "common.schema.json#/$defs/severity" },
+    "compare": { "enum": ["min", "max", "required", "forbidden", "equals", "one_of"] },
+    "value": {},
+    "overridable": { "type": "boolean" },
+    "statement": { "type": "string" },
+    "statement_original": { "type": "string" },
+    "lang": { "type": "string" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "url", "evidence_level", "accessed_at"],
+      "properties": {
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "evidence_level": { "$ref": "common.schema.json#/$defs/rule_evidence_level" },
+        "accessed_at": { "type": "string" }
+      }
+    },
+    "checked_at": { "type": "string" },
+    "valid_from": { "type": "string" },
+    "valid_to": { "type": "string" },
+    "review_after": { "type": "string" }
+  }
+}
