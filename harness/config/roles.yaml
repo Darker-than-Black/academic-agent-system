@@ -1,0 +1,12 @@
+schema_version: "0.2"
+researcher: flagship
+analyst: flagship
+integration_critic: flagship
+writer: strong
+unit_critic: strong
+chapter_critic: strong
+orchestrator: strong
+summarizer: fast
+triage: fast
+classifier: fast
+cli_checks: none
