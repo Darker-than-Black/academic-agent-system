@@ -1,0 +1,32 @@
+- id: ART-ALLOWED-KINDS
+  pack: article
+  version: "2026-10-27"
+  key: structure.allowed_kinds
+  kind: structure
+  applies_to: [A2]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: one_of
+  value: [abstract, introduction, section, conclusions, references, appendices]
+  statement: "An article uses depth-1 section units."
+  source: {title: "ADR-019 p.2", url: "https://rh.spec/decisions.md#ADR-019", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: ART-MAX-DEPTH
+  pack: article
+  version: "2026-10-27"
+  key: structure.max_depth
+  kind: structure
+  applies_to: [A2]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: max
+  value: 1
+  statement: "Article structure depth is 1."
+  source: {title: "ADR-019 p.2", url: "https://rh.spec/decisions.md#ADR-019", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"

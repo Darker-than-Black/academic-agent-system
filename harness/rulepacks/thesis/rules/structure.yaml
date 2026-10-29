@@ -1,0 +1,32 @@
+- id: THESIS-REQUIRED-UNITS
+  pack: thesis
+  version: "2026-10-27"
+  key: structure.required_units
+  kind: structure
+  applies_to: [A2]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: required
+  value: [introduction, chapter, conclusions, references]
+  statement: "A thesis requires an introduction, at least one chapter, conclusions and references."
+  source: {title: "ADR-019 p.1", url: "https://rh.spec/decisions.md#ADR-019", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: THESIS-MAX-DEPTH
+  pack: thesis
+  version: "2026-10-27"
+  key: structure.max_depth
+  kind: structure
+  applies_to: [A2]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: max
+  value: 2
+  statement: "Thesis structure allows chapters with subsections (depth 2)."
+  source: {title: "ADR-019 p.1", url: "https://rh.spec/decisions.md#ADR-019", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
