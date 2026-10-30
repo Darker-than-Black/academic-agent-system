@@ -9,6 +9,7 @@ publisher writes). Rate limit: 2 requests/second. Article search:
 from __future__ import annotations
 
 from typing import Any
+from urllib.parse import quote
 
 from research_harness.materials.doi_list import normalize_doi
 from research_harness.sources.adapters.base import AdapterResult, BaseAdapter
@@ -28,6 +29,14 @@ class DoajAdapter(BaseAdapter):
         if status == "ok" and data:
             results = data.get("results") or []
             records = [self.normalize(r.get("bibjson", {})) for r in results[:1]]
+        return self.result(status=status, url=url, http_status=http, records=records)
+
+    def search(self, query: str, *, page_size: int = 25) -> AdapterResult:
+        url = f"{self._base()}/search/articles/{quote(query)}?pageSize={page_size}"
+        status, http, data = self.fetch_json(url)
+        records = []
+        if status == "ok" and data:
+            records = [self.normalize(r.get("bibjson", {})) for r in (data.get("results") or [])]
         return self.result(status=status, url=url, http_status=http, records=records)
 
     def normalize(self, raw: Any) -> dict[str, Any]:

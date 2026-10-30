@@ -1,0 +1,3 @@
+{"schema_version": "0.2", "version": 1, "question": "q",
+ "resources": [{"resource": "eric", "queries": ["x"]}],
+ "budget": {"max_requests": 50}}

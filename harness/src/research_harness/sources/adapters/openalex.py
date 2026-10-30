@@ -14,6 +14,7 @@ does NOT send it. Data is CC0. Author objects expose ``display_name`` /
 from __future__ import annotations
 
 from typing import Any
+from urllib.parse import quote
 
 from research_harness.materials.doi_list import normalize_doi
 from research_harness.sources.adapters.base import AdapterResult, BaseAdapter
@@ -37,6 +38,14 @@ class OpenAlexAdapter(BaseAdapter):
         url = self._url(f"/works/https://doi.org/{normalize_doi(doi)}")
         status, http, data = self.fetch_json(url)
         records = [self.normalize(data)] if status == "ok" and data else []
+        return self.result(status=status, url=url, http_status=http, records=records)
+
+    def search(self, query: str, *, per_page: int = 25) -> AdapterResult:
+        url = self._url(f"/works?search={quote(query)}&per-page={per_page}")
+        status, http, data = self.fetch_json(url)
+        records = []
+        if status == "ok" and data:
+            records = [self.normalize(w) for w in (data.get("results") or [])]
         return self.result(status=status, url=url, http_status=http, records=records)
 
     def normalize(self, raw: Any) -> dict[str, Any]:

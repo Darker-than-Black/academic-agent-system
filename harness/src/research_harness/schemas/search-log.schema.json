@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/search-log.schema.json",
+  "title": "Search log line (04-modules/research-lab.md; FR-03, FR-20)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "at", "resource", "mode", "query", "status", "records_returned", "plan_version"],
+  "properties": {
+    "id": { "type": "string" },
+    "at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "resource": { "type": "string" },
+    "mode": { "enum": ["api", "manual_export", "manual_record", "browser_assisted"] },
+    "query": { "type": "string" },
+    "filters": { "type": "object" },
+    "status": { "$ref": "common.schema.json#/$defs/resource_status" },
+    "results_total": { "type": ["integer", "null"] },
+    "records_returned": { "type": "integer", "minimum": 0 },
+    "export_file_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "plan_version": { "type": ["integer", "string"] },
+    "budget_used": { "type": ["integer", "string"] }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/lab-journal.schema.json",
+  "title": "Lab journal line (04-modules/research-lab.md; FR-54 p.5)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "at", "kind", "text"],
+  "properties": {
+    "id": { "type": "string" },
+    "at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "kind": {
+      "enum": ["question", "hypothesis", "plan_change", "dead_end", "deviation", "cost", "note", "decision"]
+    },
+    "text": { "type": "string", "minLength": 1 },
+    "model_id": { "type": "string" },
+    "cost": { "type": ["number", "string"] },
+    "refs": { "type": "array", "items": { "type": "string" } }
+  }
+}
