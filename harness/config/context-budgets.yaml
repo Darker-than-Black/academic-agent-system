@@ -1,0 +1,10 @@
+# Per-role context budgets in estimated tokens (summaries-context.md).
+# Estimate method is char/4 (recorded in every pack manifest). No truncation:
+# over budget is an error listing items, never a silent cut (FR-48, NFR-16).
+method: chars_div_4
+roles:
+  writer: 8000
+  unit_critic: 12000
+  summarizer: 6000
+  orchestrator: 4000
+  analyst: 10000

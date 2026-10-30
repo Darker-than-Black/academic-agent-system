@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/context-pack.schema.json",
+  "title": "Context pack manifest (04-modules/summaries-context.md; FR-48)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "role", "created_at", "budget", "items", "total_tokens", "within_budget"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string" },
+    "role": { "enum": ["writer", "unit_critic", "summarizer", "orchestrator", "analyst"] },
+    "target_id": { "type": "string" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_tokens", "method"],
+      "properties": {
+        "max_tokens": { "type": "integer", "minimum": 1 },
+        "method": { "type": "string" }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "kind", "chars", "tokens"],
+        "properties": {
+          "ref": { "type": "string" },
+          "kind": { "type": "string" },
+          "chars": { "type": "integer", "minimum": 0 },
+          "tokens": { "type": "integer", "minimum": 0 },
+          "full_text": { "type": "boolean" }
+        }
+      }
+    },
+    "total_tokens": { "type": "integer", "minimum": 0 },
+    "within_budget": { "type": "boolean" },
+    "refused": { "type": "boolean" }
+  }
+}
