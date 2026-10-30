@@ -1,0 +1,401 @@
+{
+  "schema_version": "0.2",
+  "fixture": "F4-W",
+  "run_kind": "synthetic",
+  "synthetic": true,
+  "producer": {
+    "model_id": "synthetic/none",
+    "date": "2026-10-30",
+    "note": "SYNTHETIC fixture (H6): fabricated model output to exercise the semantic scorer offline. Error pattern: miss extract C-013/C-019; miss defect on C-014/C-018; C-006 & C-030 non-critical false PASS; C-037 verdict error. No critical false PASS. NOT a gate baseline — a real host run (run_kind=host, recorded model id) replaces this."
+  },
+  "extracted": [
+    {
+      "claim_id": "C-001",
+      "material": true
+    },
+    {
+      "claim_id": "C-002",
+      "material": true
+    },
+    {
+      "claim_id": "C-003",
+      "material": true
+    },
+    {
+      "claim_id": "C-004",
+      "material": true
+    },
+    {
+      "claim_id": "C-005",
+      "material": true
+    },
+    {
+      "claim_id": "C-006",
+      "material": true
+    },
+    {
+      "claim_id": "C-007",
+      "material": true
+    },
+    {
+      "claim_id": "C-008",
+      "material": true
+    },
+    {
+      "claim_id": "C-009",
+      "material": true
+    },
+    {
+      "claim_id": "C-010",
+      "material": true
+    },
+    {
+      "claim_id": "C-011",
+      "material": true
+    },
+    {
+      "claim_id": "C-012",
+      "material": true
+    },
+    {
+      "claim_id": "C-014",
+      "material": true
+    },
+    {
+      "claim_id": "C-015",
+      "material": true
+    },
+    {
+      "claim_id": "C-016",
+      "material": true
+    },
+    {
+      "claim_id": "C-017",
+      "material": true
+    },
+    {
+      "claim_id": "C-018",
+      "material": true
+    },
+    {
+      "claim_id": "C-020",
+      "material": true
+    },
+    {
+      "claim_id": "C-021",
+      "material": true
+    },
+    {
+      "claim_id": "C-022",
+      "material": true
+    },
+    {
+      "claim_id": "C-023",
+      "material": true
+    },
+    {
+      "claim_id": "C-024",
+      "material": true
+    },
+    {
+      "claim_id": "C-025",
+      "material": true
+    },
+    {
+      "claim_id": "C-026",
+      "material": true
+    },
+    {
+      "claim_id": "C-028",
+      "material": true
+    },
+    {
+      "claim_id": "C-029",
+      "material": true
+    },
+    {
+      "claim_id": "C-030",
+      "material": true
+    },
+    {
+      "claim_id": "C-031",
+      "material": true
+    },
+    {
+      "claim_id": "C-035",
+      "material": true
+    },
+    {
+      "claim_id": "C-036",
+      "material": true
+    },
+    {
+      "claim_id": "C-037",
+      "material": true
+    },
+    {
+      "claim_id": "C-038",
+      "material": true
+    },
+    {
+      "claim_id": "C-039",
+      "material": true
+    },
+    {
+      "claim_id": "C-040",
+      "material": true
+    },
+    {
+      "claim_id": "C-041",
+      "material": true
+    },
+    {
+      "claim_id": "C-042",
+      "material": true
+    },
+    {
+      "claim_id": "C-043",
+      "material": true
+    },
+    {
+      "claim_id": "C-044",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    }
+  ],
+  "reviewed": [
+    {
+      "claim_id": "C-001",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D13"
+      ]
+    },
+    {
+      "claim_id": "C-002",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-003",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-004",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-005",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D3"
+      ]
+    },
+    {
+      "claim_id": "C-006",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-007",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D11"
+      ]
+    },
+    {
+      "claim_id": "C-008",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-009",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D4"
+      ]
+    },
+    {
+      "claim_id": "C-010",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-011",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D9"
+      ]
+    },
+    {
+      "claim_id": "C-012",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "claim_id": "C-014",
+      "verdict": "partial"
+    },
+    {
+      "claim_id": "C-015",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-016",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-017",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D3"
+      ]
+    },
+    {
+      "claim_id": "C-018",
+      "verdict": "partial"
+    },
+    {
+      "claim_id": "C-020",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "claim_id": "C-021",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "claim_id": "C-022",
+      "verdict": "not_found",
+      "flagged_defects": [
+        "D5"
+      ]
+    },
+    {
+      "claim_id": "C-023",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-024",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D7"
+      ]
+    },
+    {
+      "claim_id": "C-025",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D8"
+      ]
+    },
+    {
+      "claim_id": "C-026",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-027",
+      "verdict": "unverifiable"
+    },
+    {
+      "claim_id": "C-028",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-029",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D10"
+      ]
+    },
+    {
+      "claim_id": "C-030",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-031",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D14"
+      ]
+    },
+    {
+      "claim_id": "C-032",
+      "verdict": "unverifiable"
+    },
+    {
+      "claim_id": "C-033",
+      "verdict": "unverifiable"
+    },
+    {
+      "claim_id": "C-034",
+      "verdict": "unverifiable"
+    },
+    {
+      "claim_id": "C-035",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-036",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-037",
+      "verdict": "partial"
+    },
+    {
+      "claim_id": "C-038",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-039",
+      "verdict": "contradicted"
+    },
+    {
+      "claim_id": "C-040",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-041",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-042",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-043",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-044",
+      "verdict": "supported"
+    }
+  ],
+  "integration_findings": [
+    {
+      "id": "IF-1",
+      "defect_id": "D13"
+    }
+  ],
+  "contribution_points": [
+    {
+      "point_id": "CP-1",
+      "response": "placeholder"
+    },
+    {
+      "point_id": "CP-2",
+      "response": "author"
+    },
+    {
+      "point_id": "CP-3",
+      "response": "placeholder"
+    }
+  ]
+}

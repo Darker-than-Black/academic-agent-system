@@ -1,0 +1,12 @@
+id: T06
+test: T06
+fixture: F4-W
+kind: semantic
+title: "relevance != support — extraction, verdicts, seeded defects, zero critical false PASS"
+metric: [MX, MV, MS, MF]
+input:
+  annotation: evals/fixtures/F4W/annotation.yaml
+  run: evals/fixtures/F4W/runs/F4W-synthetic.run.json
+thresholds: {}          # M2: baseline with CI (report only); MF critical=0 is the hard gate
+requires: [FR-07]
+run: rh eval run --suite M2-semantic --case T06

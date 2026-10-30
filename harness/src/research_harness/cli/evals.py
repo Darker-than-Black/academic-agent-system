@@ -18,6 +18,12 @@ def register(sub: argparse._SubParsersAction) -> None:
     sa = ev.add_subparsers(dest="eval_action", metavar="action", required=True)
     rn = sa.add_parser("run", help="Run every case in a suite.")
     rn.add_argument("--suite", required=True)
+    rn.add_argument("--case", help="Run only this case id.")
+    rn.add_argument(
+        "--run",
+        help="Semantic cases: path to a host run artifact to score instead of the case default "
+        "(a real С run replaces the committed synthetic one). Must be outside holdout (H1).",
+    )
     rp = sa.add_parser("report", help="Show the latest report for a suite.")
     rp.add_argument("--suite", required=True)
 
@@ -28,7 +34,9 @@ def handles(command: str) -> bool:
 
 def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     if args.eval_action == "run":
-        report = runner.run_suite(args.suite)
+        report = runner.run_suite(
+            args.suite, only=getattr(args, "case", None), run_override=getattr(args, "run", None)
+        )
         report["_text"] = report_mod.render_text(report)
         return (
             build_envelope(
