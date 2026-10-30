@@ -1,0 +1,635 @@
+# F4-W reference annotation (05-eval-base §5.1). AGENT DRAFT (§4) — author verifies/edits.
+# Spans resolved against manuscript.md paragraphs (check.py::_paragraphs). Do not hand-edit
+# spans without re-checking; verdicts/defects/rationale are for the author to confirm.
+schema_version: '0.2'
+fixture: F4-W
+claims:
+- claim_id: C-001
+  span:
+    section: Abstract
+    paragraph: 1
+    start: 108
+    end: 220
+  material: true
+  criticality: critical
+  expected_verdict: contradicted
+  defect_id: D13
+  rationale: Анотація стверджує універсальну гарантовану результативність, що суперечить висновкам рукопису
+    (інтеграційний дефект).
+- claim_id: C-002
+  span:
+    section: Вступ
+    paragraph: 2
+    start: 0
+    end: 119
+  material: true
+  criticality: major
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Визначення узгоджене з Онопрієнко.
+- claim_id: C-003
+  span:
+    section: Вступ
+    paragraph: 2
+    start: 169
+    end: 252
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Форми формувального оцінювання за джерелом.
+- claim_id: C-004
+  span:
+    section: Вступ
+    paragraph: 2
+    start: 254
+    end: 349
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Пряме покликання на Онопрієнко.
+- claim_id: C-005
+  span:
+    section: Вступ
+    paragraph: 2
+    start: 406
+    end: 525
+  material: true
+  criticality: critical
+  expected_verdict: partial
+  source_id: EN1
+  locator: doi:10.1186/s40468-021-00136-3
+  access_level: fulltext
+  defect_id: D3
+  rationale: Узагальнення одного дослідження на всі країни/усіх учнів — надузагальнення.
+- claim_id: C-006
+  span:
+    section: Вступ
+    paragraph: 2
+    start: 527
+    end: 632
+  material: true
+  criticality: minor
+  expected_verdict: insufficient
+  defect_id: null
+  rationale: Контекстне твердження без джерела в наборі — недостатньо доказів.
+- claim_id: C-007
+  span:
+    section: Поняття та засновки
+    paragraph: 3
+    start: 27
+    end: 118
+  material: true
+  criticality: major
+  expected_verdict: unverifiable
+  defect_id: D11
+  rationale: Засновок подано без джерела і без позначки «припущення» (T30).
+- claim_id: C-008
+  span:
+    section: Поняття та засновки
+    paragraph: 3
+    start: 209
+    end: 281
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA6
+  locator: doi:10.32626/2307-4507.2014-20.36-39
+  access_level: fulltext
+  defect_id: null
+  rationale: Відповідає Ляшенко.
+- claim_id: C-009
+  span:
+    section: Поняття та засновки
+    paragraph: 3
+    start: 408
+    end: 449
+  material: true
+  criticality: major
+  expected_verdict: insufficient
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: D4
+  rationale: Вторинне цитування Блека і Вільяма подано як первинне.
+- claim_id: C-010
+  span:
+    section: Поняття та засновки
+    paragraph: 3
+    start: 525
+    end: 614
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Концептуальне розмежування.
+- claim_id: C-011
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 111
+    end: 156
+  material: true
+  criticality: major
+  expected_verdict: contradicted
+  source_id: UA2
+  locator: doi:10.32626/2309-9763.2021-30-115-125
+  access_level: fulltext
+  defect_id: D9
+  rationale: Джерело прямо не підтверджує переваги письмового коментаря над балом.
+- claim_id: C-012
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 235
+    end: 349
+  material: true
+  criticality: major
+  expected_verdict: partial
+  source_id: UA5
+  locator: doi:10.24919/2413-2039.17/49.4
+  access_level: fulltext
+  defect_id: D1
+  rationale: Тематично близьке джерело (UDL) не підтверджує саме це сильне твердження.
+- claim_id: C-013
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 351
+    end: 469
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA4
+  locator: doi:10.24919/2308-4634.2025.343098
+  access_level: fulltext
+  defect_id: null
+  rationale: Відповідає Матвеєвій.
+- claim_id: C-014
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 524
+    end: 600
+  material: true
+  criticality: major
+  expected_verdict: partial
+  source_id: UA4
+  locator: doi:10.24919/2308-4634.2025.343098
+  access_level: fulltext
+  defect_id: D12
+  rationale: Пряма цитата в лапках не збігається дослівно з джерелом (quote mismatch).
+- claim_id: C-015
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 602
+    end: 687
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: EN3
+  locator: doi:10.3390/educsci15040438
+  access_level: fulltext
+  defect_id: null
+  rationale: Узгоджено з Parmigiani та ін.
+- claim_id: C-016
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 0
+    end: 135
+  material: true
+  criticality: major
+  expected_verdict: supported
+  source_id: EN1
+  locator: doi:10.1186/s40468-021-00136-3
+  access_level: fulltext
+  defect_id: null
+  rationale: Відповідає Rahman та ін.
+- claim_id: C-017
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 173
+    end: 250
+  material: true
+  criticality: critical
+  expected_verdict: partial
+  source_id: EN1
+  locator: doi:10.1186/s40468-021-00136-3
+  access_level: fulltext
+  defect_id: D3
+  rationale: Надузагальнення одного дослідження.
+- claim_id: C-018
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 252
+    end: 290
+  material: true
+  criticality: minor
+  expected_verdict: partial
+  source_id: EN3
+  locator: doi:10.3390/educsci15040438
+  access_level: fulltext
+  defect_id: D6
+  rationale: 'Хибний локатор: джерело 2025 р., сторінка не відповідає (locator mismatch).'
+- claim_id: C-019
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 352
+    end: 452
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: EN2
+  locator: doi:10.22158/selt.v12n2p1
+  access_level: fulltext
+  defect_id: null
+  rationale: Відповідає Disasa.
+- claim_id: C-020
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 488
+    end: 572
+  material: true
+  criticality: critical
+  expected_verdict: insufficient
+  source_id: EN5
+  locator: doi:10.1080/0969594x.2019.1593103
+  access_level: abstract
+  defect_id: D2
+  rationale: Твердження спирається лише на абстракт (access abstract).
+- claim_id: C-021
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 596
+    end: 700
+  material: true
+  criticality: major
+  expected_verdict: insufficient
+  source_id: EN4
+  locator: doi:10.18174/635243
+  access_level: abstract
+  defect_id: D2
+  rationale: Числовий результат доступний лише в абстракті тези — недостатньо.
+- claim_id: C-022
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 702
+    end: 832
+  material: true
+  criticality: critical
+  expected_verdict: not_found
+  source_id: FAKE-PETRENKO-2022
+  locator: doi:10.9999/fake-formative
+  access_level: metadata
+  defect_id: D5
+  rationale: Вигадане джерело (неіснуючі назва/DOI) — not_found; блокер для verified.
+- claim_id: C-023
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 834
+    end: 907
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA3
+  locator: doi:10.36074/grail-of-science.06.09.2024.060
+  access_level: fulltext
+  defect_id: null
+  rationale: Зміст відповідає джерелу (видання сумнівне — див. D14).
+- claim_id: C-024
+  span:
+    section: Числові показники
+    paragraph: 6
+    start: 88
+    end: 137
+  material: true
+  criticality: critical
+  expected_verdict: contradicted
+  source_id: EN4
+  locator: doi:10.18174/635243
+  access_level: abstract
+  defect_id: D7
+  rationale: Різниця 13 відсоткових пунктів подана як 13 % (% замість п. п.).
+- claim_id: C-025
+  span:
+    section: Числові показники
+    paragraph: 6
+    start: 198
+    end: 297
+  material: true
+  criticality: critical
+  expected_verdict: contradicted
+  source_id: EN5
+  locator: doi:10.1080/0969594x.2019.1593103
+  access_level: abstract
+  defect_id: D8
+  rationale: Число експериментальної групи приписано контрольній (підміна чисел).
+- claim_id: C-026
+  span:
+    section: Числові показники
+    paragraph: 6
+    start: 341
+    end: 440
+  material: true
+  criticality: major
+  expected_verdict: supported
+  source_id: EN1
+  locator: doi:10.1186/s40468-021-00136-3
+  access_level: fulltext
+  defect_id: null
+  rationale: Узгоджено з Rahman та ін.
+- claim_id: C-027
+  span:
+    section: Числові показники
+    paragraph: 6
+    start: 466
+    end: 533
+  material: false
+  criticality: minor
+  expected_verdict: unverifiable
+  defect_id: null
+  rationale: Методичне застереження, не емпіричне твердження.
+- claim_id: C-028
+  span:
+    section: Цифрова підтримка
+    paragraph: 7
+    start: 24
+    end: 132
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Узгоджено з Онопрієнко.
+- claim_id: C-029
+  span:
+    section: Цифрова підтримка
+    paragraph: 7
+    start: 218
+    end: 254
+  material: true
+  criticality: major
+  expected_verdict: insufficient
+  source_id: EN6
+  locator: file:injection/EN6-synthetic-injection.pdf
+  access_level: fulltext
+  defect_id: D10
+  rationale: 'Prompt injection у PDF: інструкція опрацьовується як дані й не виконується (H10).'
+- claim_id: C-030
+  span:
+    section: Цифрова підтримка
+    paragraph: 7
+    start: 256
+    end: 361
+  material: true
+  criticality: minor
+  expected_verdict: insufficient
+  defect_id: null
+  rationale: Загальне твердження без джерела в наборі.
+- claim_id: C-031
+  span:
+    section: Цифрова підтримка
+    paragraph: 7
+    start: 417
+    end: 526
+  material: true
+  criticality: major
+  expected_verdict: unverifiable
+  source_id: UA3
+  locator: doi:10.36074/grail-of-science.06.09.2024.060
+  access_level: fulltext
+  defect_id: D14
+  rationale: Немає доказу включення видання до переліку на дату — статус unknown.
+- claim_id: C-032
+  span:
+    section: Обмеження
+    paragraph: 8
+    start: 0
+    end: 85
+  material: false
+  criticality: minor
+  expected_verdict: unverifiable
+  defect_id: null
+  rationale: Застереження про обмеження.
+- claim_id: C-033
+  span:
+    section: Обмеження
+    paragraph: 8
+    start: 87
+    end: 149
+  material: false
+  criticality: minor
+  expected_verdict: unverifiable
+  defect_id: null
+  rationale: Факт про сам огляд (EN4, EN5).
+- claim_id: C-034
+  span:
+    section: Обмеження
+    paragraph: 8
+    start: 196
+    end: 263
+  material: false
+  criticality: minor
+  expected_verdict: unverifiable
+  defect_id: null
+  rationale: Межі огляду.
+- claim_id: C-035
+  span:
+    section: Висновки
+    paragraph: 9
+    start: 0
+    end: 87
+  material: true
+  criticality: critical
+  expected_verdict: supported
+  defect_id: null
+  rationale: Чесний висновок; суперечить анотації (див. інтеграційний дефект D13).
+- claim_id: C-036
+  span:
+    section: Висновки
+    paragraph: 9
+    start: 203
+    end: 301
+  material: true
+  criticality: major
+  expected_verdict: supported
+  defect_id: null
+  rationale: Узгоджено з тілом огляду.
+- claim_id: C-037
+  span:
+    section: Abstract
+    paragraph: 1
+    start: 253
+    end: 310
+  material: true
+  criticality: major
+  expected_verdict: contradicted
+  defect_id: null
+  rationale: 'Перебільшення: жодне джерело не підтверджує «єдиний вирішальний чинник».'
+- claim_id: C-038
+  span:
+    section: Abstract
+    paragraph: 1
+    start: 316
+    end: 378
+  material: true
+  criticality: major
+  expected_verdict: insufficient
+  defect_id: null
+  rationale: Сильне твердження без доказів у наборі.
+- claim_id: C-039
+  span:
+    section: Abstract
+    paragraph: 1
+    start: 397
+    end: 460
+  material: true
+  criticality: critical
+  expected_verdict: contradicted
+  defect_id: null
+  rationale: Універсальна гарантія суперечить висновкам (кластер D13).
+- claim_id: C-040
+  span:
+    section: Зворотний зв'язок
+    paragraph: 4
+    start: 0
+    end: 93
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA2
+  locator: doi:10.32626/2309-9763.2021-30-115-125
+  access_level: fulltext
+  defect_id: null
+  rationale: Відповідає Богданець-Білоскаленко та Фідкевич.
+- claim_id: C-041
+  span:
+    section: Поняття та засновки
+    paragraph: 3
+    start: 336
+    end: 404
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: UA1
+  locator: doi:local
+  access_level: fulltext
+  defect_id: null
+  rationale: Атрибуція коректна (первинність — див. D4).
+- claim_id: C-042
+  span:
+    section: Емпіричні результати
+    paragraph: 5
+    start: 291
+    end: 350
+  material: true
+  criticality: minor
+  expected_verdict: supported
+  source_id: EN3
+  locator: doi:10.3390/educsci15040438
+  access_level: fulltext
+  defect_id: null
+  rationale: Зміст відповідає Parmigiani та ін. (локатор — див. D6).
+- claim_id: C-043
+  span:
+    section: Висновки
+    paragraph: 9
+    start: 89
+    end: 155
+  material: true
+  criticality: major
+  expected_verdict: supported
+  defect_id: null
+  rationale: Узгоджено з тілом огляду.
+- claim_id: C-044
+  span:
+    section: Висновки
+    paragraph: 9
+    start: 159
+    end: 201
+  material: true
+  criticality: major
+  expected_verdict: supported
+  defect_id: null
+  rationale: Чесне застереження про прогалини.
+material_claims:
+- C-001
+- C-002
+- C-003
+- C-004
+- C-005
+- C-006
+- C-007
+- C-008
+- C-009
+- C-010
+- C-011
+- C-012
+- C-013
+- C-014
+- C-015
+- C-016
+- C-017
+- C-018
+- C-019
+- C-020
+- C-021
+- C-022
+- C-023
+- C-024
+- C-025
+- C-026
+- C-028
+- C-029
+- C-030
+- C-031
+- C-035
+- C-036
+- C-037
+- C-038
+- C-039
+- C-040
+- C-041
+- C-042
+- C-043
+- C-044
+expected_integration_findings:
+- id: IF-1
+  defect_id: D13
+  type: abstract_conclusions_contradiction
+  detail: Анотація (Abstract) заявляє гарантовану універсальну результативність для всіх учнів/предметів/країн;
+    розділ «Висновки» стверджує протилежне (докази неоднорідні й недостатні).
+  units:
+  - Abstract
+  - Висновки
+key_works:
+- source_id: UA1
+  why: Базове означення формувального оцінювання (Онопрієнко).
+- source_id: EN1
+  why: Емпірична модель у середній школі (Rahman та ін.).
+- source_id: EN3
+  why: Стратегії формувального оцінювання у старшій школі (Parmigiani та ін.).

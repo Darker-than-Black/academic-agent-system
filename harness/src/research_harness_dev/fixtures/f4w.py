@@ -6,9 +6,10 @@ Real sources carry real metadata and a hash of that metadata — nothing is
 invented (H6). The injection PDF is synthetic and labelled; it is never a
 modified real paper (H6/H10). Full texts are never committed (H8).
 
-The Ukrainian test manuscript and the reference annotation are author-approved
-content and depend on the spec file ``05-eval-base.md`` (§5.1), which is not yet
-in the repository; they are written by the author and are not generated here.
+The Ukrainian test manuscript (``manuscript.md``) and the reference annotation
+(``annotation.yaml``) are content files, not generated here: they are drafted by
+the agent per ``05-eval-base.md`` §4 and verified/edited by the author. This
+builder never touches them.
 """
 
 from __future__ import annotations
