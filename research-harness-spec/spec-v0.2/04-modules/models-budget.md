@@ -21,7 +21,7 @@
 1. Tier → model mapping lives only in config; prompts and role definitions name tiers, not models (ADR-020).
 2. A missing model for the required tier stops the call (exit 3) unless an explicit downgrade with a reason was recorded (FR-55).
 3. Missing telemetry is `"unknown"`, never 0 (NFR-05).
-4. Paid calls are disabled by default; enabling them needs an intake answer (Q9) and a limit (ADR-017 p.1).
+4. Paid calls are disabled by default; enabling them needs an intake answer (Q9) and a limit (ADR-017 p.1). The external quality validator (OpenAI) is gated the same way (ADR-021).
 5. At 100% of any limit the task stops with partial artifacts and a status line; 50% and 80% produce info findings (registry #22 thresholds).
 
 **Checks.**
