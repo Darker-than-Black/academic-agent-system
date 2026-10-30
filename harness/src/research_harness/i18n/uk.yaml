@@ -140,3 +140,7 @@ draft.dictation_imported: "Диктування для {unit} імпортова
 draft.dictation_accepted: "Структуроване диктування для {unit} прийнято (абзаци — author)."
 draft.provenance: "Походження абзаців."
 draft.marked: "Походження абзацу {paragraph} змінено."
+review.prepared: "Запит на огляд {id} ({level}) підготовлено."
+review.submitted: "Огляд {id} прийнято."
+review.rejected: "Огляд {id} відхилено: вердикт перевищує детермінований cap."
+review.integration: "Інтеграційна перевірка (детермінована частина)."
