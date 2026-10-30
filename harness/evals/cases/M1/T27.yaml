@@ -1,0 +1,5 @@
+id: T27
+kind: pytest
+title: "second object prefills author ORCID/affiliation/autonomy"
+nodes:
+  - tests/integration/test_intake.py::test_second_object_prefills_author_fields

@@ -1,0 +1,33 @@
+gate: G0
+title:
+  uk: "G0 — Схвалення анкетування та контексту"
+  en: "G0 — Approve intake and context"
+purpose:
+  uk: "Ви підтверджуєте, що контекст роботи зафіксовано правильно: тема, вид документа, видання, мова та кожне «невідомо» з його наслідком. Після цього агент може почати планування."
+  en: "You confirm the work context is captured correctly: topic, document kind, venue, language and every 'unknown' with its consequence. After this the agent may start planning."
+what_to_check:
+  - uk: "Тема й дослідницьке питання сформульовані так, як ви маєте на увазі."
+    en: "The topic and research question are worded as you mean them."
+  - uk: "Вид документа та тип дослідження вказані правильно."
+    en: "The document kind and study kind are right."
+  - uk: "Цільове видання та мова правильні (або свідомо позначені «невідомо»)."
+    en: "The target venue and language are right (or deliberately marked 'unknown')."
+  - uk: "Кожне «невідомо» та його наслідок прийнятні для вас на цьому етапі."
+    en: "Each 'unknown' and its consequence are acceptable to you for now."
+  - uk: "Рівень автономності агента відповідає тому, як ви хочете працювати."
+    en: "The agent autonomy level matches how you want to work."
+if_approved:
+  uk: "Агент переходить до планування структури й протоколу."
+  en: "The agent proceeds to planning the structure and protocol."
+if_rejected:
+  uk: "Робота зупиняється; виправте відповіді анкети й попросіть схвалення знову."
+  en: "Work stops; fix the intake answers and request approval again."
+if_conditions:
+  uk: "Агент продовжує, але виконує ваші умови до наступного гейта."
+  en: "The agent proceeds but must meet your conditions before the next gate."
+reversible:
+  uk: "Так: запишіть нове рішення для G0 — воно посилається на попереднє."
+  en: "Yes: record a new G0 decision; it references the previous one."
+typical_time:
+  uk: "5–10 хвилин"
+  en: "5–10 minutes"

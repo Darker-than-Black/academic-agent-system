@@ -1,0 +1,5 @@
+id: T44
+kind: pytest
+title: "entry routing: start and continue"
+nodes:
+  - tests/integration/test_routing.py

@@ -1,0 +1,29 @@
+gate: G1
+title:
+  uk: "G1 — Схвалення плану й протоколу"
+  en: "G1 — Approve the plan and protocol"
+purpose:
+  uk: "Ви підтверджуєте план роботи та протокол дослідження перед тим, як агент почне збирати докази й писати текст."
+  en: "You confirm the work plan and the research protocol before the agent starts collecting evidence and writing."
+what_to_check:
+  - uk: "План структури відповідає виду документа й питанню."
+    en: "The structure plan fits the document kind and the question."
+  - uk: "Протокол дослідження (метод, джерела доказів) прийнятний."
+    en: "The research protocol (method, evidence sources) is acceptable."
+  - uk: "Обсяг і межі роботи реалістичні."
+    en: "The scope and limits of the work are realistic."
+if_approved:
+  uk: "Агент починає збір доказів і чернетки за планом."
+  en: "The agent begins evidence collection and drafting per the plan."
+if_rejected:
+  uk: "Робота зупиняється; перегляньте план і попросіть схвалення знову."
+  en: "Work stops; revise the plan and request approval again."
+if_conditions:
+  uk: "Агент продовжує з вашими умовами."
+  en: "The agent proceeds with your conditions."
+reversible:
+  uk: "Так: запишіть нове рішення для G1."
+  en: "Yes: record a new G1 decision."
+typical_time:
+  uk: "10–20 хвилин"
+  en: "10–20 minutes"

@@ -1,0 +1,5 @@
+id: T45
+kind: pytest
+title: "workspace: ids, folders, pins, reindex"
+nodes:
+  - tests/integration/test_workspace.py

@@ -1,0 +1,29 @@
+gate: GE
+title:
+  uk: "GE — Етичне схвалення"
+  en: "GE — Ethics approval"
+purpose:
+  uk: "Зовнішнє етичне схвалення (комісія/комітет) перед збором доказів за участю людей або чутливих даних. Записується як рішення зі зовнішнім документом."
+  en: "External ethics approval (committee) before collecting evidence involving human participants or sensitive data. Recorded as a decision with an external document."
+what_to_check:
+  - uk: "Протокол подано тій комісії, яка має повноваження."
+    en: "The protocol was submitted to the committee with authority."
+  - uk: "Рішення комісії стосується саме цього протоколу й версії."
+    en: "The committee's decision concerns this exact protocol and version."
+  - uk: "Документ схвалення збережено й доступний для аудиту."
+    en: "The approval document is stored and available for audit."
+if_approved:
+  uk: "Збір доказів за участю людей дозволено."
+  en: "Evidence collection involving people is permitted."
+if_rejected:
+  uk: "Збір доказів за участю людей заборонено до повторного подання."
+  en: "Evidence collection involving people is barred until resubmission."
+if_conditions:
+  uk: "Збір дозволено за умов, визначених комісією."
+  en: "Collection is permitted under the conditions set by the committee."
+reversible:
+  uk: "Так: запишіть нове рішення GE з новим документом комісії."
+  en: "Yes: record a new GE decision with a new committee document."
+typical_time:
+  uk: "залежить від комісії"
+  en: "depends on the committee"

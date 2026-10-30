@@ -47,7 +47,7 @@ def recover(root: Path, *, repair: bool) -> list[dict[str, Any]]:
     # 1. Snapshot committed but CURRENT still older → roll forward.
     children = [s for s in snaps if s.get("parent") == cur and s["id"] != cur]
     if children:
-        target = sorted(children, key=lambda s: s["created_at"])[-1]
+        target = sorted(children, key=lambda s: (s["created_at"], s["id"]))[-1]
         if repair:
             if snap.missing_blobs(root, target):
                 raise CorruptStateError("error.corrupt")
@@ -69,6 +69,17 @@ def recover(root: Path, *, repair: bool) -> list[dict[str, Any]]:
                     "state.snapshot_uncommitted",
                     "info",
                     "a committed snapshot is newer than CURRENT",
+                )
+            )
+
+    # 1b. Interrupted two-phase structure rename (02 §7.3).
+    if repair and (rhd / "structure-journal.json").exists():
+        from research_harness.structure.ops import complete_journal
+
+        if complete_journal(root):
+            findings.append(
+                _finding(
+                    "state.structure_rename_completed", "minor", "finished an interrupted rename"
                 )
             )
 

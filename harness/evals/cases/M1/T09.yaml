@@ -1,0 +1,5 @@
+id: T09
+kind: pytest
+title: "freshness: stale propagates only to dependents"
+nodes:
+  - tests/unit/state/test_freshness.py

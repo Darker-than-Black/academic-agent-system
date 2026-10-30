@@ -1,0 +1,161 @@
+schema_version: "0.2"
+questions:
+  - id: Q1
+    core: true
+    type: text
+    text:
+      uk: "Яка тема й дослідницьке питання роботи?"
+      en: "What is the topic and research question?"
+    help:
+      uk: "Одне-два речення. Без теми неможливо почати (A0)."
+      en: "One or two sentences. Without a topic nothing can start (A0)."
+    unknown_consequence:
+      blocks: [A0]
+      unknown_checks: []
+      note:
+        uk: "Без теми роботу не можна розпочати."
+        en: "Without a topic the work cannot start."
+  - id: Q2
+    core: true
+    type: choice
+    options: [article, thesis, conference_abstract, report]
+    text:
+      uk: "Який це документ?"
+      en: "What kind of document is this?"
+    help:
+      uk: "Від виду залежать структура й правила."
+      en: "The structure and rules depend on the kind."
+    unknown_consequence:
+      blocks: [A2]
+      unknown_checks: [structure.allowed_kinds]
+      note:
+        uk: "Без виду документа не можна побудувати структуру."
+        en: "Without the document kind the structure cannot be built."
+  - id: Q3
+    core: true
+    type: choice
+    options: [uk, en]
+    text:
+      uk: "Якою мовою основний текст?"
+      en: "What is the main language of the text?"
+    help:
+      uk: "Мова рукопису; анотації можуть бути іншими."
+      en: "The manuscript language; abstracts may differ."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: []
+      note:
+        uk: "За замовчуванням українська."
+        en: "Ukrainian by default."
+  - id: Q4
+    core: true
+    type: text
+    text:
+      uk: "Який цільовий журнал або видання?"
+      en: "What is the target venue?"
+    help:
+      uk: "Якщо ще не обрано — позначте «не знаю»; це блокує вибір видання (A12) і G3."
+      en: "If undecided, say 'don't know'; this blocks the venue stage (A12) and G3."
+    unknown_consequence:
+      blocks: [A12, G3]
+      unknown_checks: [venue.format, venue.status]
+      note:
+        uk: "Без видання не можна перевірити вимоги видання і подати на G3."
+        en: "Without a venue, venue rules cannot be checked and G3 cannot be requested."
+  - id: Q5
+    core: true
+    type: choice
+    options: [literature, conceptual, empirical_quantitative, empirical_qualitative, computational_ml, mixed]
+    text:
+      uk: "Який тип дослідження?"
+      en: "What kind of study is it?"
+    help:
+      uk: "Визначає протокол і сімейство доказів."
+      en: "Determines the protocol and the evidence family."
+    unknown_consequence:
+      blocks: [A4]
+      unknown_checks: []
+      note:
+        uk: "Без типу дослідження не можна скласти протокол."
+        en: "Without the study kind the protocol cannot be drafted."
+  - id: Q6
+    core: true
+    type: choice
+    options: [ua, none]
+    prefill_from: previous_intake.Q6
+    text:
+      uk: "Якого регулятора вимоги застосовні (наприклад, МОН України)?"
+      en: "Which regulator's requirements apply (e.g. Ukraine's MON)?"
+    help:
+      uk: "Від регулятора залежать правила доброчесності й лічби публікацій."
+      en: "Integrity and publication-counting rules depend on the regulator."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: [integrity.selfplag]
+      note:
+        uk: "Без регулятора деякі перевірки доброчесності повертають «невідомо»."
+        en: "Without a regulator some integrity checks return 'unknown'."
+  - id: Q7
+    core: true
+    type: bool
+    text:
+      uk: "Чи залучаються люди-учасники (опитування, експерименти з людьми)?"
+      en: "Are human participants involved (surveys, experiments with people)?"
+    help:
+      uk: "Якщо так — потрібне етичне схвалення (A5/GE) перед збором доказів."
+      en: "If yes, ethics approval (A5/GE) is required before evidence collection."
+    unknown_consequence:
+      blocks: [A5, A6]
+      unknown_checks: []
+      note:
+        uk: "Поки невідомо — етап етики й збір доказів заблоковані."
+        en: "While unknown, the ethics stage and evidence collection are blocked."
+  - id: Q8
+    core: false
+    type: text
+    prefill_from: author.profile.orcid
+    text:
+      uk: "Який ваш ORCID?"
+      en: "What is your ORCID?"
+    help:
+      uk: "Беремо з профілю автора, якщо відомо."
+      en: "Taken from the author profile when known."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: []
+      note:
+        uk: "ORCID може знадобитися для подання; можна додати пізніше."
+        en: "ORCID may be needed for submission; can be added later."
+  - id: Q9
+    core: false
+    type: text
+    prefill_from: author.profile.affiliations
+    text:
+      uk: "Яка ваша афіліація?"
+      en: "What is your affiliation?"
+    help:
+      uk: "Беремо з профілю автора, якщо відомо."
+      en: "Taken from the author profile when known."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: []
+      note:
+        uk: "Афіліацію можна додати пізніше."
+        en: "Affiliation can be added later."
+  - id: Q10
+    core: true
+    type: choice
+    options: [step, gates, batch]
+    prefill_from: author.profile.default_autonomy
+    text:
+      uk: "Який рівень автономності агента ви обираєте?"
+      en: "What agent autonomy level do you choose?"
+    help:
+      uk: "step — узгоджувати кожен крок; gates — зупинятись на гейтах; batch — працювати пакетно до гейта."
+      en: "step — confirm each step; gates — stop at gates; batch — work in a batch up to a gate."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: []
+      note:
+        uk: "За замовчуванням — рівень із профілю автора."
+        en: "Defaults to the author profile's level."

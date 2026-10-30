@@ -1,0 +1,5 @@
+id: T15
+kind: pytest
+title: "import guard: core package imports no LLM SDK or host (H5)"
+nodes:
+  - tests/unit/core/test_guards.py::test_real_package_has_no_forbidden_imports

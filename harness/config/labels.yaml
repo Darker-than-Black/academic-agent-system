@@ -1,0 +1,9 @@
+# Default unit labels per main language (02 §7.1). A rule-pack format rule, when
+# present, overrides these; otherwise the object's main language selects here.
+schema_version: "0.2"
+uk:
+  chapter: "Розділ"
+  chapter_conclusions: "Висновки до розділу"
+en:
+  chapter: "Chapter"
+  chapter_conclusions: "Conclusions to chapter"

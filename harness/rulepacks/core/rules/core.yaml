@@ -1,0 +1,76 @@
+- id: CORE-NO-INVENTED-EVIDENCE
+  pack: core
+  version: "2026-10-27"
+  key: integrity.no_invented_evidence
+  kind: integrity
+  applies_to: [A6, A11]
+  check: [deterministic, human]
+  severity: blocker
+  overridable: false
+  compare: forbidden
+  value: true
+  statement: "No invented sources, data, results or approvals."
+  source: {title: "FR-12 provenance", url: "https://rh.spec/03-requirements-v0.2.md#FR-12", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: CORE-UNKNOWN-NEVER-PASSES
+  pack: core
+  version: "2026-10-27"
+  key: integrity.unknown_blocks
+  kind: integrity
+  applies_to: [A0, A12]
+  check: [deterministic]
+  severity: major
+  overridable: false
+  compare: required
+  value: true
+  statement: "An unknown value never passes a gate; it is surfaced with its consequence."
+  source: {title: "T01 unknown", url: "https://rh.spec/03-requirements-v0.2.md#T01", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: CORE-PROVENANCE-MATERIAL
+  pack: core
+  version: "2026-10-27"
+  key: integrity.provenance_required
+  kind: integrity
+  applies_to: [A11]
+  check: [deterministic, semantic]
+  severity: blocker
+  overridable: false
+  compare: required
+  value: true
+  statement: "Every material claim requires provenance (evidence and a dependency)."
+  source: {title: "FR-10", url: "https://rh.spec/03-requirements-v0.2.md#FR-10", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: CORE-AI-USE-RECORD
+  pack: core
+  version: "2026-10-27"
+  key: process.ai_use_record
+  kind: process
+  applies_to: [A0]
+  check: [deterministic]
+  severity: major
+  overridable: false
+  statement: "Every object keeps an AI-use record."
+  source: {title: "FR-55", url: "https://rh.spec/03-requirements-v0.2.md#FR-55", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"
+- id: CORE-EXTERNAL-ACTIONS-HUMAN
+  pack: core
+  version: "2026-10-27"
+  key: process.external_actions_human
+  kind: process
+  applies_to: [A12, A13]
+  check: [human]
+  severity: blocker
+  overridable: false
+  statement: "External actions are performed only by a human."
+  source: {title: "H14", url: "https://rh.spec/00-README.md#H14", evidence_level: primary, accessed_at: "2026-10-27"}
+  checked_at: "2026-10-27"
+  valid_from: "2026-01-01"
+  review_after: "2099-01-01"

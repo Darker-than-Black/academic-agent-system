@@ -18,6 +18,7 @@ from research_harness.core.envelope import build_envelope
 
 # ref_checks / schema_checks are imported for their check-registration side effect.
 from research_harness.validate import (
+    freshness_checks,  # noqa: F401
     has_blocker,
     ref_checks,  # noqa: F401
     registry,
@@ -41,6 +42,25 @@ def run(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     ctx = ValidationContext()
     if getattr(args, "known", None):
         ctx.known_refs = set(args.known)
+    if scope in ("freshness", "structure", "all"):
+        from research_harness.cli.state import resolve_object_root
+        from research_harness.core.errors import InvalidInputError
+        from research_harness.structure import checks as structure_checks  # noqa: F401
+
+        explicit = getattr(args, "root", None)
+        if explicit is None and getattr(args, "object", None):
+            from research_harness.workspace.workspace import Workspace
+
+            try:
+                explicit = str(
+                    Workspace.find(getattr(args, "workspace", None)).object_folder(args.object)
+                )
+            except InvalidInputError:
+                explicit = None
+        try:
+            ctx.extra["object_root"] = str(resolve_object_root(explicit))
+        except InvalidInputError:
+            pass  # no object in scope: nothing to report
     if getattr(args, "schema", None) and getattr(args, "file", None):
         ctx.extra["records_to_validate"] = [
             {"schema": args.schema, "ref": f"file:{p}", "record": _load(p)} for p in args.file

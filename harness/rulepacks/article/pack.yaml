@@ -1,0 +1,7 @@
+id: article
+name: "Article structure (baseline)"
+version: "2026-10-27"
+layer: 1
+status: draft
+applies_when: {document_kind: [article]}
+description: "Allowed unit kinds and depth for an article (ADR-019)."

@@ -1,0 +1,5 @@
+id: T24
+kind: pytest
+title: "adoption records valid (H4)"
+nodes:
+  - tests/unit/core/test_guards.py::test_adoption_records_valid

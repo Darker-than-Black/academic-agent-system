@@ -1,0 +1,5 @@
+id: T38
+kind: pytest
+title: "materials: duplicate linked, malformed DOI, private"
+nodes:
+  - tests/integration/test_materials.py

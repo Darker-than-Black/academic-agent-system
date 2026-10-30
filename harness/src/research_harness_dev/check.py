@@ -129,7 +129,7 @@ def _run(label: str, cmd: list[str], cwd: Path) -> bool:
     return ok
 
 
-def main(argv: list[str] | None = None) -> int:
+def check_main(argv: list[str] | None = None) -> int:
     cwd = Path.cwd()
     repo = git_root(cwd)
     failures: list[str] = []
@@ -167,6 +167,18 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     print("\nrh-dev check: OK")
     return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    """`rh-dev` dispatcher: ``check`` (default) and ``fixtures generate <name>``."""
+    args = list(sys.argv[1:] if argv is None else argv)
+    if args and args[0] == "fixtures":
+        from research_harness_dev.fixtures.cli import main as fixtures_main
+
+        return fixtures_main(args[1:])
+    if args and args[0] == "check":
+        args = args[1:]
+    return check_main(args)
 
 
 if __name__ == "__main__":

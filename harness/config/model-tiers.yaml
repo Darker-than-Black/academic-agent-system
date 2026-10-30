@@ -1,0 +1,8 @@
+schema_version: "0.2"
+hosts:
+  claude-code:
+    flagship: {model: claude-fable-5-1}
+    strong:   {model: claude-opus-5-5}
+    fast:     {model: claude-sonnet-5-5, alternatives: [claude-haiku-5-5]}
+  codex:
+    flagship: {model: unknown}   # verify in M3 (06-research-agent §2)

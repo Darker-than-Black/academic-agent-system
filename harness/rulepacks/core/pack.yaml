@@ -1,0 +1,6 @@
+id: core
+name: "Harness core invariants"
+version: "2026-10-27"
+layer: 0
+status: verified
+description: "Non-overridable harness invariants (hard rules as rule-pack data)."

@@ -277,7 +277,7 @@ class Store:
         by: str,
         request: str | None = None,
         units: list[str] | None = None,
-        message: str | None = None,
+        note: str | None = None,
     ) -> CommitResult:
         if by == "agent" and not request:
             raise InvalidInputError("error.checkpoint_request_required")
@@ -285,14 +285,14 @@ class Store:
         args: dict[str, Any] = {"by": by}
         if units:
             args["units"] = sorted(units)
-        if message:
-            args["message"] = message
+        if note:
+            args["message"] = note
         return self.commit(
             command="checkpoint", args=args, producer=producer, request=request, is_checkpoint=True
         )
 
     def history(self) -> list[dict[str, Any]]:
-        snaps = sorted(snap.all_snapshots(self.root), key=lambda s: s["created_at"])
+        snaps = sorted(snap.all_snapshots(self.root), key=lambda s: (s["created_at"], s["id"]))
         out = []
         for s in snaps:
             op = s.get("operation", {})

@@ -1,0 +1,32 @@
+schema_version: "0.2"
+kind: thesis
+stages:
+  - id: T0
+    name: {uk: "Анкетування", en: "Intake"}
+    gate: G0
+  - id: T1
+    name: {uk: "План дисертації", en: "Dissertation plan"}
+    gate: G1
+  - id: T2
+    name: {uk: "Огляд літератури", en: "Literature review"}
+  - id: T3
+    name: {uk: "Методологія", en: "Methodology"}
+  - id: T4
+    name: {uk: "Розділи та емпірика", en: "Chapters and empirics"}
+  - id: T5
+    name: {uk: "Висновки", en: "Conclusions"}
+  - id: T6
+    name: {uk: "Оформлення", en: "Formatting"}
+  - id: T7
+    name: {uk: "Передзахист на кафедрі", en: "Departmental pre-defense"}
+    external_role: department
+  - id: T8
+    name: {uk: "Попередня експертиза", en: "Preliminary review"}
+    external_role: academic_council
+  - id: T9
+    name: {uk: "Спеціалізована рада", en: "Specialized council"}
+    external_role: academic_council
+  - id: T10
+    name: {uk: "Захист", en: "Defense"}
+    external_role: defense_council
+    terminal_state: waiting

@@ -1,0 +1,5 @@
+id: T01
+kind: pytest
+title: "unknown intake answers keep a consequence; nothing fabricated"
+nodes:
+  - tests/integration/test_intake.py::test_unknown_always_has_consequence_and_no_fabrication
