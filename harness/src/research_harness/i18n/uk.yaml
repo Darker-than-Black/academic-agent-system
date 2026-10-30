@@ -87,3 +87,7 @@ source.fulltext_added: "Повний текст додано для джерел
 source.oa_fetched: "Опрацьовано відкритий доступ: {n}."
 source.retraction_checked: "Перевірено на відкликання: {n}."
 source.listed: "Джерел у реєстрі: {n}."
+library.indexed: "Проіндексовано джерел із повним текстом: {n}."
+library.searched: "Знайдено сторінок: {n}."
+library.page: "Текст сторінки {page} джерела {source}."
+quote.checked: "Перевірка цитат: {passed}/{total} пройдено."
