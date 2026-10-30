@@ -1,0 +1,7 @@
+{"schema_version": "0.2", "study_kind": "literature", "version": 1, "status": "frozen",
+ "question": "How does formative assessment affect achievement?",
+ "scope": "Secondary education, 2010-2025", "language_scope": ["uk", "en"], "period": "2010-2025",
+ "resources": [{"resource": "eric", "queries": ["formative assessment"]}],
+ "inclusion": ["peer-reviewed"], "exclusion": ["non-education"],
+ "synthesis_method": "narrative", "saturation_rule": {"batch_size": 10, "no_new_items_in_batches": 2},
+ "counter_evidence_rule": "seek disconfirming studies", "limits": ["English and Ukrainian only"]}

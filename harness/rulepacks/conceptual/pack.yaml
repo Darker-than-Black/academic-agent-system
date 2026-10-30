@@ -1,0 +1,7 @@
+id: conceptual
+name: "Conceptual / theoretical study protocol"
+version: "2026-10-30"
+layer: 2
+status: draft
+applies_when: {study_kind: [conceptual]}
+description: "Protocol requirements for a conceptual/theoretical study (02-lifecycle §4; 07-components). Draft until the author reviews it at G1."

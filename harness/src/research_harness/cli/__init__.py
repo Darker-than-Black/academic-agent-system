@@ -21,6 +21,7 @@ _EXTRA_MODULES: tuple[str, ...] = (
     "research_harness.cli.sources",
     "research_harness.cli.library",
     "research_harness.cli.search",
+    "research_harness.cli.protocol",
     "research_harness.cli.gates",
     "research_harness.cli.lifecycle",
     "research_harness.cli.models",

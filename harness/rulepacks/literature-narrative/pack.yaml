@@ -1,0 +1,7 @@
+id: literature-narrative
+name: "Literature (narrative) review protocol"
+version: "2026-10-30"
+layer: 2
+status: draft
+applies_when: {study_kind: [literature]}
+description: "Protocol requirements and default saturation rule for a narrative literature review (02-lifecycle §4; 07-components). Draft until the author reviews it at G1."

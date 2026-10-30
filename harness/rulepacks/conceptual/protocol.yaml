@@ -1,0 +1,32 @@
+# Protocol configuration for a conceptual/theoretical study (layer 2, draft).
+# Read by research_harness.lab.protocol, NOT by the rules loader. Draft until
+# the author reviews it at G1.
+study_kind: conceptual
+required_fields:
+  - question
+  - scope
+  - language_scope
+  - period
+  - concepts
+  - argument_structure
+  - assumptions
+  - counter_evidence_rule
+  - limits
+g2_fields:
+  - question
+  - scope
+  - concepts
+  - argument_structure
+  - assumptions
+saturation_default:
+  batch_size: 10
+  no_new_items_in_batches: 2
+sources:
+  - title: "02-lifecycle §4 (protocol fields; conceptual study)"
+    url: "https://rh.spec/lifecycle.md#protocol"
+    evidence_level: primary
+    accessed_at: "2026-10-30"
+  - title: "07-components (conceptual study components)"
+    url: "https://rh.spec/components.md#conceptual"
+    evidence_level: primary
+    accessed_at: "2026-10-30"

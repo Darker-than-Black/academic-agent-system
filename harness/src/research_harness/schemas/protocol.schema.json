@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/protocol.schema.json",
+  "title": "Research protocol (02-lifecycle §4; FR-56)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "study_kind", "version", "status"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "study_kind": { "$ref": "common.schema.json#/$defs/study_kind" },
+    "version": { "type": "integer", "minimum": 1 },
+    "previous": { "type": ["integer", "null"] },
+    "status": { "enum": ["draft", "discovery", "frozen"] },
+    "change_reason": { "type": "string" },
+    "needs_gate": { "type": "array", "items": { "type": "string" } },
+
+    "question": { "type": "string" },
+    "scope": { "type": "string" },
+    "language_scope": { "type": "array", "items": { "type": "string" } },
+    "period": { "type": "string" },
+    "limits": { "type": "array", "items": { "type": "string" } },
+    "counter_evidence_rule": { "type": "string" },
+
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource"],
+        "properties": {
+          "resource": { "type": "string" },
+          "queries": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "inclusion": { "type": "array", "items": { "type": "string" } },
+    "exclusion": { "type": "array", "items": { "type": "string" } },
+    "synthesis_method": { "type": "string" },
+    "saturation_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batch_size", "no_new_items_in_batches"],
+      "properties": {
+        "batch_size": { "type": "integer", "minimum": 1 },
+        "no_new_items_in_batches": { "type": "integer", "minimum": 1 }
+      }
+    },
+
+    "concepts": { "type": "array", "items": { "type": "string" } },
+    "argument_structure": { "type": "string" },
+    "assumptions": { "type": "array", "items": { "type": "string" } }
+  }
+}
