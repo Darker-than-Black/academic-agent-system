@@ -101,7 +101,7 @@ def run_record(
 
     # Confirmation code (always typed, max 3 tries)
     for _ in range(3):
-        typed = input_fn(p["code"].format(code_hint=f"{gate}-<6 hex>")).strip()
+        typed = input_fn(p["code"].format(code_hint=code)).strip()
         if typed == code:
             rec = records.record(
                 root,
