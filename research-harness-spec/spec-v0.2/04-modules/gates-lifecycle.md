@@ -36,4 +36,6 @@
 
 **Tests.** T29a, T37, T44 (M1 parts); T35, T36 and T29a records in M3.
 
-**Open points.** [?] Whether commands run from inside Claude Code count as the author's terminal is checked in M1-14 (H12).
+**Open points.**
+- [?] Whether commands run from inside Claude Code count as the author's terminal is checked in M1-14 (H12).
+- [?] **Per-gate binding scope (G0).** Invariant 3 binds every approval to the whole snapshot hash, so any later content change — adding structure units, editing manuscript prose — invalidates G0, although G0 only approves the intake context. 02 §6 already allows binding to a list of artifact refs; `gates/requests.py` currently opens the G0 request with `refs: []`, collapsing validity to whole-manifest equality (`state/freshness.py` `approval_valid`). Decide in M3-06 whether G0 should bind to the intake subset (refs = intake answers / object context) while G3 keeps whole-snapshot binding (02 §4.2 A12, T09). Surfaced in an M1 end-to-end test; not blocking while A1+ are unimplemented.
