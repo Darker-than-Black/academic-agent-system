@@ -1,0 +1,15 @@
+{
+  "id": "https://openalex.org/W2766834089",
+  "doi": "https://doi.org/10.7717/peerj.4375",
+  "title": "Formative assessment in secondary education",
+  "display_name": "Formative assessment in secondary education",
+  "publication_year": 2018,
+  "type": "article",
+  "primary_location": {"source": {"display_name": "PeerJ"}},
+  "open_access": {"is_oa": true, "oa_status": "gold", "oa_url": "https://peerj.com/articles/4375.pdf"},
+  "best_oa_location": {"pdf_url": "https://peerj.com/articles/4375.pdf", "version": "publishedVersion"},
+  "authorships": [
+    {"raw_author_name": "Taras Shevchenko", "author": {"display_name": "Taras Shevchenko", "orcid": null}},
+    {"raw_author_name": "A. Smith", "author": {"display_name": "A. Smith"}}
+  ]
+}

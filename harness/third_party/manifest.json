@@ -47,7 +47,10 @@
         "dod is a tuple of deterministic check IDs rather than a prose sentence; added a gate field",
         "dropped the 23 hard-coded ResearchClaw CONTRACTS (our stages are data, M1-11)"
       ],
-      "acceptance_tests": ["tests/unit/state/test_contracts.py", "T10"],
+      "acceptance_tests": [
+        "tests/unit/state/test_contracts.py",
+        "T10"
+      ],
       "update_policy": "pinned",
       "adopted_at": "2026-10-29",
       "adopted_by": "Rybachek Dmytro"
@@ -72,9 +75,40 @@
         "moved heartbeat metadata to the lock (state/lock.py) and resume resolution to state/recovery.py",
         "no silent rerun of side effects (idempotency key)"
       ],
-      "acceptance_tests": ["tests/fault/test_commit_interrupts.py", "T10"],
+      "acceptance_tests": [
+        "tests/fault/test_commit_interrupts.py",
+        "T10"
+      ],
       "update_policy": "pinned",
       "adopted_at": "2026-10-29",
+      "adopted_by": "Rybachek Dmytro"
+    },
+    {
+      "id": "ADP-004",
+      "origin_repo": "https://github.com/MorMar7/opendraft-paperwriter",
+      "commit": "89128b30d9857cf9b871cbebc88ec07832260b9a",
+      "path": "engine/utils/citation_validator.py",
+      "license": "MIT",
+      "license_file": "third_party/opendraft-paperwriter/LICENSE",
+      "notice": "Copyright (c) 2025 SCAILE Technologies GmbH",
+      "destination": "src/research_harness/sources/existence.py",
+      "original_copy": "third_party/opendraft-paperwriter/engine/utils/citation_validator.py",
+      "original_sha256": "c69bee587c48962cc6a9fdc144418d5bce39a16c866e1e0b499cc8ce3b472c9a",
+      "adapted_sha256": "922957c9de490bbcd562a1e3e9c5b9df2a24c72ba56be31cc298c8cac2a49846",
+      "mode": "adapt",
+      "changes": [
+        "kept only the DOI-existence (Crossref /works/{doi}) and URL-status checks",
+        "dropped the hallucinated-citation heuristics, the citation-database driver and the CLI report",
+        "replaced `requests` + `utils.retry` with our injectable stdlib transport (no live calls in CI)",
+        "timeout / 5xx / 429 -> lookup_failed (never not_found, ADR-016 p.5); Crossref 404 -> not_found; 200 -> matched",
+        "results feed metadata_status only, never support"
+      ],
+      "acceptance_tests": [
+        "tests/unit/sources/test_existence.py",
+        "T02"
+      ],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-30",
       "adopted_by": "Rybachek Dmytro"
     }
   ]

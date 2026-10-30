@@ -1,0 +1,16 @@
+{
+  "message": {
+    "DOI": "10.7717/peerj.4375",
+    "type": "journal-article",
+    "title": ["Formative assessment in secondary education"],
+    "author": [
+      {"given": "Тарас", "family": "Шевченко", "sequence": "first", "affiliation": []},
+      {"given": "A.", "family": "Smith", "sequence": "additional", "affiliation": []}
+    ],
+    "issued": {"date-parts": [[2018, 2, 27]]},
+    "container-title": ["PeerJ"],
+    "ISSN": ["2167-8359"],
+    "URL": "https://doi.org/10.7717/peerj.4375",
+    "resource": {"primary": {"URL": "https://peerj.com/articles/4375"}}
+  }
+}

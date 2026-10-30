@@ -1,0 +1,22 @@
+{
+  "doi": "10.7717/peerj.4375",
+  "title": "Formative assessment in secondary education",
+  "year": 2018,
+  "journal_name": "PeerJ",
+  "journal_issns": "2167-8359",
+  "is_oa": true,
+  "oa_status": "gold",
+  "z_authors": [
+    {"raw_author_name": "Taras Shevchenko"},
+    {"given": "A.", "family": "Smith"}
+  ],
+  "best_oa_location": {
+    "url": "https://peerj.com/articles/4375",
+    "url_for_pdf": "https://peerj.com/articles/4375.pdf",
+    "url_for_landing_page": "https://peerj.com/articles/4375",
+    "host_type": "publisher",
+    "version": "publishedVersion",
+    "license": "cc-by"
+  },
+  "oa_locations": []
+}

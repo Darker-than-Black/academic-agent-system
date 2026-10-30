@@ -1,0 +1,105 @@
+# Source resource catalogue and access policy (FR-20, ADR-016, ADR-017).
+#
+# Data only (H10). Env-variable NAMES only — never values (H8/NFR-06). The
+# names match .env.example (the author filled .env from it).
+#
+# Every `rate`/`auth` value is VERIFIED against the resource's official docs on
+# the date in `verified_on`; `source` is the doc URL fetched. Values that could
+# not be verified from an official page are left `unknown` (H6/H7) and the
+# resource carries `docs_unverified: true`. Paid access stays disabled (H9).
+schema_version: "0.2"
+
+resources:
+  openalex:
+    kind: api
+    role: [index, oa_status, oa_fulltext, citations]
+    base_url: "https://api.openalex.org"
+    auth:
+      api_key_env: OPENALEX_API_KEY   # OPTIONAL; keyless works. Passed as `api_key` query param.
+      # NOTE: the mailto "polite pool" was REMOVED by OpenAlex in Feb 2026 and
+      # `mailto` is now ignored; OPENALEX_MAILTO in .env.example is obsolete.
+    rate: {per_s_keyless: 10, per_s_keyed: 30}
+    data_license: CC0
+    status_on_limit: budget_exhausted
+    verified_on: "2026-10-30"
+    source: "https://help.openalex.org/api/authentication/ ; https://help.openalex.org/api/deprecations/"
+
+  crossref:
+    kind: api
+    role: [doi, metadata, retractions, url_status]
+    base_url: "https://api.crossref.org"
+    auth:
+      mailto_env: CROSSREF_MAILTO     # polite pool, passed as `mailto` query param (ACTIVE)
+    rate: {per_s_polite: 10}          # from live x-rate-limit-limit:10 / interval:1s header
+    data_license: "metadata free for any purpose (abstracts may be copyrighted)"
+    status_on_limit: budget_exhausted
+    verified_on: "2026-10-30"
+    source: "https://www.crossref.org/documentation/retrieve-metadata/rest-api/ ; https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/"
+
+  semantic_scholar:
+    kind: api
+    role: [citations, links, metadata]
+    base_url: "https://api.semanticscholar.org/graph/v1"
+    auth:
+      api_key_env: SEMANTIC_SCHOLAR_API_KEY   # OPTIONAL; keyless works. Header: x-api-key
+    rate: {per_s_keyless_shared: 1000, per_s_keyed: 1}
+    verified_on: "2026-10-30"
+    source: "https://www.semanticscholar.org/product/api ; https://www.semanticscholar.org/product/api/tutorial"
+
+  eric:
+    kind: api
+    role: [index_education]
+    base_url: "https://api.ies.ed.gov/eric/"
+    auth: {}                           # no key (confirmed keyless)
+    rate: {per_s: unknown}             # NOT stated on official docs (H7)
+    verified_on: "2026-10-30"
+    source: "https://eric.ed.gov/?api ; https://eric.ed.gov/api/eric-api.yaml"
+
+  unpaywall:
+    kind: api
+    role: [oa_fulltext, oa_status]
+    base_url: "https://api.unpaywall.org/v2"
+    auth:
+      email_env: UNPAYWALL_EMAIL       # REQUIRED `email` query param on every request
+    rate: {per_day: 100000}
+    verified_on: "2026-10-30"
+    source: "https://unpaywall.org/products/api"
+
+  core:
+    kind: api
+    role: [oa_fulltext]
+    base_url: unknown                  # docs unverifiable: api.core.ac.uk returned HTTP 403 to every fetch
+    auth:
+      api_key_env: CORE_API_KEY        # Bearer header per prior knowledge; NOT confirmed from live docs
+    rate: {batch_per_10s: unknown, single_per_10s: unknown}
+    docs_unverified: true              # adapter is DEFERRED until docs are confirmed (H12)
+    verified_on: "2026-10-30"
+    source: "https://core.ac.uk/documentation/api (HTTP 403 on 2026-10-30; not verifiable)"
+
+  doaj:
+    kind: api
+    role: [oa_journals, venue_check, oa_fulltext]
+    base_url: "https://doaj.org/api"
+    auth:
+      api_key_env: DOAJ_API_KEY        # reads keyless; key only for publisher writes
+    rate: {per_s: 2, queue: 5}
+    verified_on: "2026-10-30"
+    source: "https://doaj.org/api/docs"
+
+  arxiv:
+    kind: api
+    role: [preprints]
+    base_url: "https://export.arxiv.org/api/query"
+    auth: {}                           # no key
+    rate: {min_interval_s: 3, single_connection: true}
+    verified_on: "2026-10-30"
+    source: "https://info.arxiv.org/help/api/user-manual.html ; https://info.arxiv.org/help/api/tou.html"
+
+  # Manual-only resources (no API adapter; handled via `rh source import --from`
+  # and the M2-03 search log). Listed for coverage reporting (FR-20).
+  scopus:          {kind: manual_export, formats: [ris, csv], note: "export fields: Abstract & keywords"}
+  wos:             {kind: manual_export, formats: [ris, txt], access_expires: unknown}
+  google_scholar:  {kind: manual_export, formats: [ris, bibtex], browser_assisted: disabled}
+  nbuv:            {kind: manual_record, note: "record-by-record; no bulk export"}
+  researchgate:    {kind: manual_file, note: "author copies only; compare with published version"}
+  research4life:   {kind: manual_file, note: "author downloads PDFs himself; credentials never stored"}

@@ -1,0 +1,22 @@
+{
+  "message": {
+    "items": [
+      {
+        "DOI": "10.1111/a.1",
+        "type": "journal-article",
+        "title": ["Assessment literacy of teachers"],
+        "author": [{"given": "О.", "family": "Коваль"}],
+        "issued": {"date-parts": [[2020]]},
+        "container-title": ["Pedagogy"]
+      },
+      {
+        "DOI": "10.1111/a.2",
+        "type": "journal-article",
+        "title": ["Assessment literacy of teachers: a review"],
+        "author": [{"given": "І.", "family": "Мороз"}],
+        "issued": {"date-parts": [[2021]]},
+        "container-title": ["Education Review"]
+      }
+    ]
+  }
+}

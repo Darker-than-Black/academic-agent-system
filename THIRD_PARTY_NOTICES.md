@@ -37,3 +37,16 @@ repository (hard rule H4, ADR-008, FR-24).
   pattern; replaced the per-stage checkpoint.json with a snapshot manifest and a
   content-addressed blob store; moved heartbeat metadata to the lock and resume
   resolution to `state/recovery.py`; no silent rerun of side effects.
+
+## ADP-004 — citation existence check (OpenDraft)
+- Source: https://github.com/MorMar7/opendraft-paperwriter @ 89128b30d9857cf9b871cbebc88ec07832260b9a
+  path `engine/utils/citation_validator.py`
+- License: MIT — Copyright (c) 2025 SCAILE Technologies GmbH
+  (full text: `harness/third_party/opendraft-paperwriter/LICENSE`)
+- Used in: `harness/src/research_harness/sources/existence.py`
+- Modified: yes — kept only the Crossref DOI-existence and URL-status checks;
+  dropped the hallucinated-citation heuristics, the citation-database driver and
+  the CLI report; replaced `requests`/`utils.retry` with our injectable stdlib
+  transport (no live calls in CI); timeout/5xx/429 → `lookup_failed` (never
+  `not_found`, ADR-016), Crossref 404 → `not_found`, 200 → `matched`; results
+  set `metadata_status` only, never `support`.

@@ -1,0 +1,12 @@
+{
+  "message": {
+    "DOI": "10.1000/retracted.1",
+    "type": "journal-article",
+    "title": ["A retracted study"],
+    "author": [{"given": "J.", "family": "Doe"}],
+    "issued": {"date-parts": [[2015]]},
+    "update-to": [
+      {"type": "retraction", "label": "Retraction", "DOI": "10.1000/notice.1", "updated": {"date-parts": [[2017, 1, 1]]}}
+    ]
+  }
+}

@@ -111,7 +111,23 @@ def _dispatch(args: argparse.Namespace, lang: str) -> tuple[dict[str, Any], int]
     return route_extra(args, lang)
 
 
+def _load_env() -> None:
+    """Load a gitignored ``.env`` (keys live in env vars only, H8). No-op if absent.
+
+    Values already set in the real environment win; a missing ``.env`` or a
+    missing ``python-dotenv`` is silently skipped. Values are never logged.
+    """
+    try:
+        from dotenv import find_dotenv, load_dotenv
+    except ImportError:
+        return
+    path = find_dotenv(usecwd=True)
+    if path:
+        load_dotenv(path, override=False)
+
+
 def main(argv: list[str] | None = None) -> int:
+    _load_env()
     parser = _build_parser()
     args = parser.parse_args(argv)
     lang = resolve_lang(args.lang)
