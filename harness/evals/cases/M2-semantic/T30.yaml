@@ -1,0 +1,12 @@
+id: T30
+test: T30
+fixture: F4-W
+kind: semantic
+title: "conceptual: premise without a source is flagged (D11)"
+metric: [MS]
+input:
+  annotation: evals/fixtures/F4W/annotation.yaml
+  run: evals/fixtures/F4W/runs/F4W-synthetic.run.json
+thresholds: {}          # M2: baseline (report); threshold at M3
+requires: [FR-29]
+run: rh eval run --suite M2-semantic --case T30

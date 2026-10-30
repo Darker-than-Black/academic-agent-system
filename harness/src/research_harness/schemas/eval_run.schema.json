@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/eval_run.schema.json",
+  "title": "Semantic evaluation run artifact (05-eval-base §6; 08-evals-runbook §3)",
+  "description": "Model output over a fixture, produced by host subagents on a semantic (С) run and scored deterministically against the reference annotation. Nothing in the core produces this; it is fed in as JSON.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "fixture", "producer", "run_kind"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "fixture": { "type": "string" },
+    "run_kind": {
+      "enum": ["host", "synthetic"],
+      "description": "host = real subagent run (recorded model id); synthetic = fabricated for testing the scorer (H6), never a gate baseline."
+    },
+    "synthetic": { "type": "boolean" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "date"],
+      "properties": {
+        "model_id": { "type": "string" },
+        "date": { "type": "string" },
+        "budget_used": { "type": ["number", "string"] },
+        "note": { "type": "string" }
+      }
+    },
+    "extracted": {
+      "type": "array",
+      "description": "Claims the model extracted; claim_id aligns to a gold claim or is null (spurious).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claim_id": { "type": ["string", "null"] },
+          "material": { "type": "boolean" }
+        }
+      }
+    },
+    "reviewed": {
+      "type": "array",
+      "description": "The model's verdict per gold claim it reviewed.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "verdict"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "verdict": { "$ref": "common.schema.json#/$defs/support" },
+          "flagged_defects": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "integration_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "defect_id": { "type": "string" }
+        }
+      }
+    },
+    "contribution_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["point_id", "response"],
+        "properties": {
+          "point_id": { "type": "string" },
+          "response": { "enum": ["author", "placeholder", "invented"] }
+        }
+      }
+    }
+  }
+}

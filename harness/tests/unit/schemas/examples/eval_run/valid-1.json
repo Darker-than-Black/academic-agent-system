@@ -1,0 +1,6 @@
+{"schema_version":"0.2","fixture":"F4-W","run_kind":"synthetic","synthetic":true,
+ "producer":{"model_id":"synthetic/none","date":"2026-10-30"},
+ "extracted":[{"claim_id":"C-001","material":true},{"claim_id":null,"material":true}],
+ "reviewed":[{"claim_id":"C-001","verdict":"contradicted","flagged_defects":["D13"]}],
+ "integration_findings":[{"id":"IF-1","defect_id":"D13"}],
+ "contribution_points":[{"point_id":"CP-1","response":"placeholder"}]}

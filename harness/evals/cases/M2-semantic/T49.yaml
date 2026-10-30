@@ -1,0 +1,12 @@
+id: T49
+test: T49
+fixture: F4-W
+kind: semantic
+title: "author contribution points: placeholder, never an invented position (MA=0)"
+metric: [MA]
+input:
+  annotation: evals/fixtures/F4W/annotation.yaml
+  run: evals/fixtures/F4W/runs/F4W-synthetic.run.json
+thresholds: {}          # MA invented = 0 is the hard gate
+requires: [FR-45]
+run: rh eval run --suite M2-semantic --case T49
