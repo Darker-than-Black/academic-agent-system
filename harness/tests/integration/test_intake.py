@@ -40,11 +40,30 @@ def test_unknown_always_has_consequence_and_no_fabrication(tmp_path: Path) -> No
     assert data["answers"]["Q4"]["value"] == "unknown"
 
 
-def test_g0_request_open_no_approval(tmp_path: Path) -> None:
+def test_g0_opens_only_when_intake_complete(tmp_path: Path) -> None:
     _ws, oid, folder = _object(tmp_path)
-    result = apply_answer(folder, "Q1", "Тема", lang="uk")
+    core = {
+        "Q1": "Тема",
+        "Q2": "article",
+        "Q3": "uk",
+        "Q4": "Journal X",
+        "Q5": "literature",
+        "Q6": "ua",
+        "Q7": "no",
+        "Q10": "gates",
+    }
+    items = list(core.items())
+    # No G0 request while core questions remain unanswered (one AR per answer
+    # was the bug: each answer snapshots and the per-snapshot reuse misses).
+    for qid, value in items[:-1]:
+        result = apply_answer(folder, qid, value, lang="uk")
+        assert result["g0_request"] is None
+        assert not open_requests(folder, "G0")
+
+    last_qid, last_value = items[-1]
+    result = apply_answer(folder, last_qid, last_value, lang="uk")
     assert result["g0_request"].startswith("AR-")
-    assert open_requests(folder, "G0")  # request is open
+    assert len(open_requests(folder, "G0")) == 1  # exactly one, not one per answer
     assert not (folder / "approvals" / "approvals.jsonl").exists()  # no approval recorded
 
 
