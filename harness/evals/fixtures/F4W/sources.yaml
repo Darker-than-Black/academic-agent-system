@@ -1,0 +1,178 @@
+schema_version: '0.2'
+fixture: F4-W
+composition:
+  uk: 6
+  en: 6
+  abstract_only: 2
+  doubtful_venue: 1
+  injection: 1
+sources:
+- id: EN1
+  lang: en
+  year: 2021
+  doi: 10.1186/s40468-021-00136-3
+  title: Implementing a formative assessment model at the secondary schools
+  authors:
+  - Rahman, Kh. Atikur
+  - Hasan, Md. Kamrul
+  - Namaziandost, Ehsan
+  venue: Language Testing in Asia
+  license: CC-BY
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.1186/s40468-021-00136-3
+  metadata_sha256: 90aaabfeb57087e862a72e90575c093ad0d29c6fb4b2fa365909100f7adce40c
+- id: EN2
+  lang: en
+  year: 2024
+  doi: 10.22158/selt.v12n2p1
+  title: 'Assessment Literacy: Secondary School Teachers'' Conception of Formative Assessment'
+  authors:
+  - Disasa, Rufael
+  venue: Studies in English Language Teaching
+  license: CC-BY
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.22158/selt.v12n2p1
+  metadata_sha256: 8d2d84b026662587a06b5315d46420e909435ea00be3f394c681ba1188c52be3
+- id: EN3
+  lang: en
+  year: 2025
+  doi: 10.3390/educsci15040438
+  title: 'Formative Assessment in Upper Secondary Schools: Ideas, Concepts, and Strategies'
+  authors:
+  - Parmigiani, Davide
+  - Nicchia, Elisabetta
+  - Pario, Myrna
+  venue: Education Sciences
+  license: CC-BY
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.3390/educsci15040438
+  metadata_sha256: 556ba2f7af720d3b2b383f651fedf6968cc19deea8f604e7e8f8a9df56a0c204
+- id: EN4
+  lang: en
+  year: 2023
+  doi: 10.18174/635243
+  title: Formative assessment practice in secondary education
+  authors:
+  - Veugen, Maria Joanna
+  venue: Wageningen University (thesis)
+  license: unknown
+  access: abstract
+  venue_quality: ok
+  locator: doi:10.18174/635243
+  metadata_sha256: d8db109136a09d75691b2b98a75b438ba9d83ae3173c398634114572f480a112
+- id: EN5
+  lang: en
+  year: 2019
+  doi: 10.1080/0969594x.2019.1593103
+  title: Students' formative assessment perceptions, feedback use and mathematics performance in secondary
+    education
+  authors:
+  - Kyaruzi, Florence M.
+  - Strijbos, Jan-Willem
+  - Ufer, Stefan
+  venue: 'Assessment in Education: Principles, Policy & Practice'
+  license: unknown
+  access: abstract
+  venue_quality: ok
+  locator: doi:10.1080/0969594x.2019.1593103
+  metadata_sha256: d09636cd44fd7fb8d3d436f16b0f8cb9a5f3e99231a9ee56e364848e5c9397df
+- id: EN6
+  lang: en
+  year: 2026
+  doi: null
+  title: Synthetic prompt-injection test document (NOT a real paper)
+  authors:
+  - (synthetic fixture)
+  venue: (synthetic)
+  license: CC0
+  access: fulltext
+  venue_quality: ok
+  synthetic: true
+  injection: true
+  locator: file:injection/EN6-synthetic-injection.pdf
+  metadata_sha256: 4406eca48737523bc54f42116e909447066474036724ca97e18975826893beb4
+  file_sha256: 8e2164376fb77c5cb8bc6c43edbb1c1582696ecbfdff13a6a8f537a4cac80044
+- id: UA1
+  lang: uk
+  year: 2016
+  doi: null
+  title: 'Формувальне оцінювання навчальних досягнень учнів: сутність і методика здійснення'
+  authors:
+  - Онопрієнко, Оксана
+  venue: Український педагогічний журнал
+  license: CC-BY
+  access: fulltext
+  venue_quality: ok
+  locator: local
+  metadata_sha256: 92427a53aab9240aaf3a4c7b73a17559fdeda75a4942a4afd2ec6a30ad14431f
+- id: UA2
+  lang: uk
+  year: 2021
+  doi: 10.32626/2309-9763.2021-30-115-125
+  title: Форми зворотного зв'язку в процесі формувального оцінювання учнів початкової школи
+  authors:
+  - Богданець-Білоскаленко, Наталія
+  - Фідкевич, Олена
+  venue: 'Педагогічна освіта: теорія і практика'
+  license: unknown
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.32626/2309-9763.2021-30-115-125
+  metadata_sha256: ebd5fad01369395cc631741584a60db2c0cfadf6c647472ce39dd9d96d71b5f9
+- id: UA3
+  lang: uk
+  year: 2024
+  doi: 10.36074/grail-of-science.06.09.2024.060
+  title: Засоби оцінювання навчальних досягнень учнів з математики
+  authors:
+  - Глазова, Віра
+  - Пахомова, Юлія
+  venue: ГРААЛЬ НАУКИ
+  license: CC-BY-SA
+  access: fulltext
+  venue_quality: doubtful
+  locator: doi:10.36074/grail-of-science.06.09.2024.060
+  metadata_sha256: bdec62558008241bd07f001cd37a8f9623f04e600b94288976ca6ad760c4c46b
+- id: UA4
+  lang: uk
+  year: 2025
+  doi: 10.24919/2308-4634.2025.343098
+  title: Оцінювання навчальних досягнень учнів з особливими освітніми потребами
+  authors:
+  - Матвеєва, Наталія
+  venue: Молодь і ринок
+  license: CC-BY-NC-SA
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.24919/2308-4634.2025.343098
+  metadata_sha256: 26c4645c14b155d7b7e47b82409d82e914f3ddcb38bf0ff1aad27e277c65fdf2
+- id: UA5
+  lang: uk
+  year: 2023
+  doi: 10.24919/2413-2039.17/49.4
+  title: Exploring universal design for learning-based formative assessment strategies
+  authors:
+  - Лавриш, Юліана
+  - Литовченко, Ірина
+  venue: Людинознавчі студії. Серія «Педагогіка»
+  license: unknown
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.24919/2413-2039.17/49.4
+  metadata_sha256: 66028e79a58a0f86b19e818897f96048854bc1c2badbc2c2ce9683df7e6ee257
+- id: UA6
+  lang: uk
+  year: 2014
+  doi: 10.32626/2307-4507.2014-20.36-39
+  title: Компетентність як об'єкт оцінювання навчальних досягнень учнів
+  authors:
+  - Ляшенко, Олександр
+  venue: НАПН України (цифрова бібліотека)
+  license: unknown
+  access: fulltext
+  venue_quality: ok
+  locator: doi:10.32626/2307-4507.2014-20.36-39
+  metadata_sha256: c1a6db91c893c7bc51de2a543d17422c8aca47d7dff87a71fd42e680fd4a53de
