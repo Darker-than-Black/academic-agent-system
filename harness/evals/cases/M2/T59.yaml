@@ -1,0 +1,5 @@
+id: T59
+kind: pytest
+title: "locator with two paginations; quote check"
+nodes:
+  - tests/integration/test_library.py

@@ -1,0 +1,2 @@
+{"schema_version":"0.2","fixture":"F4-W","claims":[
+ {"claim_id":"C-1","material":true,"criticality":"minor","expected_verdict":"supported"}]}

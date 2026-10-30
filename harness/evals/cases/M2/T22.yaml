@@ -1,0 +1,5 @@
+id: T22
+kind: pytest
+title: "article integration review (deterministic part)"
+nodes:
+  - tests/integration/test_review_v0.py

@@ -1,0 +1,5 @@
+id: T07
+kind: pytest
+title: "draft write requires request; author edits not overwritten"
+nodes:
+  - tests/integration/test_drafting.py

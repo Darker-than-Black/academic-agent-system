@@ -1,0 +1,5 @@
+id: T49
+kind: pytest
+title: "author contribution points: no invented position"
+nodes:
+  - tests/integration/test_briefs.py

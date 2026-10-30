@@ -73,13 +73,48 @@ def check_f4w(fixture_dir: Path) -> list[str]:
 
     problems += _check_bibtex(fixture_dir / "refs.bib")
 
+    problems += _check_annotation(fixture_dir)
+    return problems
+
+
+def _paragraphs(text: str) -> list[str]:
+    body = re.sub(r"(?s)^---.*?---\n", "", text, count=1)  # strip front matter
+    body = re.sub(r"(?m)^#.*$", "", body)  # drop headings
+    return [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip()]
+
+
+def _check_annotation(fixture_dir: Path) -> list[str]:
+    import yaml
+
+    from research_harness.schemas import validate
+
     ann = fixture_dir / "annotation.yaml"
     if not ann.is_file():
-        problems.append(
-            "PENDING (not a failure): annotation.yaml absent — awaiting the author's "
-            "annotation and the spec file 05-eval-base.md (§5.1)"
-        )
-    return problems
+        return [
+            "PENDING (not a failure): annotation.yaml absent — author writes the reference "
+            "annotation (§5.1)"
+        ]
+    doc = yaml.safe_load(ann.read_text(encoding="utf-8"))
+    errors = validate("annotation", doc)
+    if errors:
+        return [f"annotation.yaml: schema invalid: {errors[0]}"]
+
+    man = fixture_dir / "manuscript.md"
+    if not man.is_file():
+        return ["PENDING (not a failure): manuscript.md absent — spans cannot be resolved yet"]
+    paras = _paragraphs(man.read_text(encoding="utf-8"))
+
+    out: list[str] = []
+    for claim in doc["claims"]:
+        span = claim["span"]
+        idx = span["paragraph"]
+        cid = claim["claim_id"]
+        if idx >= len(paras):
+            out.append(f"{cid}: span paragraph {idx} out of range ({len(paras)} paragraphs)")
+            continue
+        if not (0 <= span["start"] < span["end"] <= len(paras[idx])):
+            out.append(f"{cid}: span [{span['start']},{span['end']}] does not fit its paragraph")
+    return out
 
 
 def _check_bibtex(path: Path) -> list[str]:

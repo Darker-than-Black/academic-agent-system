@@ -1,0 +1,3 @@
+{"schema_version":"0.2","fixture":"F4-W","claims":[
+ {"claim_id":"C-1","span":{"paragraph":0,"start":0,"end":5},"material":true,
+  "criticality":"critical","expected_verdict":"PASS"}]}

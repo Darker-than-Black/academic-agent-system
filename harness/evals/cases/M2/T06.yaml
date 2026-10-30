@@ -1,0 +1,5 @@
+id: T06
+kind: pytest
+title: "claim support caps (deterministic part of the unit critic)"
+nodes:
+  - tests/integration/test_claims.py

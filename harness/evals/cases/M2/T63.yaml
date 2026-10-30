@@ -1,0 +1,5 @@
+id: T63
+kind: pytest
+title: "subagent model tier and downgrade on unknown"
+nodes:
+  - tests/unit/host/test_generate.py

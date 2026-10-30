@@ -1,0 +1,6 @@
+id: T43
+kind: pytest
+title: "Cyrillic/Latin transliteration and reference sort"
+nodes:
+  - tests/unit/sources/test_translit.py
+  - tests/integration/test_export.py
