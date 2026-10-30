@@ -40,3 +40,41 @@ uv run rh --object A-2026-001 gate record G0
 > (`permissions.deny`, `env`) і слеш-команд (`.claude/commands/*.md` з
 > frontmatter `description`, `argument-hint`, `$ARGUMENTS`) звірено з офіційною
 > документацією Claude Code на дату реалізації — див. опис PR із URL і датами.
+
+## v1: ролі, субагенти, навички (M2-13)
+
+Дослідницький цикл і чернетку можна виконувати повністю в Claude Code:
+оркестратор у головній сесії, а виконавці й рецензенти — субагенти зі свіжим
+контекстом на своїх тирах.
+
+- **Субагенти** (`agents/*.md`) **генеруються**, не пишуться вручну:
+  ```
+  cd harness
+  uv run rh-dev host generate claude-code
+  ```
+  Джерела — `config/roles.yaml` (роль → тир), `config/model-tiers.yaml`
+  (хост → тир → модель) і `harness/prompts/*.md` (системні підказки ролей).
+  Ідентифікатор моделі кожного субагента береться з конфігурації — ніколи не
+  вписується вручну. Кожен субагент (виконавець чи рецензент) отримує
+  `disallowedTools: [Agent]`; делегувати може лише оркестратор головної сесії.
+- **Пониження (downgrade, T63).** Якщо тир ролі відображається на `unknown`
+  (напр. флагманська модель недоступна), субагента **не згенеровано** — генератор
+  повідомляє проблему, а оркестратор має зупинитися або записати
+  `rh model downgrade` після згоди автора (H7: `unknown` не проходить мовчки).
+- **Навички** (`skills/<name>/SKILL.md`): `researcher`, `writer`, `critic`,
+  `summarizer` — кожна лише вказує на команди `rh` і ніколи не стверджує статус,
+  якого CLI не повернув.
+- **Слеш-команди** (`commands/*.md`): `start`, `continue`, `status`, `intake`,
+  `research`, `draft`, `review`, `export`.
+
+Щоб увімкнути субагентів і навички для проєкту, скопіюйте `agents/` у
+`.claude/agents/`, `skills/` у `.claude/skills/`, а `commands/` у
+`.claude/commands/`.
+
+> Перевірка синтаксису хоста (H12): формати субагентів
+> (`.claude/agents/*.md`: frontmatter `name`, `description`, `tools`, `model`,
+> `disallowedTools`) і навичок (`.claude/skills/<name>/SKILL.md`: `name`,
+> `description`, `allowed-tools`) звірено з офіційною документацією
+> (https://code.claude.com/docs/en/sub-agents,
+> https://code.claude.com/docs/en/skills,
+> https://code.claude.com/docs/en/slash-commands; дата: 2026-10-30).
