@@ -1,0 +1,38 @@
+# Format configuration for a Ukrainian category «Б» journal article (M2-12).
+# Not a rule file: the rules loader reads only pack.yaml and rules/*.yaml, so this
+# pack-root file is config, read by the export layer. Draft (= "secondary" in the
+# spec) until the author verifies it — sources below carry verified: false and no
+# fabricated URL is asserted as checked (H6/H7).
+
+reference_style: dstu-8302-2015
+reference_csl: csl/dstu-8302-2015.csl
+
+front_matter:
+  abstracts:
+    - {lang: uk, min_words: 150}   # МОН вимога до реферату укр.
+    - {lang: en, min_words: 150}   # structured English abstract
+  keywords: {min: 5, max: 8, languages: [uk, en]}
+  orcid: {required: true, per: author}
+
+ai_use_statement:
+  required: true
+  placeholder: "[[AUTHOR: declare AI use per FR-55 before submission]]"
+
+# Sources to verify before promoting status to "verified" (spec step 2).
+# Left unverified on purpose; the author confirms the current wording and URL.
+sources:
+  - id: mon-928
+    title: "Наказ МОН України № 928 (критерії категорії «Б»)"
+    note: "Author to confirm current number, edition and official URL."
+    verified: false
+    verified_on: unknown
+  - id: dstu-8302-2015
+    title: "ДСТУ 8302:2015. Бібліографічне посилання. Загальні положення та правила складання."
+    note: "Reference style. CSL below is a clean-room draft, not the standard text."
+    verified: false
+    verified_on: unknown
+  - id: journal-guidelines
+    title: "Target journal author guidelines"
+    note: "Author to paste the chosen journal's current URL and accessed date."
+    verified: false
+    verified_on: unknown

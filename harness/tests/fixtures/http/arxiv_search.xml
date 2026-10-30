@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
+  <entry>
+    <id>http://arxiv.org/abs/2001.01234v1</id>
+    <title>Automated formative feedback with language models</title>
+    <summary>We study automated formative feedback in secondary education.</summary>
+    <published>2020-01-05T00:00:00Z</published>
+    <author><name>Taras Shevchenko</name></author>
+    <author><name>A. Smith</name></author>
+    <arxiv:doi>10.48550/arXiv.2001.01234</arxiv:doi>
+  </entry>
+</feed>

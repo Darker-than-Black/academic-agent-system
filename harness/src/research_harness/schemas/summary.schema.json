@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/summary.schema.json",
+  "title": "Unit/chapter summary (04-modules/summaries-context.md; FR-47)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "target_id", "level", "text_sha256", "deterministic"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "target_id": { "type": "string" },
+    "level": { "enum": ["unit", "chapter", "document"] },
+    "text_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "produced_by": { "$ref": "common.schema.json#/$defs/producer" },
+    "deterministic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chars_with_spaces", "paragraphs", "cite_keys", "placeholders", "claims"],
+      "properties": {
+        "chars_with_spaces": { "type": "integer", "minimum": 0 },
+        "author_sheets": { "type": "number" },
+        "paragraphs": { "type": "integer", "minimum": 0 },
+        "cite_keys": { "type": "array", "items": { "type": "string" } },
+        "numbers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "string" },
+              "unit": { "type": "string" },
+              "paragraph": { "type": "string" }
+            }
+          }
+        },
+        "terms_used": { "type": "array", "items": { "type": "string" } },
+        "cross_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["target_unit", "resolved"],
+            "properties": {
+              "target_unit": { "type": "string" },
+              "resolved": { "type": "boolean" }
+            }
+          }
+        },
+        "placeholders": { "type": "integer", "minimum": 0 },
+        "claims": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "semantic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["main_thesis", "key_claims", "language"],
+      "properties": {
+        "main_thesis": { "type": "string" },
+        "key_claims": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "language": { "type": "string" }
+      }
+    },
+    "child_hashes": { "type": "object" },
+    "stale": { "type": "boolean" }
+  }
+}

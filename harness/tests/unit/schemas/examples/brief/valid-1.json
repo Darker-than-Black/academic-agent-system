@@ -1,0 +1,6 @@
+{"schema_version": "0.2", "unit_id": "U-ABCDEFGH", "goal": "Introduce the problem",
+ "claims_planned": ["C-1"], "evidence_refs": ["excerpt:E-00001", "finding:F-1"],
+ "target_volume": {"min": 1500, "max": 3000},
+ "author_points": [{"id": "AP1", "question": "What is your stance?",
+   "placeholder_text": "AUTHOR: stance needed"}],
+ "voice": "we", "language": "uk"}

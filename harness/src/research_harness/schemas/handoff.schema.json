@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/handoff.schema.json",
+  "title": "Reviewer handoff (05-agents.md; review v0, FR-14)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "level", "role", "status"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^REVIEW-[0-9]+$" },
+    "level": { "enum": ["unit", "article"] },
+    "target": { "type": "string" },
+    "role": { "enum": ["unit_critic", "integration_critic"] },
+    "context_pack_id": { "type": "string" },
+    "status": { "enum": ["prepared", "submitted"] },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "verdicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "support", "rationale"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "support": { "$ref": "common.schema.json#/$defs/support" },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "object" } }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/brief.schema.json",
+  "title": "Unit brief (04-modules/claims-text.md; FR-22, FR-45, FR-50)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "unit_id", "goal"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "unit_id": { "type": "string", "pattern": "^U-[0-9A-HJKMNP-TV-Z]{8}$" },
+    "goal": { "type": "string", "minLength": 1 },
+    "claims_planned": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/ref" }
+    },
+    "target_volume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "author_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "question", "placeholder_text"],
+        "properties": {
+          "id": { "type": "string" },
+          "question": { "type": "string", "minLength": 1 },
+          "answer": { "type": "string" },
+          "answered_by": { "enum": ["author"] },
+          "placeholder_text": { "type": "string" }
+        }
+      }
+    },
+    "voice": { "enum": ["I", "we", "impersonal"] },
+    "language": { "type": "string" },
+    "locked": { "type": "boolean" }
+  }
+}

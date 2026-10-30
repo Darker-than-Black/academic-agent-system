@@ -176,6 +176,10 @@ def main(argv: list[str] | None = None) -> int:
         from research_harness_dev.fixtures.cli import main as fixtures_main
 
         return fixtures_main(args[1:])
+    if args and args[0] == "host":
+        from research_harness_dev.host import main as host_main
+
+        return host_main(args[1:])
     if args and args[0] == "check":
         args = args[1:]
     return check_main(args)

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/search-plan.schema.json",
+  "title": "Search plan (04-modules/research-lab.md; FR-56)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "version", "question", "resources", "saturation_rule", "budget"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "version": { "type": "integer", "minimum": 1 },
+    "previous": { "type": ["integer", "null"] },
+    "question": { "type": "string", "minLength": 1 },
+    "language_scope": { "type": "array", "items": { "type": "string" } },
+    "period": { "type": "string" },
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource", "queries"],
+        "properties": {
+          "resource": { "type": "string" },
+          "queries": { "type": "array", "items": { "type": "string" } },
+          "filters": { "type": "object" }
+        }
+      }
+    },
+    "inclusion": { "type": "array", "items": { "type": "string" } },
+    "exclusion": { "type": "array", "items": { "type": "string" } },
+    "saturation_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batch_size", "no_new_items_in_batches"],
+      "properties": {
+        "batch_size": { "type": "integer", "minimum": 1 },
+        "no_new_items_in_batches": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_requests"],
+      "properties": {
+        "max_requests": { "type": ["integer", "string"] },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

@@ -5,14 +5,20 @@ description = "rh — runtime-neutral CLI that keeps scientific articles and dis
 requires-python = ">=3.12"
 license = "Apache-2.0"
 authors = [{ name = "Rybachek Dmytro" }]
-dependencies = ["PyYAML>=6.0", "jsonschema>=4.23"]
+dependencies = [
+  "PyYAML>=6.0",
+  "jsonschema>=4.23",
+  "python-dotenv>=1.0",
+  "pypdf>=4.0",
+  "pdfminer.six>=20231228",
+]
 
 [project.scripts]
 rh = "research_harness.cli.main:main"
 rh-dev = "research_harness_dev.check:main"
 
 [dependency-groups]
-dev = ["pytest>=8.3", "ruff>=0.14"]
+dev = ["pytest>=8.3", "ruff>=0.14", "reportlab>=4.0"]
 
 [build-system]
 requires = ["hatchling"]

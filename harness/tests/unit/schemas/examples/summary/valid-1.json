@@ -1,0 +1,7 @@
+{"schema_version": "0.2", "target_id": "U-ABCDEFGH", "level": "unit",
+ "text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "deterministic": {"chars_with_spaces": 1200, "paragraphs": 4,
+   "cite_keys": ["@smith2020"], "placeholders": 0, "claims": ["C-1"],
+   "cross_refs": [{"target_unit": "U-BBBBBBBB", "resolved": true}]},
+ "semantic": {"main_thesis": "X improves Y", "key_claims": ["C-1"], "language": "uk"},
+ "stale": false}

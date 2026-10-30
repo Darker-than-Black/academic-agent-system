@@ -1,0 +1,25 @@
+{
+  "response": {
+    "numFound": 2,
+    "start": 0,
+    "docs": [
+      {
+        "id": "EJ1234567",
+        "title": "Formative assessment in secondary schools",
+        "author": ["Коваль, О.", "Мороз, І."],
+        "publicationdateyear": "2020",
+        "source": "Ukrainian Pedagogical Review",
+        "issn": ["1234-5678"],
+        "description": "A study of formative assessment practices.",
+        "publicationtype": ["Journal Articles"]
+      },
+      {
+        "id": "ED7654321",
+        "title": "Assessment literacy for teachers",
+        "author": ["Шевченко, Т."],
+        "publicationdateyear": "2019",
+        "source": "Education Reports"
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+{"schema_version": "0.2", "id": "REVIEW-1", "level": "unit", "target": "U-ABCDEFGH",
+ "role": "unit_critic", "context_pack_id": "CP-1", "status": "submitted",
+ "verdicts": [{"claim_id": "C-1", "support": "partial", "rationale": "evidence is abstract-level"}],
+ "findings": []}

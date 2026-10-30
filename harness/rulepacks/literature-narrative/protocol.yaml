@@ -1,0 +1,38 @@
+# Protocol configuration for a narrative literature review (layer 2, draft).
+# Read by research_harness.lab.protocol, NOT by the rules loader (it lives in
+# the pack root, not under rules/). Draft until the author reviews it at G1.
+study_kind: literature
+required_fields:
+  - question
+  - scope
+  - language_scope
+  - period
+  - resources
+  - inclusion
+  - exclusion
+  - synthesis_method
+  - saturation_rule
+  - counter_evidence_rule
+  - limits
+# A material change to any of these after G1 needs a fresh G2 (02-lifecycle §4).
+g2_fields:
+  - question
+  - scope
+  - resources
+  - inclusion
+  - exclusion
+  - synthesis_method
+# Default saturation rule (ADR / intake Q-M2-2): stop after 2 batches of 10 add
+# nothing new. The author may override at G1.
+saturation_default:
+  batch_size: 10
+  no_new_items_in_batches: 2
+sources:
+  - title: "02-lifecycle §4 (protocol fields; narrative review)"
+    url: "https://rh.spec/lifecycle.md#protocol"
+    evidence_level: primary
+    accessed_at: "2026-10-30"
+  - title: "07-components (literature review components)"
+    url: "https://rh.spec/components.md#literature-review"
+    evidence_level: primary
+    accessed_at: "2026-10-30"

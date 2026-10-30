@@ -12,8 +12,12 @@ BUILDERS = {
     "F7-structure": ("f7_structure", "build_f7_structure"),
     "F5a": ("f5a_rules", "build_f5a"),
     "F4-W": ("f4w_metadata", "build_f4w_metadata"),
+    "F4-W-working": ("f4w", "build_f4w"),
     "F5b-lifecycle": ("f5b", "build_f5b_lifecycle"),
 }
+
+# Committed location of the F4-W working set (no full texts, H8).
+_F4W_DIR = Path(__file__).resolve().parents[3] / "evals" / "fixtures" / "F4W"
 
 
 def main(argv: list[str]) -> int:
@@ -22,6 +26,9 @@ def main(argv: list[str]) -> int:
     gen = sub.add_parser("generate", help="Generate a named fixture.")
     gen.add_argument("name", choices=sorted(BUILDERS))
     gen.add_argument("--dest", help="Output directory (default: build/fixtures/<NAME>).")
+    chk = sub.add_parser("check", help="Validate a fixture's structure.")
+    chk.add_argument("name")
+    chk.add_argument("--dir", help="Fixture directory (default: the committed F4W dir).")
     args = parser.parse_args(argv)
 
     if args.action == "generate":
@@ -33,4 +40,9 @@ def main(argv: list[str]) -> int:
         out = getattr(mod, func_name)(dest)
         print(f"generated {args.name} at {out}")
         return 0
+    if args.action == "check":
+        from research_harness_dev.fixtures.check import main as check_main
+
+        fixture_dir = Path(args.dir) if args.dir else _F4W_DIR
+        return check_main(args.name, fixture_dir)
     return 2

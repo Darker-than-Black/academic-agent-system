@@ -118,6 +118,22 @@ decision and `rh status` shows the approval valid.
 - When intake is complete, `rh` opens the G0 request; hand it to the author
   per **Gates**.
 
+## Roles and models (Claude Code adapter)
+
+- You are the **orchestrator** in the main session. Executors (researcher,
+  writer, summarizer, triage, classifier) and reviewers (unit/chapter/integration
+  critics, analyst) run as **subagents** in fresh contexts on their tiers; only
+  you may delegate.
+- Subagent definitions in `harness/host/claude-code/agents/` are **generated** by
+  `uv run rh-dev host generate claude-code` from `config/roles.yaml`,
+  `config/model-tiers.yaml` and `harness/prompts/`. Never hand-edit them or type a
+  model ID; regenerate instead.
+- Every subagent call: build its context pack → run → `rh model log` with the
+  pack ID → store the handoff via `rh`.
+- **Downgrade (H7).** If a role's tier resolves to `unknown` (the flagship model
+  unavailable), stop and ask the author; proceed only after the author agrees and
+  you record `rh model downgrade`. Never silently substitute a model.
+
 ## Entry flow
 
 - `rh start "<title>" [--kind article|thesis]` — create the object and get the

@@ -1,0 +1,66 @@
+# Ukrainian romanization — KMU 2010 table.
+#
+# Source: Постанова Кабінету Міністрів України від 27.01.2010 № 55
+# «Про впорядкування транслітерації українського алфавіту латиницею».
+# This is the official national system (also used by the Ukrainian passport
+# service and adopted by the UN/UNGEGN in 2012).
+#
+# Data only (H10). Loaded by translit_uk.py; never edited by hand through rh.
+schema_version: "0.2"
+
+# Base letter -> Latin. Context-dependent letters carry their NON-initial
+# (word-medial / final) form here; the word-initial form is in `initial`.
+base:
+  а: a
+  б: b
+  в: v
+  г: h
+  ґ: g
+  д: d
+  е: e
+  є: ie
+  ж: zh
+  з: z
+  и: y
+  і: i
+  ї: i
+  й: i
+  к: k
+  л: l
+  м: m
+  н: n
+  о: o
+  п: p
+  р: r
+  с: s
+  т: t
+  у: u
+  ф: f
+  х: kh
+  ц: ts
+  ч: ch
+  ш: sh
+  щ: shch
+  ь: ""      # soft sign: dropped
+  ю: iu
+  я: ia
+
+# Word-initial forms for Є, Ї, Й, Ю, Я (КМУ 2010: "на початку слова").
+initial:
+  є: ye
+  ї: yi
+  й: y
+  ю: yu
+  я: ya
+
+# Digraphs taking priority over single-letter mapping.
+# "зг" -> "zgh" to distinguish it from "ж" -> "zh" (КМУ 2010 note).
+digraphs:
+  зг: zgh
+
+# Characters dropped entirely (apostrophe and its typographic variants).
+drop:
+  - "'"
+  - "ʼ"
+  - "’"
+  - "`"
