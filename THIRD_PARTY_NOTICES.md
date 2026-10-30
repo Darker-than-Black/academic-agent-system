@@ -50,3 +50,15 @@ repository (hard rule H4, ADR-008, FR-24).
   transport (no live calls in CI); timeout/5xx/429 → `lookup_failed` (never
   `not_found`, ADR-016), Crossref 404 → `not_found`, 200 → `matched`; results
   set `metadata_status` only, never `support`.
+
+## ADP-005 — version/paragraph diff (AutoResearchClaw)
+- Source: https://github.com/aiming-lab/AutoResearchClaw @ be4ba4755bf1b52220f25e13b2293b5956590070
+  path `researchclaw/hitl/diff_view.py`
+- License: MIT — Copyright (c) 2026 Aiming Lab
+  (full text: `harness/third_party/autoresearchclaw/LICENSE`)
+- Used in: `harness/src/research_harness/units/diff.py`
+- Modified: yes — kept `unified_diff`, `diff_summary` and `format_diff_stats`;
+  dropped `side_by_side_diff` and the pipeline-snapshot helper
+  `diff_from_snapshot`; added `three_way()` per-paragraph three-way conflict
+  detection for agent edits (02 §5.6, T07). difflib is Unicode, so diffs are
+  Cyrillic-safe.

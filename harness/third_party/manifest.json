@@ -110,6 +110,33 @@
       "update_policy": "pinned",
       "adopted_at": "2026-10-30",
       "adopted_by": "Rybachek Dmytro"
+    },
+    {
+      "id": "ADP-005",
+      "origin_repo": "https://github.com/aiming-lab/AutoResearchClaw",
+      "commit": "be4ba4755bf1b52220f25e13b2293b5956590070",
+      "path": "researchclaw/hitl/diff_view.py",
+      "license": "MIT",
+      "license_file": "third_party/autoresearchclaw/LICENSE",
+      "notice": "Copyright (c) 2026 Aiming Lab",
+      "destination": "src/research_harness/units/diff.py",
+      "original_copy": "third_party/autoresearchclaw/researchclaw/hitl/diff_view.py",
+      "original_sha256": "93865b2cf1a39804a9711a22b65fc8911ffc24c8b1682fe5755aba7b29c8c94e",
+      "adapted_sha256": "f50fa4d1c45b1eeb17108d5ea4cf31c439973fb8e723161b7534a3403b6d2e9f",
+      "mode": "adapt",
+      "changes": [
+        "kept unified_diff, diff_summary and format_diff_stats",
+        "dropped side_by_side_diff and the pipeline-snapshot helper diff_from_snapshot (stage-specific)",
+        "added three_way(): per-paragraph three-way conflict detection by paragraph id for agent edits (02 §5.6, T07)",
+        "difflib operates on Unicode, so diffs are Cyrillic-safe"
+      ],
+      "acceptance_tests": [
+        "tests/integration/test_drafting.py",
+        "T07"
+      ],
+      "update_policy": "pinned",
+      "adopted_at": "2026-10-30",
+      "adopted_by": "Rybachek Dmytro"
     }
   ]
 }
