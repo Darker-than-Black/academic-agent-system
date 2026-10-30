@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Clean-room CSL draft for ДСТУ 8302:2015 (Bibliographic reference).
+  Written for the Research Harness (Apache-2.0); NOT the text of the standard and
+  NOT derived from any third-party CSL (so no external licence applies, H4).
+  DRAFT: the author must validate it against МОН Наказ № 928 and a target cat. «Б»
+  journal's guidelines, testing on ≥10 real published references (M2-12 step 1)
+  before relying on it. Numeric, sorted; approximates "Автор. Назва. Контейнер.
+  Рік. Том, № . С. nn–nn."
+-->
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="uk-UA">
+  <info>
+    <title>ДСТУ 8302:2015 (Research Harness draft)</title>
+    <id>https://rh.spec/csl/dstu-8302-2015-draft</id>
+    <updated>2026-10-30T00:00:00+00:00</updated>
+    <category citation-format="numeric"/>
+    <summary>Clean-room draft; validate before use.</summary>
+  </info>
+  <locale xml:lang="uk">
+    <terms>
+      <term name="page" form="short">С.</term>
+      <term name="volume" form="short">Т.</term>
+      <term name="issue" form="short">№</term>
+    </terms>
+  </locale>
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " initialize-with=". " delimiter=", "/>
+    </names>
+  </macro>
+  <citation collapse="citation-number">
+    <sort><key variable="citation-number"/></sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key macro="author"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <text variable="citation-number" prefix="" suffix=". "/>
+      <group delimiter=". ">
+        <text macro="author"/>
+        <text variable="title"/>
+        <text variable="container-title"/>
+        <date variable="issued"><date-part name="year"/></date>
+      </group>
+      <group prefix=". " delimiter=", ">
+        <group><label variable="volume" form="short" suffix=" "/><text variable="volume"/></group>
+        <group><label variable="issue" form="short" suffix=" "/><text variable="issue"/></group>
+        <group><label variable="page" form="short" suffix=" "/><text variable="page"/></group>
+      </group>
+    </layout>
+  </bibliography>
+</style>

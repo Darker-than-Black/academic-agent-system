@@ -144,3 +144,6 @@ review.prepared: "Запит на огляд {id} ({level}) підготовле
 review.submitted: "Огляд {id} прийнято."
 review.rejected: "Огляд {id} відхилено: вердикт перевищує детермінований cap."
 review.integration: "Інтеграційна перевірка (детермінована частина)."
+export.done: "Чернетку експортовано ({format}); прогалин: {gaps}."
+error.pandoc_missing: "pandoc не знайдено; встановіть його або експортуйте у форматі md."
+error.pandoc_failed: "pandoc завершився з помилкою під час створення .docx."

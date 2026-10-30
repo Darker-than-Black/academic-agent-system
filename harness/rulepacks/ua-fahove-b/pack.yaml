@@ -1,0 +1,7 @@
+id: ua-fahove-b
+name: "Ukrainian cat. «Б» journal — format pack"
+version: "2026-10-30"
+layer: 3
+status: draft
+applies_when: {document_kind: [article]}
+description: "Formatting for a Ukrainian category «Б» (fahove) journal article: UA+EN abstracts, keywords, ORCID, ДСТУ 8302:2015 references, AI-use statement. Format part only (02-lifecycle). Draft until the author checks it against МОН Наказ № 928 and a target journal's guidelines (see format.yaml → sources)."
