@@ -119,3 +119,6 @@ synth.findings_blocked: "Висновки не збережено: центра�
 claims.set: "Твердження одиниці збережено ({n})."
 claims.checked: "Перевірено твердження ({n})."
 claims.coverage: "Покриття: знаменник = всі суттєві твердження ({d})."
+brief.set: "Бриф одиниці {unit} збережено."
+brief.checked: "Бриф {unit} перевірено."
+brief.answered: "Відповідь на внесок {point} записано."
