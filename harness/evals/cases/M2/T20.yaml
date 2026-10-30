@@ -1,0 +1,5 @@
+id: T20
+kind: pytest
+title: "search log and coverage"
+nodes:
+  - tests/integration/test_search.py

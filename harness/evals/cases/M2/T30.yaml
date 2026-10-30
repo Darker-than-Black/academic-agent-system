@@ -1,0 +1,5 @@
+id: T30
+kind: pytest
+title: "premises without a source are flagged (conceptual)"
+nodes:
+  - tests/integration/test_synthesis.py

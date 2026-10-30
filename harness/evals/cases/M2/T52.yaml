@@ -1,0 +1,5 @@
+id: T52
+kind: pytest
+title: "context packs within budget"
+nodes:
+  - tests/integration/test_context.py

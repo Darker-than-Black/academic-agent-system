@@ -1,0 +1,6 @@
+{"schema_version":"0.2","fixture":"F4-W","claims":[
+ {"claim_id":"C-001","span":{"section":"Вступ","paragraph":0,"start":0,"end":40},
+  "material":true,"criticality":"critical","expected_verdict":"insufficient",
+  "source_id":"S-0004","locator":"abstract","access_level":"abstract","defect_id":"D2",
+  "rationale":"Спирається лише на абстракт."}],
+ "material_claims":["C-001"]}

@@ -1,0 +1,5 @@
+id: T57
+kind: pytest
+title: "dictation keeps raw; dictated paragraphs are the author's"
+nodes:
+  - tests/integration/test_provenance.py

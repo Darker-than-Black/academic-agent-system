@@ -1,0 +1,5 @@
+id: T11
+kind: pytest
+title: "draft export gaps and manifest hashes"
+nodes:
+  - tests/integration/test_export.py

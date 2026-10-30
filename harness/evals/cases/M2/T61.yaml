@@ -1,0 +1,5 @@
+id: T61
+kind: pytest
+title: "counter-evidence required for central claims"
+nodes:
+  - tests/integration/test_synthesis.py

@@ -1,0 +1,5 @@
+id: T02
+kind: pytest
+title: "source identity, version, access level, lookup outcomes"
+nodes:
+  - tests/integration/test_sources.py

@@ -1,0 +1,231 @@
+{
+  "suite": "M2",
+  "date": "2026-10-30",
+  "total": 20,
+  "passed": 20,
+  "failed": 0,
+  "all_pass": true,
+  "results": [
+    {
+      "id": "T01",
+      "title": "unknown never passes a required check",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_intake.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_intake.py → exit 0"
+    },
+    {
+      "id": "T02",
+      "title": "source identity, version, access level, lookup outcomes",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_sources.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_sources.py → exit 0"
+    },
+    {
+      "id": "T03",
+      "title": "protocol freeze requires required fields (G1)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_protocol.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_protocol.py → exit 0"
+    },
+    {
+      "id": "T06",
+      "title": "claim support caps (deterministic part of the unit critic)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_claims.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_claims.py → exit 0"
+    },
+    {
+      "id": "T07",
+      "title": "draft write requires request; author edits not overwritten",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_drafting.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_drafting.py → exit 0"
+    },
+    {
+      "id": "T11",
+      "title": "draft export gaps and manifest hashes",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_export.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_export.py → exit 0"
+    },
+    {
+      "id": "T20",
+      "title": "search log and coverage",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_search.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_search.py → exit 0"
+    },
+    {
+      "id": "T22",
+      "title": "article integration review (deterministic part)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_review_v0.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_review_v0.py → exit 0"
+    },
+    {
+      "id": "T30",
+      "title": "premises without a source are flagged (conceptual)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_synthesis.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_synthesis.py → exit 0"
+    },
+    {
+      "id": "T43",
+      "title": "Cyrillic/Latin transliteration and reference sort",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/sources/test_translit.py",
+        "tests/integration/test_export.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/sources/test_translit.py tests/integration/test_export.py → exit 0"
+    },
+    {
+      "id": "T46",
+      "title": "docx/md export: order, references, bookmarks",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_export.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_export.py → exit 0"
+    },
+    {
+      "id": "T49",
+      "title": "author contribution points: no invented position",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_briefs.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_briefs.py → exit 0"
+    },
+    {
+      "id": "T51",
+      "title": "unit summaries and map freshness",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_summaries.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_summaries.py → exit 0"
+    },
+    {
+      "id": "T52",
+      "title": "context packs within budget",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_context.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_context.py → exit 0"
+    },
+    {
+      "id": "T57",
+      "title": "dictation keeps raw; dictated paragraphs are the author's",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_provenance.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_provenance.py → exit 0"
+    },
+    {
+      "id": "T58",
+      "title": "paragraph provenance records mixed origins",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_provenance.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_provenance.py → exit 0"
+    },
+    {
+      "id": "T59",
+      "title": "locator with two paginations; quote check",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_library.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_library.py → exit 0"
+    },
+    {
+      "id": "T60",
+      "title": "synthesis saturation baseline (deterministic part)",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_synthesis.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_synthesis.py → exit 0"
+    },
+    {
+      "id": "T61",
+      "title": "counter-evidence required for central claims",
+      "kind": "pytest",
+      "nodes": [
+        "tests/integration/test_synthesis.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/integration/test_synthesis.py → exit 0"
+    },
+    {
+      "id": "T63",
+      "title": "subagent model tier and downgrade on unknown",
+      "kind": "pytest",
+      "nodes": [
+        "tests/unit/host/test_generate.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "evidence": "pytest tests/unit/host/test_generate.py → exit 0"
+    }
+  ]
+}

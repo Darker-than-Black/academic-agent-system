@@ -1,0 +1,5 @@
+id: T51
+kind: pytest
+title: "unit summaries and map freshness"
+nodes:
+  - tests/integration/test_summaries.py

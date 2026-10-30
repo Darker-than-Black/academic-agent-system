@@ -35,6 +35,34 @@ def test_composition_and_injection(tmp_path: Path) -> None:
         assert s["license"] and len(s["metadata_sha256"]) == 64
 
 
+def _annotate(tmp_path: Path, end: int) -> None:
+    (tmp_path / "manuscript.md").write_text(
+        "---\ntitle: T\n---\n# Вступ\n\nПерший абзац рукопису має певну довжину.\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "annotation.yaml").write_text(
+        "schema_version: '0.2'\nfixture: F4-W\nclaims:\n"
+        "  - claim_id: C-001\n    span: {section: Вступ, paragraph: 0, start: 0, end: "
+        + str(end)
+        + "}\n    material: true\n    criticality: critical\n    expected_verdict: insufficient\n",
+        encoding="utf-8",
+    )
+
+
+def test_annotation_span_resolves(tmp_path: Path) -> None:  # §5.1
+    build_f4w(tmp_path)
+    _annotate(tmp_path, end=10)  # within the paragraph
+    problems = check_f4w(tmp_path)
+    assert [p for p in problems if not p.startswith("PENDING")] == []
+
+
+def test_annotation_span_out_of_range_fails(tmp_path: Path) -> None:
+    build_f4w(tmp_path)
+    _annotate(tmp_path, end=9999)  # past the paragraph length
+    problems = check_f4w(tmp_path)
+    assert any("does not fit" in p for p in problems)
+
+
 def test_check_flags_broken_composition(tmp_path: Path) -> None:
     build_f4w(tmp_path)
     doc = yaml.safe_load((tmp_path / "sources.yaml").read_text(encoding="utf-8"))

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/annotation.schema.json",
+  "title": "Reference annotation (05-eval-base §5.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "fixture", "claims"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "fixture": { "type": "string" },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "span", "material", "criticality", "expected_verdict"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "span": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["paragraph", "start", "end"],
+            "properties": {
+              "section": { "type": "string" },
+              "paragraph": { "type": "integer", "minimum": 0 },
+              "start": { "type": "integer", "minimum": 0 },
+              "end": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "material": { "type": "boolean" },
+          "criticality": { "enum": ["critical", "major", "minor"] },
+          "expected_verdict": { "$ref": "common.schema.json#/$defs/support" },
+          "source_id": { "type": "string" },
+          "locator": { "type": "string" },
+          "access_level": { "$ref": "common.schema.json#/$defs/access_level" },
+          "defect_id": { "type": ["string", "null"] },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
+    "material_claims": { "type": "array", "items": { "type": "string" } },
+    "expected_integration_findings": { "type": "array", "items": { "type": "object" } },
+    "key_works": { "type": "array", "items": { "type": "object" } }
+  }
+}

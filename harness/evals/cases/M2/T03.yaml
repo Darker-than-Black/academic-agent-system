@@ -1,0 +1,5 @@
+id: T03
+kind: pytest
+title: "protocol freeze requires required fields (G1)"
+nodes:
+  - tests/integration/test_protocol.py

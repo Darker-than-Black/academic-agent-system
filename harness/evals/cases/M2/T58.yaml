@@ -1,0 +1,5 @@
+id: T58
+kind: pytest
+title: "paragraph provenance records mixed origins"
+nodes:
+  - tests/integration/test_provenance.py

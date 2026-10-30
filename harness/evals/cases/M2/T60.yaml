@@ -1,0 +1,5 @@
+id: T60
+kind: pytest
+title: "synthesis saturation baseline (deterministic part)"
+nodes:
+  - tests/integration/test_synthesis.py
