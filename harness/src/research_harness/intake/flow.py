@@ -19,7 +19,11 @@ def apply_answer(
     summary_mod.render(root, data, lang)
     resolve_object(root)
     Store(root).checkpoint(by="human", note=f"intake {qid}")
-    ar_id = open_g0(root, lang)
+    # Open G0 only once intake is complete (spec: G0 opens when intake is
+    # complete). Opening per answer accumulated one request per answer, since
+    # each answer checkpoints a new snapshot and the per-snapshot reuse in
+    # open_request() never matched.
+    ar_id = open_g0(root, lang) if not answers_mod.missing_core(root) else None
     return {"answers": data, "g0_request": ar_id, "consequences": data["consequences"]}
 
 
