@@ -1,0 +1,1436 @@
+{
+  "schema_version": "0.2",
+  "fixture": "F4-W",
+  "run_kind": "host",
+  "producer": {
+    "model_id": "claude-fable-5-1",
+    "date": "2026-11-02",
+    "budget_used": "A 82672 + B2 230058 subagent tokens",
+    "note": "blind 2-pass host run v2; extraction reused from 2026-11-01 (manuscript unchanged); verdicts re-done over 8 OA fulltexts (EN1,EN2,EN3,UA1,UA2,UA3,UA4,UA5)+EN6; EN4/EN5 abstract-only, UA6 metadata-only; subagents never saw annotation (H6)"
+  },
+  "extracted": [
+    {
+      "local_id": "M-001",
+      "material": true,
+      "anchor": {
+        "quote": "formative assessment reliably improves learning outcomes for all students, in every subject and in every country, with no meaningful exceptions"
+      }
+    },
+    {
+      "local_id": "M-002",
+      "material": true,
+      "anchor": {
+        "quote": "Teacher assessment literacy is the single decisive factor behind every reported gain"
+      }
+    },
+    {
+      "local_id": "M-003",
+      "material": true,
+      "anchor": {
+        "quote": "digital tools remove the remaining barriers to timely feedback"
+      }
+    },
+    {
+      "local_id": "M-004",
+      "material": true,
+      "anchor": {
+        "quote": "We therefore conclude that adoption guarantees higher achievement wherever it is attempted"
+      }
+    },
+    {
+      "local_id": "M-005",
+      "material": false,
+      "anchor": {
+        "quote": "The body of the review, by contrast, treats the evidence as mixed and context-dependent"
+      }
+    },
+    {
+      "local_id": "M-006",
+      "material": true,
+      "anchor": {
+        "quote": "спрямоване на коригування процесу викладання під час його перебігу, а не на підсумкову атестацію"
+      }
+    },
+    {
+      "local_id": "M-007",
+      "material": true,
+      "anchor": {
+        "quote": "У середній освіті воно реалізується через зворотний зв'язок, самооцінювання та взаємооцінювання учнів"
+      }
+    },
+    {
+      "local_id": "M-008",
+      "material": true,
+      "anchor": {
+        "quote": "Онопрієнко описує формувальне оцінювання як неперервний процес відстеження навчальних досягнень"
+      }
+    },
+    {
+      "local_id": "M-009",
+      "material": true,
+      "anchor": {
+        "quote": "наголошує, що воно не зводиться до окремої контрольної процедури"
+      }
+    },
+    {
+      "local_id": "M-010",
+      "material": true,
+      "anchor": {
+        "quote": "зумовлений зміщенням освітньої політики від контролю результату до супроводу процесу навчання"
+      }
+    },
+    {
+      "local_id": "M-011",
+      "material": true,
+      "anchor": {
+        "quote": "Ідея «оцінювання для навчання» на противагу «оцінюванню навчання» стала рамкою"
+      }
+    },
+    {
+      "local_id": "M-012",
+      "material": true,
+      "anchor": {
+        "quote": "Саме тому дослідники наголошують на своєчасності зворотного зв'язку, на залученні учня до оцінювання власного поступу та на прозорості критеріїв успіху"
+      }
+    },
+    {
+      "local_id": "M-013",
+      "material": true,
+      "anchor": {
+        "quote": "Поширеність цієї практики в українській школі помітно зросла після впровадження концепції Нової української школи"
+      }
+    },
+    {
+      "local_id": "M-014",
+      "material": true,
+      "anchor": {
+        "quote": "Реформа закріпила очікування, що вчитель систематично відстежує поступ кожного учня"
+      }
+    },
+    {
+      "local_id": "M-015",
+      "material": true,
+      "anchor": {
+        "quote": "практика впровадження виявилася нерівномірною: різні школи, предмети й учителі по-різному тлумачать межі формувального оцінювання"
+      }
+    },
+    {
+      "local_id": "M-016",
+      "material": true,
+      "anchor": {
+        "quote": "Частина вчителів ототожнює формувальне оцінювання з відмовою від балів, інша — з частішим поточним контролем"
+      }
+    },
+    {
+      "local_id": "M-017",
+      "material": true,
+      "anchor": {
+        "quote": "за даними огляду формувальне оцінювання підвищує навчальні результати в усіх країнах і для всіх без винятку учнів незалежно від предмета"
+      }
+    },
+    {
+      "local_id": "M-018",
+      "material": false,
+      "anchor": {
+        "quote": "твердження, що спирається на одне дослідження, але подане як універсальне"
+      }
+    },
+    {
+      "local_id": "M-019",
+      "material": true,
+      "anchor": {
+        "quote": "Огляд спирається на дванадцять джерел — шість україномовних і шість англомовних"
+      }
+    },
+    {
+      "local_id": "M-020",
+      "material": false,
+      "anchor": {
+        "quote": "дібраних за критеріями тематичної релевантності до формувального оцінювання в загальній середній освіті та доступності повного тексту у відкритому доступі"
+      }
+    },
+    {
+      "local_id": "M-021",
+      "material": false,
+      "anchor": {
+        "quote": "усі повні тексти походять із відкритих репозиторіїв і журналів відкритого доступу"
+      }
+    },
+    {
+      "local_id": "M-022",
+      "material": true,
+      "anchor": {
+        "quote": "Два джерела долучено лише на рівні анотації, оскільки їхній повний текст у відкритому доступі відсутній"
+      }
+    },
+    {
+      "local_id": "M-023",
+      "material": true,
+      "anchor": {
+        "quote": "Одне з джерел видано у виданні із сумнівним статусом у переліку фахових видань"
+      }
+    },
+    {
+      "local_id": "M-024",
+      "material": true,
+      "anchor": {
+        "quote": "Ще один документ у наборі є синтетичним і містить вбудовану інструкцію всередині PDF"
+      }
+    },
+    {
+      "local_id": "M-025",
+      "material": false,
+      "anchor": {
+        "quote": "Витяг тверджень із рукопису виконано на рівні окремих речень"
+      }
+    },
+    {
+      "local_id": "M-026",
+      "material": false,
+      "anchor": {
+        "quote": "твердження, що спиралися лише на анотацію, окремо позначали як такі, що мають обмежену доказову силу"
+      }
+    },
+    {
+      "local_id": "M-027",
+      "material": true,
+      "anchor": {
+        "quote": "більшість суперечок про ефективність формувального оцінювання насправді є суперечками про те, що саме вважати формувальним оцінюванням"
+      }
+    },
+    {
+      "local_id": "M-028",
+      "material": true,
+      "anchor": {
+        "quote": "будь-яке оцінювання під час уроку автоматично є формувальним, якщо вчитель не виставляє бал"
+      }
+    },
+    {
+      "local_id": "M-029",
+      "material": false,
+      "anchor": {
+        "quote": "Це положення приймаємо без покликання на джерело, оскільки воно видається самоочевидним"
+      }
+    },
+    {
+      "local_id": "M-030",
+      "material": true,
+      "anchor": {
+        "quote": "відсутність бала не робить оцінювання формувальним, якщо його результат не використано для коригування навчання"
+      }
+    },
+    {
+      "local_id": "M-031",
+      "material": true,
+      "anchor": {
+        "quote": "Ляшенко трактує компетентність як інтегровану характеристику особистості, що підлягає оцінюванню за спостережуваними проявами"
+      }
+    },
+    {
+      "local_id": "M-032",
+      "material": true,
+      "anchor": {
+        "quote": "Таке розуміння зміщує предмет оцінювання з обсягу запам'ятованого матеріалу на здатність застосовувати знання в нових ситуаціях"
+      }
+    },
+    {
+      "local_id": "M-033",
+      "material": true,
+      "anchor": {
+        "quote": "Ключову тезу про петлю зворотного зв'язку сформулювали Блек і Вільям"
+      }
+    },
+    {
+      "local_id": "M-034",
+      "material": false,
+      "anchor": {
+        "quote": "ми спираємося безпосередньо на їхню працю, хоча фактично наводимо її за переказом в огляді Онопрієнко"
+      }
+    },
+    {
+      "local_id": "M-035",
+      "material": false,
+      "anchor": {
+        "quote": "переказ в огляді не дає підстави посилатися на першоджерело як на безпосередньо опрацьоване"
+      }
+    },
+    {
+      "local_id": "M-036",
+      "material": true,
+      "anchor": {
+        "quote": "Атрибуцію самого поняття «оцінювання для навчання» подаємо за Онопрієнко"
+      }
+    },
+    {
+      "local_id": "M-037",
+      "material": true,
+      "anchor": {
+        "quote": "формувальне оцінювання протиставляється підсумковому за функцією, а не за інструментарієм"
+      }
+    },
+    {
+      "local_id": "M-038",
+      "material": true,
+      "anchor": {
+        "quote": "Тест, проведений посеред теми для діагностики прогалин, є формувальним; той самий тест наприкінці теми для виставлення оцінки є підсумковим"
+      }
+    },
+    {
+      "local_id": "M-039",
+      "material": true,
+      "anchor": {
+        "quote": "два зовні однакові уроки можуть належати до різних категорій, і навпаки"
+      }
+    },
+    {
+      "local_id": "M-040",
+      "material": true,
+      "anchor": {
+        "quote": "емпіричні дослідження, що відносять до «формувального оцінювання» різні набори практик, насправді вимірюють різні явища під спільною назвою"
+      }
+    },
+    {
+      "local_id": "M-041",
+      "material": true,
+      "anchor": {
+        "quote": "Невизначеність меж поняття є однією з причин, чому зведені твердження про ефективність формувального оцінювання слід приймати обережно"
+      }
+    },
+    {
+      "local_id": "M-042",
+      "material": true,
+      "anchor": {
+        "quote": "Богданець-Білоскаленко та Фідкевич систематизують форми зворотного зв'язку в початковій школі"
+      }
+    },
+    {
+      "local_id": "M-043",
+      "material": true,
+      "anchor": {
+        "quote": "Їхня класифікація розрізняє усний і письмовий, індивідуальний і груповий, відтермінований і негайний зворотний зв'язок"
+      }
+    },
+    {
+      "local_id": "M-044",
+      "material": true,
+      "anchor": {
+        "quote": "письмовий коментар ефективніший за оцінку-бал у середній школі"
+      }
+    },
+    {
+      "local_id": "M-045",
+      "material": false,
+      "anchor": {
+        "quote": "твердження, якого цитоване джерело прямо не підтверджує, оскільки воно стосується початкової школи"
+      }
+    },
+    {
+      "local_id": "M-046",
+      "material": true,
+      "anchor": {
+        "quote": "Дослідження універсального дизайну навчання Лавриш і Литовченко доводить, що структурований усний зворотний зв'язок у середній школі усуває розрив в успішності"
+      }
+    },
+    {
+      "local_id": "M-047",
+      "material": false,
+      "anchor": {
+        "quote": "Це сильне твердження про усунення розриву подано тут у категоричнішому формулюванні"
+      }
+    },
+    {
+      "local_id": "M-048",
+      "material": true,
+      "anchor": {
+        "quote": "Матвеєва наголошує, що для учнів з особливими освітніми потребами зворотний зв'язок потребує адаптації темпу й формату його подання"
+      }
+    },
+    {
+      "local_id": "M-049",
+      "material": true,
+      "anchor": {
+        "quote": "уніфікований підхід до всіх учнів знижує дієвість формувального оцінювання саме для тих, хто його найбільше потребує"
+      }
+    },
+    {
+      "local_id": "M-050",
+      "material": true,
+      "anchor": {
+        "quote": "«зворотний зв'язок має бути негайним, конкретним і дієвим для кожної дитини»"
+      }
+    },
+    {
+      "local_id": "M-051",
+      "material": false,
+      "anchor": {
+        "quote": "лапки передають точну цитату, якої в джерелі немає в такому формулюванні"
+      }
+    },
+    {
+      "local_id": "M-052",
+      "material": true,
+      "anchor": {
+        "quote": "Parmigiani та співавтори показують, що якість зворотного зв'язку залежить від чіткості критеріїв, відомих учневі заздалегідь"
+      }
+    },
+    {
+      "local_id": "M-053",
+      "material": true,
+      "anchor": {
+        "quote": "чи має учень час скористатися коментарем до наступного оцінювання"
+      }
+    },
+    {
+      "local_id": "M-054",
+      "material": true,
+      "anchor": {
+        "quote": "зворотний зв'язок працює не сам собою, а лише тоді, коли вбудований у цикл"
+      }
+    },
+    {
+      "local_id": "M-055",
+      "material": true,
+      "anchor": {
+        "quote": "передавання учневі частини відповідальності за відстеження власного прогресу підвищує його залученість, але потребує попереднього навчання критеріїв і процедур"
+      }
+    },
+    {
+      "local_id": "M-056",
+      "material": true,
+      "anchor": {
+        "quote": "без цього самооцінювання вироджується у формальну процедуру без діагностичної цінності"
+      }
+    },
+    {
+      "local_id": "M-057",
+      "material": true,
+      "anchor": {
+        "quote": "взаємооцінювання дає ефект лише тоді, коли учні володіють мовою опису якості роботи й спільно виробленими критеріями"
+      }
+    },
+    {
+      "local_id": "M-058",
+      "material": true,
+      "anchor": {
+        "quote": "Ці форми не є автоматично кращими за оцінювання вчителем"
+      }
+    },
+    {
+      "local_id": "M-059",
+      "material": true,
+      "anchor": {
+        "quote": "Rahman та співавтори впровадили модель формувального оцінювання в кількох середніх школах і зафіксували зростання середнього бала класу"
+      }
+    },
+    {
+      "local_id": "M-060",
+      "material": true,
+      "anchor": {
+        "quote": "Дослідження має квазіекспериментальний дизайн із порівнянням до і після впровадження"
+      }
+    },
+    {
+      "local_id": "M-061",
+      "material": true,
+      "anchor": {
+        "quote": "модель однаково результативна в усіх системах освіти та для всіх вікових груп"
+      }
+    },
+    {
+      "local_id": "M-062",
+      "material": false,
+      "anchor": {
+        "quote": "висновок, що виходить далеко за межі вибірки й контексту одного дослідження"
+      }
+    },
+    {
+      "local_id": "M-063",
+      "material": true,
+      "anchor": {
+        "quote": "Parmigiani та співавтори описують стратегії формувального оцінювання у старшій школі й ілюструють їх прикладами уроків із різних предметів"
+      }
+    },
+    {
+      "local_id": "M-064",
+      "material": true,
+      "anchor": {
+        "quote": "Те саме джерело Parmigiani наводимо з локатором «2019, с. 12»"
+      }
+    },
+    {
+      "local_id": "M-065",
+      "material": false,
+      "anchor": {
+        "quote": "хоча робота має інший рік і сторінку — хибне покликання"
+      }
+    },
+    {
+      "local_id": "M-066",
+      "material": true,
+      "anchor": {
+        "quote": "Disasa показує, що вчителі з вищою оцінювальною грамотністю частіше й системніше застосовують формувальні техніки"
+      }
+    },
+    {
+      "local_id": "M-067",
+      "material": true,
+      "anchor": {
+        "quote": "грамотність оцінювання є передумовою, а не наслідком упровадження формувального підходу"
+      }
+    },
+    {
+      "local_id": "M-068",
+      "material": true,
+      "anchor": {
+        "quote": "інвестиція в підготовку вчителів щодо принципів оцінювання є умовою, без якої формальне запровадження процедур не дає очікуваного ефекту"
+      }
+    },
+    {
+      "local_id": "M-069",
+      "material": true,
+      "anchor": {
+        "quote": "дослідження Disasa описове й кореляційне, тому воно встановлює зв'язок, а не причинність"
+      }
+    },
+    {
+      "local_id": "M-070",
+      "material": true,
+      "anchor": {
+        "quote": "За даними Kyaruzi та співавторів, сприйняття учнями зворотного зв'язку позитивно пов'язане з результатами з математики"
+      }
+    },
+    {
+      "local_id": "M-071",
+      "material": false,
+      "anchor": {
+        "quote": "цей висновок доступний лише в анотації статті, повний текст якої до набору не долучено"
+      }
+    },
+    {
+      "local_id": "M-072",
+      "material": true,
+      "anchor": {
+        "quote": "Veugen установила, що регулярні формувальні практики підвищили результативність порівняно з контрольною групою"
+      }
+    },
+    {
+      "local_id": "M-073",
+      "material": false,
+      "anchor": {
+        "quote": "цей кількісний результат також доступний лише в анотації тези"
+      }
+    },
+    {
+      "local_id": "M-074",
+      "material": true,
+      "anchor": {
+        "quote": "Петренко (2022, doi:10.9999/fake-formative) повідомляє про стандартизований протокол формувального оцінювання для всіх шкіл країни"
+      }
+    },
+    {
+      "local_id": "M-075",
+      "material": false,
+      "anchor": {
+        "quote": "джерела з такою назвою й DOI не існує, його внесено як приклад вигаданого покликання"
+      }
+    },
+    {
+      "local_id": "M-076",
+      "material": true,
+      "anchor": {
+        "quote": "Глазова та Пахомова класифікують засоби оцінювання досягнень з математики й рекомендують їх для щоденного використання вчителем"
+      }
+    },
+    {
+      "local_id": "M-077",
+      "material": true,
+      "anchor": {
+        "quote": "окремі дослідження повідомляють про помітні позитивні ефекти, інші — про скромні або умовні"
+      }
+    },
+    {
+      "local_id": "M-078",
+      "material": true,
+      "anchor": {
+        "quote": "Порівняння досліджень ускладнене й тим, що вони послуговуються різними операційними визначеннями формувального оцінювання"
+      }
+    },
+    {
+      "local_id": "M-079",
+      "material": true,
+      "anchor": {
+        "quote": "Ці величини не є взаємозамінними, і їх не можна поєднувати в єдиний показник ефекту без втрати сенсу"
+      }
+    },
+    {
+      "local_id": "M-080",
+      "material": true,
+      "anchor": {
+        "quote": "воно радше відображає спосіб, у який автор огляду поєднав різнорідні свідчення, ніж сталу емпіричну величину"
+      }
+    },
+    {
+      "local_id": "M-081",
+      "material": true,
+      "anchor": {
+        "quote": "частка вчителів, які застосовують формувальне оцінювання щотижня, зросла з 48 до 61, тобто на 13 відсотків"
+      }
+    },
+    {
+      "local_id": "M-082",
+      "material": false,
+      "anchor": {
+        "quote": "різницю в 13 відсоткових пунктів подано як 13 %"
+      }
+    },
+    {
+      "local_id": "M-083",
+      "material": true,
+      "anchor": {
+        "quote": "зростання з 48 до 61 відсотка становить приблизно 27 % відносного приросту, а не 13 %"
+      }
+    },
+    {
+      "local_id": "M-084",
+      "material": true,
+      "anchor": {
+        "quote": "Kyaruzi та співавтори наводять для експериментальної групи середній бал 78 зі 100"
+      }
+    },
+    {
+      "local_id": "M-085",
+      "material": true,
+      "anchor": {
+        "quote": "саме цей показник ми приписуємо контрольній групі того самого дослідження"
+      }
+    },
+    {
+      "local_id": "M-086",
+      "material": true,
+      "anchor": {
+        "quote": "Rahman та співавтори прямо зазначають, що саме по собі збільшення частоти оцінювання не впливає на успішність без якісного зворотного зв'язку"
+      }
+    },
+    {
+      "local_id": "M-087",
+      "material": true,
+      "anchor": {
+        "quote": "Матвеєва підкреслює, що кількісні показники слід інтерпретувати обережно через малі вибірки й коротку тривалість спостереження"
+      }
+    },
+    {
+      "local_id": "M-088",
+      "material": false,
+      "anchor": {
+        "quote": "Числа в цьому розділі навмисно містять засіяні дефекти підміни й хибного переведення одиниць"
+      }
+    },
+    {
+      "local_id": "M-089",
+      "material": true,
+      "anchor": {
+        "quote": "Онопрієнко зазначає, що цифрові платформи самі собою не гарантують якості формувального оцінювання без методичної підготовки вчителя"
+      }
+    },
+    {
+      "local_id": "M-090",
+      "material": true,
+      "anchor": {
+        "quote": "технологія лише підсилює наявну практику, а не заміщує її"
+      }
+    },
+    {
+      "local_id": "M-091",
+      "material": true,
+      "anchor": {
+        "quote": "Синтетичний документ EN6 долучено до набору як приклад вбудованої інструкції в PDF"
+      }
+    },
+    {
+      "local_id": "M-092",
+      "material": true,
+      "anchor": {
+        "quote": "Автоматизовані системи зворотного зв'язку пришвидшують перевірку відкритих завдань, але не замінюють педагогічного судження"
+      }
+    },
+    {
+      "local_id": "M-093",
+      "material": true,
+      "anchor": {
+        "quote": "Глазова та Пахомова опублікували результати у виданні ГРААЛЬ НАУКИ"
+      }
+    },
+    {
+      "local_id": "M-094",
+      "material": true,
+      "anchor": {
+        "quote": "яке подаємо як таке, що входить до затвердженого переліку фахових видань на дату подання статті"
+      }
+    },
+    {
+      "local_id": "M-095",
+      "material": false,
+      "anchor": {
+        "quote": "хоча доказу цього включення на потрібну дату в наборі немає"
+      }
+    },
+    {
+      "local_id": "M-096",
+      "material": false,
+      "anchor": {
+        "quote": "Статус видання у переліку може змінюватися з часом, тому його слід перевіряти саме на дату подання"
+      }
+    },
+    {
+      "local_id": "M-097",
+      "material": false,
+      "anchor": {
+        "quote": "Доброчесність огляду вимагає, щоб кожне число й кожна цитата мали простежуване джерело"
+      }
+    },
+    {
+      "local_id": "M-098",
+      "material": true,
+      "anchor": {
+        "quote": "запис про її використання має залишатися в історії роботи, а відповідальність за зміст висновку зберігається за вчителем"
+      }
+    },
+    {
+      "local_id": "M-099",
+      "material": true,
+      "anchor": {
+        "quote": "вбудовані в документи інструкції, посилання на неперевірені ресурси чи автоматично підставлені цитати не можуть мати вищого статусу, ніж перевірене першоджерело"
+      }
+    },
+    {
+      "local_id": "M-100",
+      "material": true,
+      "anchor": {
+        "quote": "Технологія корисна доти, доки вона розширює, а не підміняє простежуваність доказів"
+      }
+    },
+    {
+      "local_id": "M-101",
+      "material": true,
+      "anchor": {
+        "quote": "Більшість оглянутих досліджень мають малі вибірки й обмежену тривалість спостереження"
+      }
+    },
+    {
+      "local_id": "M-102",
+      "material": false,
+      "anchor": {
+        "quote": "Доступ до повних текстів двох джерел обмежений лише анотаціями"
+      }
+    },
+    {
+      "local_id": "M-103",
+      "material": false,
+      "anchor": {
+        "quote": "Огляд не охоплює літератури мовами, крім української та англійської"
+      }
+    },
+    {
+      "local_id": "M-104",
+      "material": false,
+      "anchor": {
+        "quote": "дванадцять джерел — замала основа для систематичних висновків"
+      }
+    },
+    {
+      "local_id": "M-105",
+      "material": false,
+      "anchor": {
+        "quote": "частина покликань у цьому рукописі навмисно спотворена"
+      }
+    },
+    {
+      "local_id": "M-106",
+      "material": true,
+      "anchor": {
+        "quote": "Наявні докази щодо впливу формувального оцінювання є неоднорідними й часто недостатніми"
+      }
+    },
+    {
+      "local_id": "M-107",
+      "material": true,
+      "anchor": {
+        "quote": "Ефект залежить від предмета, контексту школи та підготовки вчителя, а для низки груп учнів надійних даних бракує"
+      }
+    },
+    {
+      "local_id": "M-108",
+      "material": false,
+      "anchor": {
+        "quote": "Твердження про універсальну й гарантовану результативність, винесене в анотацію, не підтверджується оглянутими джерелами"
+      }
+    },
+    {
+      "local_id": "M-109",
+      "material": true,
+      "anchor": {
+        "quote": "Потрібні більші й триваліші дослідження, перш ніж формулювати рекомендації для всіх шкіл країни"
+      }
+    },
+    {
+      "local_id": "M-110",
+      "material": true,
+      "anchor": {
+        "quote": "дієвість формувального оцінювання визначається якістю зворотного зв'язку та підготовкою вчителя, а не самим фактом його запровадження"
+      }
+    },
+    {
+      "local_id": "M-111",
+      "material": true,
+      "anchor": {
+        "quote": "запровадження формувального оцінювання варто супроводжувати підготовкою вчителів щодо принципів і критеріїв оцінювання, бо без неї процедури залишаються формальними"
+      }
+    },
+    {
+      "local_id": "M-112",
+      "material": true,
+      "anchor": {
+        "quote": "зворотний зв'язок дає ефект лише тоді, коли учень має час і підставу діяти на його основі"
+      }
+    },
+    {
+      "local_id": "M-113",
+      "material": true,
+      "anchor": {
+        "quote": "кількісні показники ефекту слід подавати з описом вибірки, тривалості та способу вимірювання, інакше вони вводять в оману"
+      }
+    },
+    {
+      "local_id": "M-114",
+      "material": true,
+      "anchor": {
+        "quote": "узагальнення результатів одного дослідження на всі предмети, вікові групи й системи освіти є неприйнятним спрощенням"
+      }
+    }
+  ],
+  "reviewed": [
+    {
+      "local_id": "M-001",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D13"
+      ]
+    },
+    {
+      "local_id": "M-002",
+      "verdict": "contradicted",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-003",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-004",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D13"
+      ]
+    },
+    {
+      "local_id": "M-005",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-006",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-007",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-008",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-009",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-010",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-011",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-012",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-013",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-014",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-015",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-016",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-017",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D3"
+      ]
+    },
+    {
+      "local_id": "M-018",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-019",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-020",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-021",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-022",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-023",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-024",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-025",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-026",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-027",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-028",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D11"
+      ]
+    },
+    {
+      "local_id": "M-029",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-030",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-031",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-032",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-033",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D4"
+      ]
+    },
+    {
+      "local_id": "M-034",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-035",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-036",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-037",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-038",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-039",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-040",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-041",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-042",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-043",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-044",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "local_id": "M-045",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-046",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "local_id": "M-047",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-048",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-049",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-050",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D12"
+      ]
+    },
+    {
+      "local_id": "M-051",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-052",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-053",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-054",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-055",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-056",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-057",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-058",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-059",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D9"
+      ]
+    },
+    {
+      "local_id": "M-060",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D9"
+      ]
+    },
+    {
+      "local_id": "M-061",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D3"
+      ]
+    },
+    {
+      "local_id": "M-062",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-063",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-064",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D6"
+      ]
+    },
+    {
+      "local_id": "M-065",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-066",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-067",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-068",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-069",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-070",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "local_id": "M-071",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-072",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "local_id": "M-073",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-074",
+      "verdict": "not_found",
+      "flagged_defects": [
+        "D5"
+      ]
+    },
+    {
+      "local_id": "M-075",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-076",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-077",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-078",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-079",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-080",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-081",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D7"
+      ]
+    },
+    {
+      "local_id": "M-082",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-083",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-084",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "local_id": "M-085",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D8"
+      ]
+    },
+    {
+      "local_id": "M-086",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-087",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "local_id": "M-088",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-089",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "local_id": "M-090",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "local_id": "M-091",
+      "verdict": "supported",
+      "flagged_defects": [
+        "D10"
+      ]
+    },
+    {
+      "local_id": "M-092",
+      "verdict": "insufficient",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-093",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-094",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D14"
+      ]
+    },
+    {
+      "local_id": "M-095",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-096",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-097",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-098",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-099",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-100",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-101",
+      "verdict": "partial",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-102",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-103",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-104",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-105",
+      "verdict": "unverifiable",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-106",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-107",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-108",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-109",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-110",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-111",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-112",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-113",
+      "verdict": "supported",
+      "flagged_defects": []
+    },
+    {
+      "local_id": "M-114",
+      "verdict": "supported",
+      "flagged_defects": []
+    }
+  ],
+  "integration_findings": [
+    {
+      "id": "IF-1",
+      "defect_id": "D13"
+    }
+  ],
+  "contribution_points": []
+}
