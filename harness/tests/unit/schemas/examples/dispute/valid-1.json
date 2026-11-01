@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.2",
+  "id": "D-1",
+  "claim_id": "C-5",
+  "finding_id": "F-3",
+  "cycles": [
+    {
+      "by": "analyst",
+      "argument": "The excerpt does support the claim at the cited locator.",
+      "evidence_refs": ["excerpt:EXC-7"],
+      "at": "2026-11-02T10:00:00Z"
+    }
+  ],
+  "max_cycles": 2,
+  "status": "open"
+}

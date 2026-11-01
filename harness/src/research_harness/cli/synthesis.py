@@ -80,11 +80,16 @@ def register(sub: argparse._SubParsersAction) -> None:
     scheck = saa.add_parser("check")
     scheck.add_argument("--batch-size", type=int, default=10, dest="batch_size")
 
-    fi = sub.add_parser("findings", help="Hand synthesis findings to the writer.")
+    fi = sub.add_parser("findings", help="Synthesis findings, and the review findings index.")
     fia = fi.add_subparsers(dest="findings_action", metavar="action", required=True)
     fset = fia.add_parser("set")
     fset.add_argument("--file", required=True)
     fset.add_argument("--central", action="append", default=[], dest="central")
+    # list / resolve belong to the review findings index (M3-05); the command is
+    # one namespace, so they are registered here and delegated to the resolution CLI.
+    from research_harness.cli import resolution
+
+    resolution.add_findings_subactions(fia)
 
 
 _COMMANDS = (
@@ -228,6 +233,13 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
             data={"saturation": report},
         )
     # findings
+    if args.findings_action in ("list", "resolve"):
+        from research_harness.cli import resolution
+
+        root = object_root(args)
+        if args.findings_action == "list":
+            return resolution.findings_list(root, args, lang)
+        return resolution.findings_resolve(root, args, lang)
     items = yaml.safe_load(Path(args.file).read_text(encoding="utf-8")) or []
     items = items.get("findings", items) if isinstance(items, dict) else items
     findings = findings_mod.set_findings(root, items, central_claims=args.central)

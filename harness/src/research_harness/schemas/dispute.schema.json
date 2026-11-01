@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/dispute.schema.json",
+  "title": "Dispute record (review.md §Disputes; M3-05, FR-23)",
+  "description": "An analyst/critic disagreement over a finding on a claim. Each side adds one argument + evidence per cycle; after max_cycles without agreement the dispute is 'unresolved' and goes to the author. A dispute never auto-resolves to a pass (T23).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "claim_id", "finding_id", "cycles", "max_cycles", "status"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^D-[0-9]+$" },
+    "claim_id": { "type": "string", "minLength": 1 },
+    "finding_id": { "type": "string", "minLength": 1 },
+    "cycles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["by", "argument", "evidence_refs", "at"],
+        "properties": {
+          "by": { "enum": ["analyst", "critic"] },
+          "argument": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } },
+          "at": { "$ref": "common.schema.json#/$defs/datetime" }
+        }
+      }
+    },
+    "max_cycles": { "type": "integer", "minimum": 1 },
+    "status": { "enum": ["open", "resolved_by_author", "unresolved"] },
+    "author_decision": { "type": "string" }
+  }
+}
