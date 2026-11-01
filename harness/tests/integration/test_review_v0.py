@@ -51,7 +51,14 @@ def test_verdict_exceeding_cap_is_rejected(tmp_path: Path) -> None:  # DoD deter
     _h, problems = verdicts_mod.submit(
         folder,
         review["id"],
-        verdicts=[{"claim_id": "C-1", "support": "supported", "rationale": "topic match"}],
+        verdicts=[
+            {
+                "claim_id": "C-1",
+                "support": "supported",
+                "rationale": "topic match",
+                "evidence_refs": [f"excerpt:{exc['id']}"],
+            }
+        ],
         findings=[],
     )
     assert any(p["check_id"] == "review.verdict_cap_exceeded" for p in problems)
@@ -82,12 +89,84 @@ def test_verdict_within_cap_is_stored_and_counted(tmp_path: Path) -> None:
     handoff, problems = verdicts_mod.submit(
         folder,
         review["id"],
-        verdicts=[{"claim_id": "C-1", "support": "insufficient", "rationale": "abstract only"}],
+        verdicts=[
+            {
+                "claim_id": "C-1",
+                "support": "insufficient",
+                "rationale": "abstract only",
+                "evidence_refs": [f"excerpt:{exc['id']}"],
+                "access_level": "abstract",
+                "confidence": "medium",
+            }
+        ],
         findings=[],
     )
     assert not problems and handoff["status"] == "submitted"
+    # The M3-02 fields are carried into the stored assessment.
+    stored = ledger_mod.load_unit_claims(folder, _U)[0]["assessments"][-1]
+    assert stored["evidence_refs"] == [f"excerpt:{exc['id']}"]
+    assert stored["access_level"] == "abstract" and stored["confidence"] == "medium"
     cov = verdicts_mod.coverage(folder, _U)
     assert cov["checked"] == 1 and cov["unchecked_claims"] == []
+    assert cov["status"] == "ok" and cov["by_verdict"] == {"insufficient": 1}
+
+
+def test_verdict_without_evidence_is_rejected(tmp_path: Path) -> None:  # M3-02, FR-07 inv.3
+    folder = _unit_object(tmp_path)
+    excerpts_mod.add_excerpt(
+        folder, source_id="S-0001", text="abstract line", locator={}, access_level="abstract"
+    )
+    ledger_mod.set_claims(
+        folder,
+        _U,
+        [
+            {
+                "text": "X improves Y",
+                "kind": "external",
+                "materiality": "material",
+                "evidence": [],
+                "support": "unreviewed",
+            }
+        ],
+    )
+    review = handoff_mod.prepare(folder, "unit", unit=_U)
+    _h, problems = verdicts_mod.submit(
+        folder,
+        review["id"],
+        verdicts=[{"claim_id": "C-1", "support": "insufficient", "rationale": "no ref given"}],
+        findings=[],
+    )
+    assert any(p["check_id"] == "review.verdict_without_evidence" for p in problems)
+    # Nothing stored on rejection.
+    assert verdicts_mod.coverage(folder, _U)["checked"] == 0
+
+
+def test_coverage_incomplete_finding(tmp_path: Path) -> None:  # T08 (N3)
+    folder = _unit_object(tmp_path)
+    ledger_mod.set_claims(
+        folder,
+        _U,
+        [
+            {
+                "text": "A",
+                "kind": "external",
+                "materiality": "material",
+                "evidence": [],
+                "support": "unreviewed",
+            },
+            {
+                "text": "B",
+                "kind": "external",
+                "materiality": "material",
+                "evidence": [],
+                "support": "unreviewed",
+            },
+        ],
+    )
+    cov = verdicts_mod.coverage(folder, _U)
+    assert cov["denominator"] == 2 and cov["checked"] == 0 and cov["status"] == "unknown"
+    cf = verdicts_mod.coverage_findings(cov)
+    assert cf and cf[0]["check_id"] == "review.coverage_incomplete"
 
 
 def test_integration_deterministic_numbers_and_crossref(tmp_path: Path) -> None:  # T22 det part

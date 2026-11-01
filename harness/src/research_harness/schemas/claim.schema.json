@@ -51,7 +51,10 @@
           "rationale": { "type": "string" },
           "by": { "type": "string" },
           "at": { "$ref": "common.schema.json#/$defs/datetime" },
-          "check_run_id": { "type": "string" }
+          "check_run_id": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } },
+          "access_level": { "enum": ["full", "abstract", "metadata", "unknown"] },
+          "confidence": { "enum": ["low", "medium", "high"] }
         }
       }
     },
