@@ -29,6 +29,13 @@ def main(argv: list[str]) -> int:
     chk = sub.add_parser("check", help="Validate a fixture's structure.")
     chk.add_argument("name")
     chk.add_argument("--dir", help="Fixture directory (default: the committed F4W dir).")
+    lock = sub.add_parser(
+        "holdout-lock",
+        help="Build holdout.lock.json from a decrypted holdout dir OUTSIDE the repo (H1).",
+    )
+    lock.add_argument("--dir", required=True)
+    lock.add_argument("--out")
+    lock.add_argument("--fixture")
     args = parser.parse_args(argv)
 
     if args.action == "generate":
@@ -45,4 +52,13 @@ def main(argv: list[str]) -> int:
 
         fixture_dir = Path(args.dir) if args.dir else _F4W_DIR
         return check_main(args.name, fixture_dir)
+    if args.action == "holdout-lock":
+        from research_harness_dev.fixtures.holdout_lock import main as lock_main
+
+        lock_argv = ["--dir", args.dir]
+        if args.out:
+            lock_argv += ["--out", args.out]
+        if args.fixture:
+            lock_argv += ["--fixture", args.fixture]
+        return lock_main(lock_argv)
     return 2
