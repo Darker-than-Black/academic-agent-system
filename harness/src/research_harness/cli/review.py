@@ -11,6 +11,7 @@ from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
 from research_harness.review import handoff as handoff_mod
 from research_harness.review import integration_v0
+from research_harness.review import numbers as numbers_mod
 from research_harness.review import verdicts as verdicts_mod
 
 
@@ -30,6 +31,8 @@ def register(sub: argparse._SubParsersAction) -> None:
         "coverage", help="Coverage of material claims by verdict (full denominator)."
     )
     cv.add_argument("--unit", required=True)
+    nm = rva.add_parser("numbers", help="Numbers in a unit's claims vs their cited excerpts.")
+    nm.add_argument("--unit", required=True)
 
 
 def handles(command: str) -> bool:
@@ -63,6 +66,20 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
                 message_params={"checked": cov["checked"], "denominator": cov["denominator"]},
                 findings=cf,
                 data={"coverage": cov},
+            ),
+            0,
+        )
+    if args.review_action == "numbers":
+        findings = numbers_mod.check_unit_numbers(root, args.unit)
+        return (
+            build_envelope(
+                command="review",
+                status="partial" if findings else "ok",
+                lang=lang,
+                message_key="review.numbers",
+                message_params={"n": len(findings)},
+                findings=findings,
+                data={"findings": findings},
             ),
             0,
         )
