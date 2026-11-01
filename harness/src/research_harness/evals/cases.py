@@ -29,31 +29,36 @@ def _check_no_holdout(paths: list[str]) -> None:
         raise InvalidInputError("error.eval_holdout")
 
 
-def load_suite(suite: str) -> list[Case]:
-    d = CASES_DIR / suite
+def parse_case(path: Path) -> Case:
+    """Parse one case YAML into a Case.
+
+    H1: a case's node paths and semantic input values must not point under
+    holdout. Holdout cases themselves use package-relative paths (e.g.
+    ``annotation.yaml``), so this guard does not trip on them; it still blocks a
+    working-set case that reaches into holdout.
+    """
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    nodes = data.get("nodes", [])
+    inp = data.get("input", {}) or {}
+    _check_no_holdout([*nodes, *(str(v) for v in inp.values())])
+    metric = data.get("metric")
+    return Case(
+        id=data["id"],
+        kind=data.get("kind", "pytest"),
+        title=data.get("title", data["id"]),
+        nodes=nodes,
+        fixture=data.get("fixture"),
+        metrics=metric if isinstance(metric, list) else [metric] if metric else [],
+        inp=inp,
+        thresholds=data.get("thresholds", {}) or {},
+    )
+
+
+def load_dir(d: Path) -> list[Case]:
     if not d.is_dir():
         raise InvalidInputError("error.eval_unknown_suite")
-    cases: list[Case] = []
-    for f in sorted(d.glob("*.yaml")):
-        data = yaml.safe_load(f.read_text(encoding="utf-8"))
-        nodes = data.get("nodes", [])
-        inp = data.get("input", {}) or {}
-        # H1: neither node paths nor semantic input may point under holdout.
-        _check_no_holdout([*nodes, *(str(v) for v in inp.values())])
-        cases.append(
-            Case(
-                id=data["id"],
-                kind=data.get("kind", "pytest"),
-                title=data["title"],
-                nodes=nodes,
-                fixture=data.get("fixture"),
-                metrics=data.get("metric", [])
-                if isinstance(data.get("metric"), list)
-                else [data["metric"]]
-                if data.get("metric")
-                else [],
-                inp=inp,
-                thresholds=data.get("thresholds", {}) or {},
-            )
-        )
-    return cases
+    return [parse_case(f) for f in sorted(d.glob("*.yaml"))]
+
+
+def load_suite(suite: str) -> list[Case]:
+    return load_dir(CASES_DIR / suite)

@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import argparse
+from pathlib import Path
 from typing import Any
 
 from research_harness.core.envelope import build_envelope
 from research_harness.core.errors import InvalidInputError
+from research_harness.evals import holdout as holdout_mod
 from research_harness.evals import report as report_mod
 from research_harness.evals import runner
 
@@ -26,6 +28,15 @@ def register(sub: argparse._SubParsersAction) -> None:
     )
     rp = sa.add_parser("report", help="Show the latest report for a suite.")
     rp.add_argument("--suite", required=True)
+    hd = sa.add_parser("holdout", help="Author-only holdout run (aggregates only, H1).")
+    ha = hd.add_subparsers(dest="holdout_action", metavar="action", required=True)
+    hr = ha.add_parser("run", help="Run the holdout package from a dir OUTSIDE the repo.")
+    hr.add_argument(
+        "--dir", required=True, help="Decrypted holdout package, outside the repo (H1)."
+    )
+    hr.add_argument("--run", help="Host run artifact for semantic scoring (C run).")
+    hc = ha.add_parser("mark-compromised", help="Record that the holdout leaked.")
+    hc.add_argument("--reason", required=True)
 
 
 def handles(command: str) -> bool:
@@ -33,6 +44,37 @@ def handles(command: str) -> bool:
 
 
 def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
+    if args.eval_action == "holdout":
+        if args.holdout_action == "mark-compromised":
+            row = holdout_mod.mark_compromised(args.reason)
+            return (
+                build_envelope(
+                    command=_COMMAND,
+                    status="ok",
+                    lang=lang,
+                    message_key="holdout.compromised",
+                    message_params={"reason": args.reason},
+                    data=row,
+                ),
+                0,
+            )
+        row = holdout_mod.run(Path(args.dir), run_override=getattr(args, "run", None))
+        return (
+            build_envelope(
+                command=_COMMAND,
+                status="ok" if row["all_pass"] else "partial",
+                lang=lang,
+                message_key="holdout.ran",
+                message_params={
+                    "scored": row["cases"]["scored"],
+                    "pending": row["cases"]["pending"],
+                    "total": row["cases"]["total"],
+                },
+                data=row,
+            ),
+            0 if row["all_pass"] else 2,
+        )
+
     if args.eval_action == "run":
         report = runner.run_suite(
             args.suite, only=getattr(args, "case", None), run_override=getattr(args, "run", None)
