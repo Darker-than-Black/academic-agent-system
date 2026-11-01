@@ -164,6 +164,7 @@ review.rejected: "Review {id} rejected: a verdict exceeds the deterministic cap.
 review.integration: "Integration check (deterministic part)."
 review.coverage: "Coverage: {checked}/{denominator} material claims checked."
 review.numbers: "Numbers check: {n} claim number(s) not found in a cited excerpt."
+review.fulltext: "Document-wide checks: {n} finding(s)."
 export.done: "Draft exported ({format}); gaps: {gaps}."
 error.pandoc_missing: "pandoc not found; install it or export with format md."
 error.pandoc_failed: "pandoc failed while producing the .docx."

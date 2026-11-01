@@ -9,10 +9,12 @@ from typing import Any
 
 from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
+from research_harness.review import fulltext as fulltext_mod
 from research_harness.review import handoff as handoff_mod
 from research_harness.review import integration_v0
 from research_harness.review import numbers as numbers_mod
 from research_harness.review import verdicts as verdicts_mod
+from research_harness.validate.framework import has_blocker
 
 
 def register(sub: argparse._SubParsersAction) -> None:
@@ -33,6 +35,9 @@ def register(sub: argparse._SubParsersAction) -> None:
     cv.add_argument("--unit", required=True)
     nm = rva.add_parser("numbers", help="Numbers in a unit's claims vs their cited excerpts.")
     nm.add_argument("--unit", required=True)
+    rva.add_parser(
+        "fulltext", help="Document-wide deterministic checks (crossref, cites, repeats)."
+    )
 
 
 def handles(command: str) -> bool:
@@ -68,6 +73,21 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
                 data={"coverage": cov},
             ),
             0,
+        )
+    if args.review_action == "fulltext":
+        findings = fulltext_mod.run(root)
+        blocked = has_blocker(findings)
+        return (
+            build_envelope(
+                command="review",
+                status="blocked" if blocked else ("partial" if findings else "ok"),
+                lang=lang,
+                message_key="review.fulltext",
+                message_params={"n": len(findings)},
+                findings=findings,
+                data={"findings": findings},
+            ),
+            3 if blocked else 0,
         )
     if args.review_action == "numbers":
         findings = numbers_mod.check_unit_numbers(root, args.unit)
