@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.2",
+  "run_id": "OV-20261102T120500Z",
+  "corpus_index_sha256": "abc123",
+  "rule_refs": ["ua-mon-phd:overlap"],
+  "method": { "normalization": "casefold_word_tokens", "shingle_size": 8, "min_fragment_words": 20 },
+  "matches": [
+    {
+      "unit_id": "U-AAAAAAAA",
+      "char_start": 10,
+      "char_end": 220,
+      "corpus_doc_id": "thesis-2019.md",
+      "shingle_size": 8,
+      "overlap_words": 34,
+      "overlap_ratio": 0.42,
+      "cited": false,
+      "severity": "major"
+    }
+  ],
+  "limitations": [],
+  "result": "partial"
+}

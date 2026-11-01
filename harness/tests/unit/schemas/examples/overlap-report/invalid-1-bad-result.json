@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.2",
+  "run_id": "OV-1",
+  "method": { "normalization": "x", "shingle_size": 8, "min_fragment_words": 20 },
+  "matches": [],
+  "result": "pass"
+}

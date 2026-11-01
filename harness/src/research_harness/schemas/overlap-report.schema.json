@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/overlap-report.schema.json",
+  "title": "Overlap report (integrity.md; M3-10, FR-30)",
+  "description": "Deterministic overlap of the current text with the author corpus. An empty corpus yields result=unknown (never a clean pass).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "method", "matches", "result"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "run_id": { "type": "string", "pattern": "^OV-.+" },
+    "snapshot_id": { "type": "string" },
+    "corpus_index_sha256": { "type": "string" },
+    "rule_refs": { "type": "array", "items": { "type": "string" } },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normalization", "shingle_size", "min_fragment_words"],
+      "properties": {
+        "normalization": { "type": "string" },
+        "shingle_size": { "type": "integer", "minimum": 1 },
+        "min_fragment_words": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["unit_id", "char_start", "char_end", "corpus_doc_id",
+          "shingle_size", "overlap_words", "overlap_ratio", "cited", "severity"],
+        "properties": {
+          "unit_id": { "type": "string" },
+          "paragraph_id": { "type": "string" },
+          "char_start": { "type": "integer", "minimum": 0 },
+          "char_end": { "type": "integer", "minimum": 0 },
+          "corpus_doc_id": { "type": "string" },
+          "corpus_locator": { "type": "string" },
+          "shingle_size": { "type": "integer", "minimum": 1 },
+          "overlap_words": { "type": "integer", "minimum": 0 },
+          "overlap_ratio": { "type": "number", "minimum": 0 },
+          "cited": { "type": "boolean" },
+          "severity": { "$ref": "common.schema.json#/$defs/severity" }
+        }
+      }
+    },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "result": { "enum": ["ok", "partial", "unknown"] }
+  }
+}
