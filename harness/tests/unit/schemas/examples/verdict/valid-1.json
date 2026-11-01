@@ -1,0 +1,10 @@
+{
+  "claim_id": "C-1",
+  "support": "insufficient",
+  "rationale": "Only the abstract was available; the body claim is not confirmed.",
+  "evidence_refs": ["excerpt:EXC-0ABCDEFGHJKMNPQRSTVWXYZ012"],
+  "access_level": "abstract",
+  "confidence": "medium",
+  "by": "unit_critic",
+  "at": "2026-11-02T10:00:00Z"
+}

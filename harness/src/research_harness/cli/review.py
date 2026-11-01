@@ -26,6 +26,10 @@ def register(sub: argparse._SubParsersAction) -> None:
     su.add_argument("--verdicts")
     ic = rva.add_parser("integration")
     ic.add_argument("--coverage-unit", dest="coverage_unit")
+    cv = rva.add_parser(
+        "coverage", help="Coverage of material claims by verdict (full denominator)."
+    )
+    cv.add_argument("--unit", required=True)
 
 
 def handles(command: str) -> bool:
@@ -47,6 +51,21 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
             ),
             0,
         )
+    if args.review_action == "coverage":
+        cov = verdicts_mod.coverage(root, args.unit)
+        cf = verdicts_mod.coverage_findings(cov)
+        return (
+            build_envelope(
+                command="review",
+                status="ok" if cov["status"] == "ok" else "partial",
+                lang=lang,
+                message_key="review.coverage",
+                message_params={"checked": cov["checked"], "denominator": cov["denominator"]},
+                findings=cf,
+                data={"coverage": cov},
+            ),
+            0,
+        )
     if args.review_action == "submit":
         verdicts = _load(args.verdicts)
         findings = _load(args.findings)
@@ -55,8 +74,11 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         )
         blocked = bool(problems)
         cov = None
+        cov_findings: list[dict[str, Any]] = []
         if handoff["level"] == "unit":
             cov = verdicts_mod.coverage(root, handoff["target"])
+            if not blocked:
+                cov_findings = verdicts_mod.coverage_findings(cov)
         return (
             build_envelope(
                 command="review",
@@ -64,7 +86,7 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
                 lang=lang,
                 message_key="review.submitted" if not blocked else "review.rejected",
                 message_params={"id": args.review_id},
-                findings=problems,
+                findings=problems if blocked else cov_findings,
                 data={"handoff": handoff, "coverage": cov},
             ),
             3 if blocked else 0,

@@ -23,7 +23,10 @@
         "properties": {
           "claim_id": { "type": "string" },
           "support": { "$ref": "common.schema.json#/$defs/support" },
-          "rationale": { "type": "string" }
+          "rationale": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } },
+          "access_level": { "enum": ["full", "abstract", "metadata", "unknown"] },
+          "confidence": { "enum": ["low", "medium", "high"] }
         }
       }
     },
