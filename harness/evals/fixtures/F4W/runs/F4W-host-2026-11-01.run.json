@@ -1,0 +1,702 @@
+{
+  "schema_version": "0.2",
+  "fixture": "F4-W",
+  "run_kind": "host",
+  "producer": {
+    "model_id": "claude-fable-5-1",
+    "date": "2026-11-01",
+    "budget_used": "214366 subagent tokens (A 82672 + B 131694)",
+    "note": "blind 2-pass host run; researcher(extract)+analyst/integration_critic(verdict)=claude-fable-5-1 per config/roles.yaml; subagents saw only manuscript.md + sources.yaml + 3 OA fulltexts (EN1,UA3,UA4) + EN6-injection + D-codebook, never annotation (H6); aligned_from=F4W-host-2026-11-01.raw.json@sha256:e6ff4a748645"
+  },
+  "extracted": [
+    {
+      "claim_id": "C-001",
+      "material": true
+    },
+    {
+      "claim_id": "C-037",
+      "material": true
+    },
+    {
+      "claim_id": "C-038",
+      "material": true
+    },
+    {
+      "claim_id": "C-039",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-002",
+      "material": true
+    },
+    {
+      "claim_id": "C-003",
+      "material": true
+    },
+    {
+      "claim_id": "C-004",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-006",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-005",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-007",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-008",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-009",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-041",
+      "material": true
+    },
+    {
+      "claim_id": "C-010",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-040",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-011",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-012",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-013",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-014",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-015",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-016",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-017",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-042",
+      "material": true
+    },
+    {
+      "claim_id": "C-018",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-019",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-020",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-021",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-022",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-023",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-024",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-025",
+      "material": true
+    },
+    {
+      "claim_id": "C-026",
+      "material": true
+    },
+    {
+      "claim_id": "C-027",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-028",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-029",
+      "material": true
+    },
+    {
+      "claim_id": "C-030",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-031",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": "C-032",
+      "material": true
+    },
+    {
+      "claim_id": "C-033",
+      "material": false
+    },
+    {
+      "claim_id": "C-034",
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": null,
+      "material": false
+    },
+    {
+      "claim_id": "C-035",
+      "material": true
+    },
+    {
+      "claim_id": "C-043",
+      "material": true
+    },
+    {
+      "claim_id": "C-036",
+      "material": false
+    },
+    {
+      "claim_id": "C-044",
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    },
+    {
+      "claim_id": null,
+      "material": true
+    }
+  ],
+  "reviewed": [
+    {
+      "claim_id": "C-001",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-037",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-038",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-039",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-002",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-003",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-004",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-006",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-005",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-007",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D11"
+      ]
+    },
+    {
+      "claim_id": "C-008",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-009",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D4"
+      ]
+    },
+    {
+      "claim_id": "C-041",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-010",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-040",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-011",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "claim_id": "C-012",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "claim_id": "C-013",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-014",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D12"
+      ]
+    },
+    {
+      "claim_id": "C-015",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-016",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D9"
+      ]
+    },
+    {
+      "claim_id": "C-017",
+      "verdict": "partial",
+      "flagged_defects": [
+        "D3"
+      ]
+    },
+    {
+      "claim_id": "C-042",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-018",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D6"
+      ]
+    },
+    {
+      "claim_id": "C-019",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-020",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "claim_id": "C-021",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D2"
+      ]
+    },
+    {
+      "claim_id": "C-022",
+      "verdict": "not_found",
+      "flagged_defects": [
+        "D5"
+      ]
+    },
+    {
+      "claim_id": "C-023",
+      "verdict": "partial"
+    },
+    {
+      "claim_id": "C-024",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D7"
+      ]
+    },
+    {
+      "claim_id": "C-025",
+      "verdict": "contradicted",
+      "flagged_defects": [
+        "D8"
+      ]
+    },
+    {
+      "claim_id": "C-026",
+      "verdict": "partial"
+    },
+    {
+      "claim_id": "C-027",
+      "verdict": "insufficient",
+      "flagged_defects": [
+        "D1"
+      ]
+    },
+    {
+      "claim_id": "C-028",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-029",
+      "verdict": "supported",
+      "flagged_defects": [
+        "D10"
+      ]
+    },
+    {
+      "claim_id": "C-030",
+      "verdict": "insufficient"
+    },
+    {
+      "claim_id": "C-031",
+      "verdict": "unverifiable",
+      "flagged_defects": [
+        "D14"
+      ]
+    },
+    {
+      "claim_id": "C-032",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-033",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-034",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-035",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-043",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C-036",
+      "verdict": "unverifiable"
+    },
+    {
+      "claim_id": "C-044",
+      "verdict": "supported"
+    }
+  ],
+  "integration_findings": [
+    {
+      "id": "IF-1",
+      "defect_id": "D13"
+    }
+  ],
+  "contribution_points": []
+}
