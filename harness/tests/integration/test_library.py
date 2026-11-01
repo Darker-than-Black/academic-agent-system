@@ -111,6 +111,27 @@ def test_injection_flagged_on_ingest(tmp_path: Path) -> None:
     assert any(f["check_id"] == "source.injection_suspect" for f in findings)
 
 
+def test_unreadable_fulltext_is_skipped_not_fatal(tmp_path: Path) -> None:
+    # A fetched OA "PDF" that is really an HTML landing page must be skipped with
+    # a finding, and a good PDF in the same batch must still index.
+    _oid, folder = _object(tmp_path)
+    good, _ = registry.add_records(folder, [{"bib_key": "good", "title": "Assessment"}])
+    bad, _ = registry.add_records(folder, [{"bib_key": "bad", "title": "Landing page"}])
+    good_pdf = tmp_path / "good.pdf"
+    _make_pdf(good_pdf)
+    import_files.add_fulltext(folder, good[0]["id"], good_pdf, version="published")
+    html = tmp_path / "bad.pdf"
+    html.write_text("<!DOCTYPE html><html><body>not a pdf</body></html>", encoding="utf-8")
+    import_files.add_fulltext(folder, bad[0]["id"], html, version="published")
+
+    n, findings = ingest.ingest_all(folder)
+    assert n == 1  # only the good PDF indexed
+    skipped = [f for f in findings if f["check_id"] == "library.unreadable_fulltext"]
+    assert len(skipped) == 1
+    assert skipped[0]["location"]["ref"] == f"source:{bad[0]['id']}"
+    assert index_mod.search(folder, "assessment")  # good source searchable
+
+
 def test_derived_text_and_index_are_gitignored() -> None:
     hits = forbidden_hits(
         [
