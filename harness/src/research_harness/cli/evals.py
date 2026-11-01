@@ -8,6 +8,7 @@ from typing import Any
 
 from research_harness.core.envelope import build_envelope
 from research_harness.core.errors import InvalidInputError
+from research_harness.evals import align as align_mod
 from research_harness.evals import holdout as holdout_mod
 from research_harness.evals import report as report_mod
 from research_harness.evals import runner
@@ -26,6 +27,17 @@ def register(sub: argparse._SubParsersAction) -> None:
         help="Semantic cases: path to a host run artifact to score instead of the case default "
         "(a real С run replaces the committed synthetic one). Must be outside holdout (H1).",
     )
+    al = sa.add_parser(
+        "align-run",
+        help="Map a blind raw host run to gold claim_ids by span overlap (M2-19).",
+    )
+    al.add_argument("--raw", required=True, help="Blind raw run (eval_run.raw schema).")
+    al.add_argument("--annotation", required=True, help="Reference annotation.yaml (gold).")
+    al.add_argument(
+        "--manuscript",
+        help="manuscript.md; default: a sibling of the annotation.",
+    )
+    al.add_argument("--out", required=True, help="Where to write the aligned eval_run artifact.")
     rp = sa.add_parser("report", help="Show the latest report for a suite.")
     rp.add_argument("--suite", required=True)
     hd = sa.add_parser("holdout", help="Author-only holdout run (aggregates only, H1).")
@@ -73,6 +85,28 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
                 data=row,
             ),
             0 if row["all_pass"] else 2,
+        )
+
+    if args.eval_action == "align-run":
+        annotation = Path(args.annotation)
+        manuscript = (
+            Path(args.manuscript) if args.manuscript else annotation.parent / "manuscript.md"
+        )
+        rep = align_mod.align_files(Path(args.raw), annotation, manuscript, Path(args.out))
+        return (
+            build_envelope(
+                command=_COMMAND,
+                status="ok",
+                lang=lang,
+                message_key="align.done",
+                message_params={
+                    "matched": rep["matched"],
+                    "gold": rep["gold_total"],
+                    "spurious": rep["spurious"],
+                },
+                data=rep,
+            ),
+            0,
         )
 
     if args.eval_action == "run":

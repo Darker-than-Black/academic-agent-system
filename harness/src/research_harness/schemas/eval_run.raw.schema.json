@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/eval_run.raw.schema.json",
+  "title": "Blind host run artifact (05-eval-base §6; M2-19)",
+  "description": "A semantic host run BEFORE claim_id alignment. Subagents produce this seeing only manuscript.md + sources.yaml + local full texts, never annotation.yaml (H6). `rh eval align-run` maps each anchor quote to a gold claim_id by span overlap to produce the eval_run artifact; verdicts/defects are carried over unchanged.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "fixture", "producer", "run_kind"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "fixture": { "type": "string" },
+    "run_kind": { "enum": ["host", "synthetic"] },
+    "synthetic": { "type": "boolean" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "date"],
+      "properties": {
+        "model_id": { "type": "string" },
+        "date": { "type": "string" },
+        "budget_used": { "type": ["number", "string"] },
+        "note": { "type": "string" }
+      }
+    },
+    "extracted": {
+      "type": "array",
+      "description": "Claims the model extracted, keyed by its own local_id; anchor.quote is a verbatim manuscript sentence used to locate the claim's span.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local_id", "anchor"],
+        "properties": {
+          "local_id": { "type": "string" },
+          "material": { "type": "boolean" },
+          "anchor": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["quote"],
+            "properties": {
+              "section": { "type": "string" },
+              "paragraph": { "type": "integer" },
+              "quote": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "reviewed": {
+      "type": "array",
+      "description": "The model's verdict per extracted claim, keyed by local_id.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local_id", "verdict"],
+        "properties": {
+          "local_id": { "type": "string" },
+          "verdict": { "$ref": "common.schema.json#/$defs/support" },
+          "flagged_defects": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "integration_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "defect_id": { "type": "string" }
+        }
+      }
+    },
+    "contribution_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["point_id", "response"],
+        "properties": {
+          "point_id": { "type": "string" },
+          "response": { "enum": ["author", "placeholder", "invented"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+{"schema_version":"0.2","fixture":"F4-W","run_kind":"host",
+ "producer":{"model_id":"claude-fable-5-1","date":"2026-11-01"},
+ "reviewed":[{"claim_id":"C-001","verdict":"contradicted"}]}
