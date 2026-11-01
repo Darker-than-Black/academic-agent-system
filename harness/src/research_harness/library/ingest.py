@@ -37,6 +37,12 @@ def ingest_source(root: Path, source_id: str) -> tuple[dict[str, Any], list[dict
     if not fulltext or not fulltext.get("local_path"):
         raise ValueError(f"{source_id} has no local full text to ingest")
     pdf_path = root / fulltext["local_path"]
+    with pdf_path.open("rb") as fh:
+        header = fh.read(5)
+    if header != b"%PDF-":
+        # A fetched OA "PDF" is sometimes an HTML landing page; do not feed it to
+        # the PDF parser (it would crash the whole index). H6: no fabricated text.
+        raise ValueError(f"{source_id}: not a PDF (header {header!r})")
     pages = extract_pages(pdf_path)
     page_map = build_page_map(pages, _first_printed(source))
     apply_page_map(pages, page_map)
@@ -51,9 +57,24 @@ def ingest_all(root: Path) -> tuple[int, list[dict[str, Any]]]:
     findings: list[dict[str, Any]] = []
     n = 0
     for source in registry.load(root):
-        if source.get("fulltext", {}).get("local_path"):
-            _src, fnd = ingest_source(root, source["id"])
-            findings.extend(fnd)
-            n += 1
+        if not source.get("fulltext", {}).get("local_path"):
+            continue
+        sid = source["id"]
+        try:
+            _src, fnd = ingest_source(root, sid)
+        except Exception as exc:  # noqa: BLE001 - one unreadable file must not abort the index
+            findings.append(
+                {
+                    "check_id": "library.unreadable_fulltext",
+                    "severity": "warn",
+                    "reason": f"{sid}: full text could not be extracted "
+                    f"({type(exc).__name__}); skipped",
+                    "location": {"ref": f"source:{sid}"},
+                    "proposed_action": "replace with a real PDF or register the full text manually",
+                }
+            )
+            continue
+        findings.extend(fnd)
+        n += 1
     index_mod.build_index(root)
     return n, findings
