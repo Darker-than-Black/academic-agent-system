@@ -1,0 +1,8 @@
+{"schema_version":"0.2","fixture":"F4-W","run_kind":"host",
+ "producer":{"model_id":"claude-fable-5-1","date":"2026-11-01"},
+ "extracted":[
+   {"local_id":"M-001","material":true,
+    "anchor":{"section":"Abstract","paragraph":1,"quote":"formative assessment reliably improves learning outcomes for all students"}}],
+ "reviewed":[{"local_id":"M-001","verdict":"contradicted","flagged_defects":["D13"]}],
+ "integration_findings":[{"id":"IF-1","defect_id":"D13"}],
+ "contribution_points":[{"point_id":"CP-1","response":"placeholder"}]}
