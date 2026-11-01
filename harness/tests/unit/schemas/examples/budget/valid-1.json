@@ -1,0 +1,12 @@
+{
+  "scope": "object",
+  "limits": {
+    "model_calls": 50,
+    "tokens": 100000,
+    "cost": 5.0,
+    "wall_time_s": 3600,
+    "external_requests": 20
+  },
+  "paid_calls": "disabled",
+  "thresholds": [0.5, 0.8, 1.0]
+}

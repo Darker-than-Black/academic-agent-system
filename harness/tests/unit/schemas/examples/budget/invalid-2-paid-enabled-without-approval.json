@@ -1,0 +1,5 @@
+{
+  "scope": "object",
+  "limits": { "tokens": 100000 },
+  "paid_calls": "enabled"
+}
