@@ -1,0 +1,4 @@
+{
+  "scope": "object",
+  "limits": { "tokens": 100000 }
+}

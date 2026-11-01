@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/budget.schema.json",
+  "title": "Budget controller config (models-budget.md; M3-01, FR-13, NFR-05)",
+  "description": "Per-object or per-task spending envelope. Limits are checked before every LLM / compute / paid call; at 100% of any limit the task stops with partial artifacts (invariant 5). Paid calls are disabled by default and enabling them needs a recorded approval (ADR-017/ADR-021). Usage is computed from .rh/model-calls.jsonl and adapter request logs; any unknown usage makes the state unknown, never ok (NFR-05).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scope", "paid_calls"],
+  "properties": {
+    "scope": { "enum": ["object", "task"] },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "model_calls": { "type": "integer", "minimum": 0 },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "cost": { "type": "number", "minimum": 0 },
+        "wall_time_s": { "type": "number", "minimum": 0 },
+        "external_requests": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "paid_calls": { "enum": ["disabled", "enabled"] },
+    "enabled_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Approval id (e.g. AR-0001) that authorises paid calls. Required in practice whenever paid_calls is enabled; the controller blocks paid calls when it is absent."
+    },
+    "thresholds": {
+      "type": "array",
+      "items": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+      "minItems": 1,
+      "description": "Fractions of each limit that raise findings; the default is [0.5, 0.8, 1.0] (registry #22)."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "paid_calls": { "const": "enabled" } } },
+      "then": { "required": ["enabled_by"] }
+    }
+  ]
+}
