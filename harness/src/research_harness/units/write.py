@@ -111,9 +111,13 @@ def rebind_claims(root: Path, unit_id: str) -> int:
     if not cf.is_file():
         return 0
     data = json.loads(cf.read_text(encoding="utf-8"))
+    # A unit with no claims yet is seeded as a bare list ([]); once `claims set`
+    # runs it becomes {"schema_version", "unit_id", "claims": [...]}. Tolerate
+    # both shapes so the first `unit write` to an unclaimed unit does not crash.
+    claims = data if isinstance(data, list) else data.get("claims", [])
     pmap = anchors.paragraph_map(read_body(root, unit_id))
     rebound = 0
-    for c in data.get("claims", []):
+    for c in claims:
         pid = c.get("location", {}).get("paragraph_id")
         if pid and pid in pmap:
             new_sha = paragraph_sha(pmap[pid])

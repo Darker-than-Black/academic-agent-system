@@ -31,6 +31,16 @@ def test_write_requires_request(tmp_path: Path) -> None:
         write_mod.write_unit(folder, _U, "Some text.", request="")
 
 
+def test_write_tolerates_bare_list_claims_json(tmp_path: Path) -> None:
+    # A freshly scaffolded unit seeds claims.json as a bare list ([]); the first
+    # `unit write` must not crash in rebind_claims (regression: 'list' object
+    # has no attribute 'get').
+    folder, uf = _object(tmp_path)
+    (uf / "claims.json").write_text("[]\n", encoding="utf-8")
+    paras, _ = write_mod.write_unit(folder, _U, "First paragraph.", request="draft")
+    assert paras and json.loads((uf / "claims.json").read_text(encoding="utf-8")) == []
+
+
 def test_author_edit_not_overwritten_and_claims_rebind(tmp_path: Path) -> None:  # T07
     folder, uf = _object(tmp_path)
     # Agent drafts two paragraphs.
