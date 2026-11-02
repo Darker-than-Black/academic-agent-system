@@ -1,0 +1,9 @@
+# Review configuration (M3-02+, review.md).
+# The Codex critic (a critic from another model family, FR-58) is OFF by default
+# and is additionally gated by intake Q3b (external-API permission) and the paid
+# budget (ADR-017/021, H9). Enabling it is the author's governed decision.
+codex_critic:
+  enabled: false
+  model: "gpt-5-codex"   # the configured Codex model id (logged per FR-55 when run)
+disputes:
+  max_cycles: 2

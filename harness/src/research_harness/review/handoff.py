@@ -42,13 +42,18 @@ def _write(root: Path, record: dict[str, Any]) -> dict[str, Any]:
     return record
 
 
-def prepare(root: Path, level: str, *, unit: str | None = None) -> dict[str, Any]:
+def prepare(
+    root: Path, level: str, *, unit: str | None = None, engine: str = "claude"
+) -> dict[str, Any]:
+    from research_harness.review import engine as engine_mod
+
     target = unit if level == "unit" else "article"
     pack_target = unit if level == "unit" else (unit or "")
     pack_id = ""
     if pack_target:
         manifest, _ = pack_mod.build_pack(root, pack_target, _PACK_ROLE[level])
         pack_id = manifest["id"]
+    resolved = engine_mod.resolve_engine(root, engine)
     record = {
         "schema_version": "0.2",
         "id": _next_id(root),
@@ -57,6 +62,10 @@ def prepare(root: Path, level: str, *, unit: str | None = None) -> dict[str, Any
         "role": _ROLE[level],
         "context_pack_id": pack_id,
         "status": "prepared",
+        "fresh_context": True,
+        "engine": resolved["engine"],
+        "engine_status": resolved["engine_status"],
+        "engine_reason": resolved["reason"],
         "created_at": default_clock().now_rfc3339(),
     }
     return _write(root, record)

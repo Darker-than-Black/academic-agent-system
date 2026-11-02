@@ -13,6 +13,10 @@
     "role": { "enum": ["unit_critic", "integration_critic"] },
     "context_pack_id": { "type": "string" },
     "status": { "enum": ["prepared", "submitted"] },
+    "fresh_context": { "type": "boolean" },
+    "engine": { "enum": ["claude", "codex"] },
+    "engine_status": { "enum": ["ok", "unavailable", "blocked_by_permissions", "disabled"] },
+    "engine_reason": { "type": "string" },
     "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
     "verdicts": {
       "type": "array",

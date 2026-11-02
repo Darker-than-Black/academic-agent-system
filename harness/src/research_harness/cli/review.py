@@ -23,6 +23,7 @@ def register(sub: argparse._SubParsersAction) -> None:
     pr = rva.add_parser("prepare")
     pr.add_argument("--level", required=True, choices=["unit", "article"])
     pr.add_argument("--unit")
+    pr.add_argument("--engine", default="claude", choices=["claude", "codex"])
     su = rva.add_parser("submit")
     su.add_argument("review_id")
     su.add_argument("--findings")
@@ -47,14 +48,36 @@ def handles(command: str) -> bool:
 def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     root = object_root(args)
     if args.review_action == "prepare":
-        rec = handoff_mod.prepare(root, args.level, unit=args.unit)
+        from research_harness.review import engine as engine_mod
+
+        requested = getattr(args, "engine", "claude")
+        rec = handoff_mod.prepare(root, args.level, unit=args.unit, engine=requested)
+        # Codex requested but disabled by config → refuse with an explanation.
+        if rec["engine_status"] == engine_mod.DISABLED:
+            return (
+                build_envelope(
+                    command="review",
+                    status="blocked",
+                    lang=lang,
+                    message_key="review.engine_disabled",
+                    message_params={"reason": rec["engine_reason"]},
+                    data={"handoff": rec},
+                ),
+                3,
+            )
+        status = "partial" if rec["engine_status"] != engine_mod.OK else "ok"
         return (
             build_envelope(
                 command="review",
-                status="ok",
+                status=status,
                 lang=lang,
                 message_key="review.prepared",
-                message_params={"id": rec["id"], "level": args.level},
+                message_params={
+                    "id": rec["id"],
+                    "level": args.level,
+                    "engine": rec["engine"],
+                    "engine_status": rec["engine_status"],
+                },
                 data={"handoff": rec},
             ),
             0,

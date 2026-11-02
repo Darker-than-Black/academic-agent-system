@@ -159,3 +159,19 @@ questions:
       note:
         uk: "За замовчуванням — рівень із профілю автора."
         en: "Defaults to the author profile's level."
+  - id: Q3b
+    core: false
+    type: choice
+    options: ["yes", "no"]
+    text:
+      uk: "Чи дозволяєте використання зовнішніх модельних API (напр. Codex) на матеріалах цього об'єкта?"
+      en: "Do you permit external-model APIs (e.g. Codex) on this object's materials?"
+    help:
+      uk: "Стосується критика з іншої модельної сім'ї (FR-58). За замовчуванням — ні; без дозволу зовнішній критик заблоковано."
+      en: "Governs a critic from another model family (FR-58). Default is no; without permission the external critic is blocked."
+    unknown_consequence:
+      blocks: []
+      unknown_checks: []
+      note:
+        uk: "Без явного «так» зовнішні модельні API не викликаються."
+        en: "Without an explicit 'yes', external-model APIs are not called."
