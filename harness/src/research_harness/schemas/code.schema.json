@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/code.schema.json",
+  "title": "Qualitative coding entry (analysis-sandbox.md, FR-54)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "code", "document_ref", "locator", "quote", "doc_sha256", "verified"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^CODE-[0-9]{4,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "code": { "type": "string" },
+    "document_ref": { "type": "string" },
+    "locator": { "type": "string" },
+    "quote": { "type": "string" },
+    "doc_sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "const": "unknown" }] },
+    "verified": { "type": "boolean" }
+  }
+}

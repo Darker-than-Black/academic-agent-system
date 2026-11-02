@@ -9,7 +9,7 @@ import argparse
 from typing import Any
 
 from research_harness.analysis import rows as rows_mod
-from research_harness.analysis import tuples
+from research_harness.analysis import synthetic, tuples
 from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
 
@@ -42,7 +42,7 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
             ),
             0,
         )
-    findings = tuples.check(root)
+    findings = tuples.check(root) + synthetic.findings(root)
     blocked = bool(findings)
     return (
         build_envelope(

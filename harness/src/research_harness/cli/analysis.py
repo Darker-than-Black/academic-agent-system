@@ -9,7 +9,7 @@ from __future__ import annotations
 import argparse
 from typing import Any
 
-from research_harness.analysis import project, runner, sandbox
+from research_harness.analysis import bibliometrics, project, runner, sandbox
 from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
 
@@ -21,6 +21,7 @@ def register(sub: argparse._SubParsersAction) -> None:
     sa = an.add_subparsers(dest="analysis_action", metavar="action", required=True)
     sa.add_parser("init", help="Create the per-object analysis project with pinned packages.")
     sa.add_parser("sandbox", help="Show the network-isolation capability for runs.")
+    sa.add_parser("corpus-export", help="Export literature-registry metadata for bibliometrics.")
     rn = sa.add_parser("run", help="Run a script in the sandbox (network off).")
     rn.add_argument("script", help="Path to the analysis script.")
     rn.add_argument("--dataset", dest="datasets", action="append", default=None)
@@ -66,6 +67,19 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
                 data=report,
             ),
             0 if ok else 3,
+        )
+    if args.analysis_action == "corpus-export":
+        report = bibliometrics.export(root)
+        return (
+            build_envelope(
+                command=_COMMAND,
+                status="ok",
+                lang=lang,
+                message_key="analysis.corpus_export",
+                message_params={"n": report["n"]},
+                data=report,
+            ),
+            0,
         )
     caps = sandbox.capabilities()
     return (
