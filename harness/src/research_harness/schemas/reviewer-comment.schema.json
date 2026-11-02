@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/reviewer-comment.schema.json",
+  "title": "Reviewer comment (lifecycle-records.md; M3-08, FR-41)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "round", "reviewer", "text", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^RC-\\d{2,}$" },
+    "round": { "type": "integer", "minimum": 1 },
+    "reviewer": { "type": "string", "minLength": 1 },
+    "text": { "type": "string", "minLength": 1 },
+    "location_hint": { "type": "string" },
+    "action": { "enum": ["accept", "partial", "decline"] },
+    "response": { "type": "string" },
+    "changed_units": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "status": { "enum": ["open", "closed"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "closed" } } },
+      "then": { "required": ["action", "response"] }
+    }
+  ]
+}
