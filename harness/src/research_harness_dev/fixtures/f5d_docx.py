@@ -13,6 +13,9 @@ from __future__ import annotations
 import zipfile
 from pathlib import Path
 
+from research_harness_dev.ids import paragraph_id as _pg
+from research_harness_dev.ids import unit_id as _uid
+
 _W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
 _CONTENT_TYPES = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -97,8 +100,8 @@ def build_f5d(dest: Path) -> Path:
 def build_f5d_docx(
     dest: Path,
     *,
-    unit_id: str = "U-MPRT2345",
-    para_ids: tuple[str, str] = ("PG-MP2345", "PG-MP2346"),
+    unit_id: str = _uid("MPRT2345"),
+    para_ids: tuple[str, str] = (_pg("MP2345"), _pg("MP2346")),
     with_unmapped: bool = False,
 ) -> Path:
     """Write a synthetic reviewed ``.docx`` to ``dest`` and return its path."""

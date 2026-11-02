@@ -8,16 +8,17 @@ from typing import Any
 from research_harness.structure import ops
 from research_harness.workspace.objects import create_object
 from research_harness.workspace.workspace import Workspace
+from research_harness_dev.ids import unit_id as _uid
 
-INTRO = "U-00000001"
-CH1, CH2, CH3 = "U-00000002", "U-00000003", "U-00000004"
-CONCL, REFS, APP = "U-00000005", "U-00000006", "U-00000007"
-CH1_SUBS = ["U-00000011", "U-00000012", "U-00000013", "U-00000014"]
-CH1_CONCL = "U-00000015"
-CH2_SUBS = ["U-00000021", "U-00000022", "U-00000023"]
-CH2_CONCL = "U-00000024"
-CH3_SUBS = ["U-00000031", "U-00000032", "U-00000033"]
-CH3_CONCL = "U-00000034"
+INTRO = _uid("00000001")
+CH1, CH2, CH3 = _uid("00000002"), _uid("00000003"), _uid("00000004")
+CONCL, REFS, APP = _uid("00000005"), _uid("00000006"), _uid("00000007")
+CH1_SUBS = [_uid("00000011"), _uid("00000012"), _uid("00000013"), _uid("00000014")]
+CH1_CONCL = _uid("00000015")
+CH2_SUBS = [_uid("00000021"), _uid("00000022"), _uid("00000023")]
+CH2_CONCL = _uid("00000024")
+CH3_SUBS = [_uid("00000031"), _uid("00000032"), _uid("00000033")]
+CH3_CONCL = _uid("00000034")
 
 
 def _chapter(cid: str, title: str, subs: list[str], concl: str) -> dict[str, Any]:
@@ -51,7 +52,7 @@ def build_f7_structure(dest: Path) -> Path:
 
 
 # Depth-1 article: the same code path (ADR-019 p.2).
-ART_SECS = ["U-10000001", "U-10000002", "U-10000003"]
+ART_SECS = [_uid("10000001"), _uid("10000002"), _uid("10000003")]
 
 
 def build_f7_article(dest: Path) -> Path:

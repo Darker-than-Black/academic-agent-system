@@ -13,12 +13,13 @@ from typing import Any
 from research_harness.core.hashing import canonical_json_hash, file_hash
 from research_harness.state import snapshot as snap
 from research_harness.state.store import Store
+from research_harness_dev.ids import unit_id as _uid
 
 HUMAN = {"kind": "human", "name": "fixture", "version": "0.1.0"}
 AGENT = {"kind": "model", "name": "fixture", "version": "0.1.0"}
 
-UNIT_A = "U-AAAA1111"
-UNIT_B = "U-BBBB2222"
+UNIT_A = _uid("AAAA1111")
+UNIT_B = _uid("BBBB2222")
 FOLDER_A = "manuscript/01 Unit A"
 FOLDER_B = "manuscript/02 Unit B"
 
