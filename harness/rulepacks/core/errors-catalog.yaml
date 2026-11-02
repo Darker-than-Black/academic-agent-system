@@ -1,0 +1,56 @@
+# Typical-errors catalogue (integrity.md; M3-13, FR-51). Rule-pack DATA, uk + en.
+# The author chooses categories; `rh errors check` reports findings with proposed
+# fixes. The harness NEVER introduces an error into any version or export (T56).
+schema_version: "0.2"
+categories:
+  - id: voice_person
+    label:
+      uk: "Голос і особа (змішування я / ми / безособове)"
+      en: "Voice and person (mixing I / we / impersonal)"
+    deterministic: true
+  - id: calque_bureaucratese
+    label:
+      uk: "Кальки та канцелярит"
+      en: "Calques and bureaucratese"
+    deterministic: true
+    # Deterministic calque -> preferred form (Ukrainian academic style).
+    calques:
+      - { bad: "в залежності від", good: "залежно від" }
+      - { bad: "на протязі", good: "протягом" }
+      - { bad: "у відповідності з", good: "відповідно до" }
+      - { bad: "згідно даних", good: "згідно з даними" }
+      - { bad: "приймати участь", good: "брати участь" }
+      - { bad: "в якості", good: "як" }
+      - { bad: "більш детальніше", good: "детальніше" }
+      - { bad: "на рахунок", good: "щодо" }
+  - id: terminology
+    label:
+      uk: "Термінологія (непослідовні терміни)"
+      en: "Terminology (inconsistent terms)"
+    deterministic: false
+  - id: argumentation
+    label:
+      uk: "Аргументація (твердження без підстави)"
+      en: "Argumentation (claims without grounds)"
+    deterministic: false
+  - id: formatting
+    label:
+      uk: "Форматування"
+      en: "Formatting"
+    deterministic: false
+  - id: structure
+    label:
+      uk: "Структура"
+      en: "Structure"
+    deterministic: false
+# Voice markers used by the deterministic voice_person check.
+voice_markers:
+  I:
+    uk: ["я вважаю", "на мою думку", "я показав", "мною"]
+    en: ["i argue", "i show", "in my view", "i propose"]
+  we:
+    uk: ["ми вважаємо", "ми показали", "на нашу думку", "нами"]
+    en: ["we argue", "we show", "in our view", "we propose"]
+  impersonal:
+    uk: ["доцільно", "слід зазначити", "показано, що", "встановлено, що"]
+    en: ["it is shown", "it should be noted", "it is established", "one can"]

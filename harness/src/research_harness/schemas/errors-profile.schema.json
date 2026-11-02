@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/errors-profile.schema.json",
+  "title": "Typical-errors profile (integrity.md; M3-13, FR-51)",
+  "description": "The author's chosen typical-error categories and voice.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["chosen", "voice", "version"],
+  "properties": {
+    "chosen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["category_id"],
+        "properties": {
+          "category_id": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "voice": { "enum": ["I", "we", "impersonal"] },
+    "version": { "type": "integer", "minimum": 1 }
+  }
+}

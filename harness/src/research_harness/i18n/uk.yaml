@@ -180,3 +180,9 @@ review.fulltext: "Загальнодокументні перевірки: {n} �
 export.done: "Чернетку експортовано ({format}); прогалин: {gaps}."
 error.pandoc_missing: "pandoc не знайдено; встановіть його або експортуйте у форматі md."
 error.pandoc_failed: "pandoc завершився з помилкою під час створення .docx."
+
+style.built: "Профіль стилю для {lang} побудовано з {n} документів корпусу."
+errors.chosen: "Обрано категорій типових помилок: {n}."
+errors.checked: "Перевірка типових помилок у {unit}: {n} знахідок."
+error.style_invalid: "Профіль стилю не відповідає схемі."
+error.errors_unknown_category: "Невідома категорія типової помилки."

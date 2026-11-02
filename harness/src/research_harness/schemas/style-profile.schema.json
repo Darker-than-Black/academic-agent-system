@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/style-profile.schema.json",
+  "title": "Style profile (integrity.md; M3-13, FR-19)",
+  "description": "Per-language style features built from the author's corpus. Data edited only by the author; stylization must preserve invariants (FR-19a).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lang", "version", "features"],
+  "properties": {
+    "lang": { "type": "string", "minLength": 2 },
+    "version": { "type": "integer", "minimum": 1 },
+    "built_from": { "type": "array", "items": { "type": "string" } },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["voice"],
+      "properties": {
+        "sentence_length": { "type": "number", "minimum": 0 },
+        "voice": { "enum": ["I", "we", "impersonal"] },
+        "connectives": { "type": "array", "items": { "type": "string" } },
+        "preferred_terms": { "type": "object" },
+        "banned_phrases": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "accepted_proposals": { "type": "array", "items": { "type": "string" } }
+  }
+}
