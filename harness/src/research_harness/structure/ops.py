@@ -232,7 +232,11 @@ def sync(root: Path, main_language: str = "uk") -> dict[str, Any]:
     units = model.parse_units(data)
     labels = model.resolve_labels(data, main_language)
     summary = sync_folders(root, units, labels)
-    # Repair front-matter titles/kinds to match structure.yaml.
+    # Repair front-matter titles/kinds to match structure.yaml, preserving the
+    # manuscript body verbatim (H13). The rendered header already ends with the
+    # single blank line that separates front matter from body, so the existing
+    # body is taken with its leading blank line(s) stripped; this keeps sync
+    # idempotent instead of prepending a blank line on every run.
     folders = current_folders(root)
     for u in _flatten(units):
         folder = folders.get(u.id)
@@ -240,8 +244,12 @@ def sync(root: Path, main_language: str = "uk") -> dict[str, Any]:
             continue
         tpl = (_TEMPLATES / "text.md").read_text(encoding="utf-8")
         existing = (folder / "text.md").read_text(encoding="utf-8")
+        if "\n---\n" not in existing:
+            # No closing front-matter delimiter: do not risk clobbering content.
+            continue
         _, _, after = existing.partition("\n---\n")
+        body = after.lstrip("\n")
         header = tpl.format(id=u.id, title=u.title or "", kind=u.kind)
-        (folder / "text.md").write_text(header + (after or "\n"), encoding="utf-8")
+        (folder / "text.md").write_text(header + body, encoding="utf-8")
     Store(root).checkpoint(by="human", note="structure sync")
     return summary

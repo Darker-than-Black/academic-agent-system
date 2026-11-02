@@ -98,6 +98,28 @@ def test_crash_between_rename_phases_recovers(tmp_path: Path) -> None:
     assert majors == []
 
 
+def test_sync_preserves_body_and_is_idempotent(tmp_path: Path) -> None:
+    """PH-3: sync repairs front matter only; the manuscript body survives
+    verbatim and repeated syncs do not drift whitespace."""
+    folder = build_f7_structure(tmp_path / "f7")
+    folders = ops.current_folders(folder)
+    uid = sorted(folders)[0]
+    text_md = folders[uid] / "text.md"
+    body = "SEEDED BODY PARAGRAPH.\n\nSecond paragraph with --- dashes inside.\n"
+    header = text_md.read_text(encoding="utf-8")
+    text_md.write_text(header.rstrip() + "\n\n" + body, encoding="utf-8")
+
+    ops.sync(folder, "uk")
+    first = text_md.read_text(encoding="utf-8")
+    assert "SEEDED BODY PARAGRAPH." in first
+    assert "Second paragraph with --- dashes inside." in first
+    # Exactly one blank line between front matter and body, no accrual.
+    assert first.endswith("---\n\n" + body)
+
+    ops.sync(folder, "uk")
+    assert text_md.read_text(encoding="utf-8") == first  # idempotent
+
+
 def test_article_depth1_same_code(tmp_path: Path) -> None:
     folder = build_f7_article(tmp_path / "art")
     assert check_structure(folder, "uk") == []
