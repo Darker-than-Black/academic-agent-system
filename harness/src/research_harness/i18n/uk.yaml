@@ -12,6 +12,8 @@ error.dirty_overlap: "Є незакомічені зміни ({n}) у файла
 error.checkpoint_request_required: "Для --by agent потрібен --request із проханням автора."
 error.no_object: "Не знайдено об'єкт (каталог із .rh/)."
 autonomy.shown: "Рівень автономії: {level}."
+ethics.ok: "Етичний гейт: A6 дозволено."
+ethics.blocked: "Етичний гейт: A6 заблоковано до запису схвалення GE від етичної комісії."
 autonomy.set: "Рівень автономії встановлено: {level}."
 error.autonomy_human_only: "Зміна автономії лише для людини: виконай команду у власному терміналі."
 overlap.done: "Перевірка збігів: {n} збіг(ів); результат {result}."

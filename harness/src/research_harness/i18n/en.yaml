@@ -12,6 +12,8 @@ error.dirty_overlap: "{n} uncommitted change(s) in the operation's files. Run rh
 error.checkpoint_request_required: "--by agent requires --request with the author's instruction."
 error.no_object: "No object found (a directory containing .rh/)."
 autonomy.shown: "Autonomy level: {level}."
+ethics.ok: "Ethics gate: A6 is permitted."
+ethics.blocked: "Ethics gate: A6 is blocked until a GE ethics-committee approval is recorded."
 autonomy.set: "Autonomy level set to {level}."
 error.autonomy_human_only: "Changing autonomy is human-only: run the command in your own terminal."
 overlap.done: "Overlap check: {n} match(es); result {result}."
