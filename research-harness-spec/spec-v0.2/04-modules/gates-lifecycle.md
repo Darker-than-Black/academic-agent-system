@@ -38,4 +38,12 @@
 
 **Open points.**
 - [?] Whether commands run from inside Claude Code count as the author's terminal is checked in M1-14 (H12).
-- [?] **Per-gate binding scope (G0).** Invariant 3 binds every approval to the whole snapshot hash, so any later content change — adding structure units, editing manuscript prose — invalidates G0, although G0 only approves the intake context. 02 §6 already allows binding to a list of artifact refs; `gates/requests.py` currently opens the G0 request with `refs: []`, collapsing validity to whole-manifest equality (`state/freshness.py` `approval_valid`). Decide in M3-06 whether G0 should bind to the intake subset (refs = intake answers / object context) while G3 keeps whole-snapshot binding (02 §4.2 A12, T09). Surfaced in an M1 end-to-end test; not blocking while A1+ are unimplemented.
+- [R] **Per-gate binding scope (G0).** Resolved (P2-1; author-confirmed). G0
+  approves the intake context only, so `gates/requests.request_gate` now opens
+  the G0 request bound to the intake subset `G0_INTAKE_REFS =
+  (file:intake/answers.json, file:object.json)` instead of `refs: []`.
+  `state/freshness._ref_relpath` resolves a `file:` ref to its snapshot path, so
+  `approval_valid` holds a G0 valid as long as those two files keep their hash —
+  a later structure or prose edit (random unit IDs, prose in text.md) leaves them
+  untouched, while changing an intake answer re-opens G0. G3 keeps whole-snapshot
+  binding (02 §4.2 A12). Tested in `tests/unit/state/test_g0_binding.py`.

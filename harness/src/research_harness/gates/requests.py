@@ -65,11 +65,21 @@ def open_request(
     return ar_id
 
 
+# G0 approves the intake context only, so it binds to the intake subset rather
+# than the whole snapshot (02 §4.2, T09; P2-1). A later structure or prose edit
+# leaves these two files untouched (unit IDs are random, prose lives in text.md),
+# so a valid G0 survives it; G3 keeps whole-snapshot binding. Changing an intake
+# answer still re-opens G0.
+G0_INTAKE_REFS: tuple[str, ...] = ("file:intake/answers.json", "file:object.json")
+
+
 def request_gate(root: Path, gate: str, lang: str, *, refs: list[str] | None = None) -> str:
     """Render the full briefing for ``gate`` and open (or reuse) its request."""
     from research_harness.gates.briefing import render
 
     summary_path = "intake/summary.md" if gate == "G0" else ""
+    if gate == "G0" and refs is None:
+        refs = list(G0_INTAKE_REFS)
     return open_request(
         root, gate, briefing_text=render(root, gate, lang), summary_path=summary_path, refs=refs
     )

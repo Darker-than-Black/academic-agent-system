@@ -206,6 +206,10 @@ def _snapshot_file_hash(root: Path, snapshot_id: str, relpath: str) -> str | Non
 
 def _ref_relpath(g: ObjectGraph, ref_str: str) -> str | None:
     r = parse_ref(ref_str)
+    if r.kind == "file":
+        # A file: ref is already a repo-relative path (02 §1.4); it maps straight
+        # to the snapshot's file list (used e.g. for G0's intake-subset binding).
+        return r.id
     if r.kind == "unit" and r.part:
         folder = g.unit_dir.get(r.id)
         if folder is None:
