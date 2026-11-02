@@ -67,6 +67,8 @@ Findings handed to the writer: `{id, statement, kind: synthesis|gap|position|def
 | ID | Kind | Severity | Source |
 |---|---|---|---|
 | `protocol.required_missing` | D | blocker for G1 | pack `literature-narrative` / `conceptual` |
+| `protocol.no_pack` | D | major at draft (degraded), blocker at freeze | study_kind with no pack yet (mixed, empirical_\*, computational_ml); Finding 2 |
+| `protocol.invalid_fields` | D | blocker | supplied `--file` fields fail schema validation; Finding 3 |
 | `protocol.changed_after_g1` | D | blocker until G2 | T03 |
 | `search.no_plan`, `search.plan_no_stop_rule` | D | blocker | FR-56 |
 | `search.log_incomplete` (missing query, status or date) | D | major | FR-03 |

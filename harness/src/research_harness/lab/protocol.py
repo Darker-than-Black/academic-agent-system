@@ -112,6 +112,27 @@ def draft(
     findings: list[dict[str, Any]] = []
     fields = dict(fields or {})
 
+    # A known study_kind with no protocol pack yet (mixed, empirical_*,
+    # computational_ml) drafts in a degraded mode: no required-field check, no
+    # saturation default, no G2 scope fields. Say so instead of degrading
+    # silently (Finding 2). Not a blocker here — freeze still blocks on
+    # `protocol.no_pack`; packs for these profiles are later-milestone work (H6:
+    # we do not invent a pack to make the gap disappear).
+    if cfg is None and _known(kind):
+        findings.append(
+            {
+                "check_id": "protocol.no_pack",
+                "severity": "major",
+                "reason": (
+                    f"study_kind {kind!r} has no protocol pack yet "
+                    "(M2 covers literature, conceptual); drafting without "
+                    "required-field checks, a saturation default or G2 scope fields"
+                ),
+                "location": {},
+                "proposed_action": "",
+            }
+        )
+
     current = load_latest(root)
     base: dict[str, Any] = dict(current) if current else {}
     base.update(fields)
