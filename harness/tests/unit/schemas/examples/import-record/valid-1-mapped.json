@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.2",
+  "created_at": "2026-11-02T12:00:00Z",
+  "source": "editor",
+  "actor_label": "Supervisor",
+  "count": 2,
+  "mapped": 2,
+  "unmapped": 0,
+  "changes": [
+    {
+      "type": "ins",
+      "author": "Editor",
+      "date": "2026-02-01T10:00:00Z",
+      "text": "додано",
+      "unit_id": "U-AAAAAAAA",
+      "paragraph_id": "PG-AAAAAA",
+      "change_id": "10"
+    },
+    {
+      "type": "comment",
+      "author": "Supervisor",
+      "date": "2026-02-01T10:00:00Z",
+      "text": "уточніть джерело",
+      "unit_id": "U-AAAAAAAA",
+      "paragraph_id": "PG-AAAAAA",
+      "change_id": "0"
+    }
+  ]
+}

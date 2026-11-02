@@ -14,6 +14,7 @@ BUILDERS = {
     "F4-W": ("f4w_metadata", "build_f4w_metadata"),
     "F4-W-working": ("f4w", "build_f4w"),
     "F5b-lifecycle": ("f5b", "build_f5b_lifecycle"),
+    "F5d": ("f5d_docx", "build_f5d"),
 }
 
 # Committed location of the F4-W working set (no full texts, H8).

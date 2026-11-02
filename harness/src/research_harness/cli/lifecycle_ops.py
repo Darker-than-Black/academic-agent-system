@@ -8,19 +8,16 @@ with ``who: author`` (exit 3, ASR-04/H14).
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 from typing import Any
 
 from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
 from research_harness.gates.interactive import is_human_channel
-from research_harness.intake.answers import answers_path
-from research_harness.intake.answers import load as load_answers
 from research_harness.lifecycle import locks as locks_mod
 from research_harness.lifecycle import records as records_mod
 from research_harness.lifecycle import reviews as reviews_mod
-from research_harness.state.snapshot import atomic_write_bytes
+from research_harness.lifecycle import revise as revise_mod
 
 _COMMANDS = {"lock", "unlock", "record", "reviews", "revise"}
 
@@ -169,27 +166,22 @@ def _reviews(root: Path, args: Any, lang: str) -> tuple[dict[str, Any], int]:
 
 
 def _revise(root: Path, args: Any, lang: str) -> tuple[dict[str, Any], int]:
+    # A .docx original goes through the full import flow (M3-09): parse tracked
+    # changes, map them, record, and enter revise mode scoped to touched units.
     if args.from_file and args.from_file.lower().endswith(".docx"):
-        return (
-            build_envelope(
-                command="revise", status="blocked", lang=lang, message_key="error.docx_import_m3_09"
-            ),
-            3,
-        )
-    data = load_answers(root)
-    data["mode"] = "revise"
-    atomic_write_bytes(
-        answers_path(root), (json.dumps(data, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    )
+        from research_harness.cli.import_docx import route as import_route
+
+        args.file = args.from_file
+        args.source = getattr(args, "source", None) or "editor"
+        args.actor_label = getattr(args, "actor_label", None)
+        return import_route(args, lang)
+
     scope = args.scope or []
-    revise_dir = root / "revise"
-    revise_dir.mkdir(parents=True, exist_ok=True)
-    (revise_dir / "scope.json").write_text(
-        json.dumps({"scope": scope}, ensure_ascii=False), encoding="utf-8"
-    )
+    original_md = None
     if args.from_file:
         src = root / args.from_file if (root / args.from_file).is_file() else Path(args.from_file)
-        (revise_dir / "original.md").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+        original_md = src.read_text(encoding="utf-8")
+    report = revise_mod.enter_revise(root, scope, original_md=original_md)
     # Units outside scope are proposed for locking — the author confirms (rh lock).
     next_actions = [
         {
@@ -204,7 +196,7 @@ def _revise(root: Path, args: Any, lang: str) -> tuple[dict[str, Any], int]:
             lang=lang,
             message_key="revise.entered",
             message_params={"n": len(scope)},
-            data={"scope": scope},
+            data=report,
             next_actions=next_actions,
         ),
         0,

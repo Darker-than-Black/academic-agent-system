@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/import-record.schema.json",
+  "title": "docx import record (04-modules/docx.md, M3-09)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "created_at", "source", "count", "mapped", "unmapped", "changes"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "source": { "enum": ["supervisor", "editor", "author"] },
+    "actor_label": { "type": ["string", "null"] },
+    "count": { "type": "integer", "minimum": 0 },
+    "mapped": { "type": "integer", "minimum": 0 },
+    "unmapped": { "type": "integer", "minimum": 0 },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "author", "date", "text", "unit_id", "paragraph_id", "change_id"],
+        "properties": {
+          "type": { "enum": ["ins", "del", "moveFrom", "moveTo", "comment"] },
+          "author": { "type": "string" },
+          "date": { "type": "string" },
+          "text": { "type": "string" },
+          "unit_id": { "type": ["string", "null"] },
+          "paragraph_id": { "type": ["string", "null"] },
+          "change_id": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

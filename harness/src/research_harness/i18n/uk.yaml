@@ -191,6 +191,10 @@ error.dispute_closed_or_capped: "Не можна додати доказ: {why}.
 export.done: "Чернетку експортовано ({format}); прогалин: {gaps}."
 error.pandoc_missing: "pandoc не знайдено; встановіть його або експортуйте у форматі md."
 error.pandoc_failed: "pandoc завершився з помилкою під час створення .docx."
+import.done: "Імпортовано змін: {count}; зіставлено з одиницями: {mapped}, незіставлено: {unmapped}."
+import.blocked: "Імпорт заблоковано: незіставлених змін {unmapped} з {count}; розв'яжіть перед прийняттям."
+error.import_file_missing: "Немає такого файлу: {path}."
+error.import_not_docx: "Це не файл .docx: {path}."
 
 style.built: "Профіль стилю для {lang} побудовано з {n} документів корпусу."
 errors.chosen: "Обрано категорій типових помилок: {n}."
