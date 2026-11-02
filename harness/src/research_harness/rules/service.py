@@ -13,6 +13,55 @@ from research_harness.state.snapshot import atomic_write_bytes
 
 RULEPACKS = Path(__file__).resolve().parents[3] / "rulepacks"
 
+# Intake answers that map onto object.json's own fields. `venue`/`regulator`
+# live in the resolved rule stack, not on the object, so they are not here.
+# Allowed values mirror object.schema.json / common.schema.json ($defs); keep
+# in sync with the schema.
+_OBJECT_FIELD_FOR = {"Q2": "document_kind", "Q5": "study_kind"}
+_ALLOWED_VALUES = {
+    "document_kind": {"article", "thesis", "conference_abstract", "report", "unknown"},
+    "study_kind": {
+        "literature",
+        "conceptual",
+        "empirical_quantitative",
+        "empirical_qualitative",
+        "computational_ml",
+        "mixed",
+        "unknown",
+    },
+}
+
+
+def persist_intake_object_fields(root: Path) -> bool:
+    """Write known intake answers (Q2→document_kind, Q5→study_kind) onto
+    object.json so readers like ``protocol.study_kind`` see them. An ``unknown``
+    answer or a value outside the schema enum is never written (H7). Returns
+    True when object.json changed. Call before the intake checkpoint so the
+    change lands in the same snapshot.
+    """
+    intake = root / "intake" / "answers.json"
+    if not intake.is_file():
+        return False
+    stored = json.loads(intake.read_text(encoding="utf-8")).get("answers", {})
+    obj_path = root / "object.json"
+    obj = json.loads(obj_path.read_text(encoding="utf-8"))
+    changed = False
+    for qid, field in _OBJECT_FIELD_FOR.items():
+        ans = stored.get(qid)
+        if not ans:
+            continue
+        value = ans.get("value")
+        if value in (None, "unknown") or value not in _ALLOWED_VALUES[field]:
+            continue
+        if obj.get(field) != value:
+            obj[field] = value
+            changed = True
+    if changed:
+        atomic_write_bytes(
+            obj_path, (json.dumps(obj, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+        )
+    return changed
+
 
 def all_packs(packs_dir: Path | None = None) -> list[Pack]:
     base = packs_dir or RULEPACKS

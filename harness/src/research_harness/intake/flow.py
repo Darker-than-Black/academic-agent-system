@@ -8,7 +8,7 @@ from typing import Any
 from research_harness.gates.requests import request_gate
 from research_harness.intake import answers as answers_mod
 from research_harness.intake import summary as summary_mod
-from research_harness.rules.service import resolve_object
+from research_harness.rules.service import persist_intake_object_fields, resolve_object
 from research_harness.state.store import Store
 
 
@@ -17,6 +17,7 @@ def apply_answer(
 ) -> dict[str, Any]:
     data = answers_mod.record(root, qid, value, source=source, lang=lang)
     summary_mod.render(root, data, lang)
+    persist_intake_object_fields(root)
     resolve_object(root)
     Store(root).checkpoint(by="human", note=f"intake {qid}")
     # Open G0 only once intake is complete (spec: G0 opens when intake is

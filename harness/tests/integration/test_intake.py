@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from research_harness.gates.requests import open_requests
@@ -65,6 +66,26 @@ def test_g0_opens_only_when_intake_complete(tmp_path: Path) -> None:
     assert result["g0_request"].startswith("AR-")
     assert len(open_requests(folder, "G0")) == 1  # exactly one, not one per answer
     assert not (folder / "approvals" / "approvals.jsonl").exists()  # no approval recorded
+
+
+def _study_kind(folder: Path) -> str:
+    return json.loads((folder / "object.json").read_text(encoding="utf-8"))["study_kind"]
+
+
+def test_intake_persists_study_kind_to_object(tmp_path: Path) -> None:
+    # protocol.study_kind reads object.json directly, so a known Q5 answer must
+    # land on the object field, not only in intake answers / the rule stack.
+    _ws, _oid, folder = _object(tmp_path)
+    assert _study_kind(folder) == "unknown"  # default before intake
+    apply_answer(folder, "Q5", "literature", lang="uk")
+    assert _study_kind(folder) == "literature"
+
+
+def test_intake_unknown_study_kind_stays_unknown(tmp_path: Path) -> None:
+    # H7: an unknown answer never fills the object field with a guess.
+    _ws, _oid, folder = _object(tmp_path)
+    apply_answer(folder, "Q5", answers_mod.UNKNOWN, lang="uk")
+    assert _study_kind(folder) == "unknown"
 
 
 def test_second_object_prefills_author_fields(tmp_path: Path) -> None:
