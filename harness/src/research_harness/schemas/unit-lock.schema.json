@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/unit-lock.schema.json",
+  "title": "Unit lock (lifecycle-records.md; M3-08, FR-41, T21)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["unit_id", "reason", "locked_by", "at"],
+  "properties": {
+    "unit_id": { "type": "string", "minLength": 1 },
+    "reason": { "type": "string", "minLength": 1 },
+    "locked_by": { "type": "string", "minLength": 1 },
+    "at": { "type": "string" }
+  }
+}

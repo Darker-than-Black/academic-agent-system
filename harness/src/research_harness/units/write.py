@@ -41,8 +41,10 @@ def diff_preview(root: Path, unit_id: str, new_body: str) -> str:
 
 def write_body(root: Path, unit_id: str, new_body: str, *, by: str) -> list[dict[str, str]]:
     """Low-level write used by the author/dictation path (no conflict check)."""
+    from research_harness.lifecycle.locks import assert_not_locked
     from research_harness.provenance.paragraphs import apply_write
 
+    assert_not_locked(root, unit_id)  # T21: no write to a locked unit
     folder = _folder(root, unit_id)
     front, _ = _split((folder / "text.md").read_text(encoding="utf-8"))
     anchored, paras = anchors.ensure_anchors(new_body)
@@ -64,6 +66,9 @@ def write_unit(
     if not request or not request.strip():
         raise ValueError("a write needs the author's request (--request)")
 
+    from research_harness.lifecycle.locks import assert_not_locked
+
+    assert_not_locked(root, unit_id)  # T21: no write to a locked unit
     current = anchors.paragraph_map(read_body(root, unit_id))
     anchored, paras = anchors.ensure_anchors(new_body)
     ours = {p["id"]: p["text"] for p in paras if p["id"]}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/publication-record.schema.json",
+  "title": "Publication record (lifecycle-records.md; M3-08, FR-28)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "submission_id", "date", "snapshot_id"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^PUB-\\d{2,}$" },
+    "submission_id": { "type": "string", "pattern": "^SUB-\\d{2,}$" },
+    "doi": { "type": "string" },
+    "volume": { "type": "string" },
+    "issue": { "type": "string" },
+    "pages": { "type": "string" },
+    "date": { "type": "string" },
+    "license": { "type": "string" },
+    "url": { "type": "string" },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "proof_diff_ref": { "type": "string" }
+  }
+}

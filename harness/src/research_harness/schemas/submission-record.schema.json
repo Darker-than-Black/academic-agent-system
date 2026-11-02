@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/submission-record.schema.json",
+  "title": "Submission record (lifecycle-records.md; M3-08, FR-28)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "venue", "date", "snapshot_id", "manifest_sha256", "g3_approval_id", "channel_note"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^SUB-\\d{2,}$" },
+    "venue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "issn": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "date": { "type": "string" },
+    "manuscript_id": { "type": "string" },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "manifest_sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "g3_approval_id": { "type": "string", "minLength": 1 },
+    "channel_note": { "type": "string" }
+  }
+}
