@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/asset.schema.json",
+  "title": "Asset (integrity.md; M3-12, FR-17)",
+  "description": "A figure, table or image in the manuscript with its origin and rights. A third_party asset needs licensed or permission_documented rights before a verified export.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "path", "sha256", "kind", "origin", "rights_status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^AS-\\d{3,}$" },
+    "path": { "type": "string", "minLength": 1 },
+    "sha256": { "$ref": "common.schema.json#/$defs/hash" },
+    "kind": { "enum": ["figure", "table", "image", "other"] },
+    "origin": { "enum": ["own_generated", "own_data", "third_party"] },
+    "source_ref": { "type": "string" },
+    "license": { "type": "string" },
+    "rights_status": { "enum": ["own", "licensed", "permission_documented", "unknown"] },
+    "permission_doc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "common.schema.json#/$defs/hash" }
+      }
+    },
+    "generated_from_rows": { "type": "array", "items": { "type": "string" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "rights_status": { "const": "permission_documented" } } },
+      "then": { "required": ["permission_doc"] }
+    }
+  ]
+}

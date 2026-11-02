@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/venue-check.schema.json",
+  "title": "Venue status check (integrity.md; M3-12, FR-37)",
+  "description": "Evidence of a target venue's indexing status on the date that matters. No evidence yields value=unknown (D14).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "venue", "resource", "query_date", "status_on_date", "evidence", "checked_by"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^VC-\\d{3,}$" },
+    "venue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "issn": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "resource": { "enum": ["scopus_sources", "mjl", "doaj", "ua_perelik", "journal_site"] },
+    "query_date": { "type": "string", "format": "date" },
+    "status_on_date": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "value"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "value": { "enum": ["included", "not_included", "unknown"] }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": { "type": "string" },
+        "file": { "type": "string" },
+        "sha256": { "$ref": "common.schema.json#/$defs/hash" }
+      }
+    },
+    "checked_by": { "type": "string", "minLength": 1 },
+    "rule_refs": { "type": "array", "items": { "type": "string" } }
+  }
+}
