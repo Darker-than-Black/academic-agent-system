@@ -73,8 +73,8 @@ resources:
       api_key_env: CORE_API_KEY        # Bearer header per prior knowledge; NOT confirmed from live docs
     rate: {batch_per_10s: unknown, single_per_10s: unknown}
     docs_unverified: true              # adapter is DEFERRED until docs are confirmed (H12)
-    verified_on: "2026-10-30"
-    source: "https://core.ac.uk/documentation/api (HTTP 403 on 2026-10-30; not verifiable)"
+    verified_on: "2026-11-02"
+    source: "https://core.ac.uk/documentation/api and api.core.ac.uk/docs/v3 (HTTP 403 on 2026-10-30 and re-checked 2026-11-02; still not verifiable; third-party docs conflict, so not usable under H12)"
 
   doaj:
     kind: api

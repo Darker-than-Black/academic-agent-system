@@ -80,4 +80,9 @@ Page map (02 §12 `page_map`): `pdf_to_printed_offset` from metadata `pages.firs
 
 **Tests.** T02, T20, T38 (network part), T43, T59 (library, quote check); fixtures F4-W, F5h (author's real Scopus RIS and SAGE PDF, `private`, outside git), API mocks.
 
-**Open points.** [?] Exact rate limits and terms of ERIC, Crossref polite pool, Unpaywall, DOAJ, arXiv — checked in M2-01. [?] CORE phrase search via API. [P] PDF extraction quality threshold below which a page is marked `quality: low` and quotes on it are `unverifiable` rather than `not_found`.
+**Open points.** [?] Exact rate limits and terms of ERIC, Crossref polite pool, Unpaywall, DOAJ, arXiv — checked in M2-01. [R] CORE API — resolved (P2-3): the official docs returned HTTP 403 to every
+automated fetch on 2026-10-30 and again on 2026-11-02, and only conflicting
+third-party pages exist, so the syntax cannot be verified (H12) or invented
+(H6). The adapter stays deferred (`docs_unverified: true`): it makes no calls,
+reports `unavailable` as a coverage gap (FR-20), and is excluded from
+`policy.available_adapters`, so `rh source lookup --adapter core` is refused. [P] PDF extraction quality threshold below which a page is marked `quality: low` and quotes on it are `unverifiable` rather than `not_found`.

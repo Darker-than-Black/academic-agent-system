@@ -9,7 +9,7 @@ from typing import Any
 from research_harness.cli.context import object_root
 from research_harness.core.envelope import build_envelope
 from research_harness.core.errors import InvalidInputError
-from research_harness.sources import enrich, import_files, registry, retractions
+from research_harness.sources import enrich, import_files, policy, registry, retractions
 
 _COMMAND = "source"
 
@@ -92,11 +92,24 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     if action == "import":
         return _import(args, root, lang)
     if action == "lookup":
+        available = policy.available_adapters()
+        requested = list(args.adapter) if args.adapter else list(enrich._DEFAULT_ENRICH)
+        bad = [a for a in requested if a not in available]
+        if bad:
+            # A deferred (e.g. core) or unknown adapter must not be silently
+            # dropped: refuse so it cannot be selected (P2-3).
+            return _env(
+                _COMMAND,
+                lang,
+                "source.adapter_unavailable",
+                params={"bad": ", ".join(bad), "available": ", ".join(available)},
+                status="blocked",
+            )
         updated, findings = enrich.lookup(
             root,
             args.ids,
             transport=None,
-            adapters=tuple(args.adapter) if args.adapter else enrich._DEFAULT_ENRICH,
+            adapters=tuple(requested),
         )
         return _env(
             _COMMAND,

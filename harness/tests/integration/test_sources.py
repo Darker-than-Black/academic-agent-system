@@ -114,6 +114,33 @@ def test_resource_unavailable_and_core_deferred() -> None:
     assert policy.is_deferred("core")
 
 
+def test_core_excluded_from_available_adapters() -> None:
+    # P2-3: a deferred adapter is not selectable.
+    available = policy.available_adapters()
+    assert "core" not in available
+    assert "openalex" in available and "crossref" in available
+
+
+def test_cli_lookup_rejects_deferred_adapter(tmp_path: Path) -> None:
+    from types import SimpleNamespace
+
+    from research_harness.cli import sources as cli
+
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="Д", kind="article", document_kind="article")
+    args = SimpleNamespace(
+        object=None,
+        root=str(folder),
+        workspace=None,
+        source_action="lookup",
+        ids=[],
+        adapter=["core"],
+    )
+    env, code = cli.route(args, "en")
+    assert code == 3 and env["status"] == "blocked"
+    assert "core" in env["message"] and "openalex" in env["message"]
+
+
 def test_retraction_states(tmp_path: Path) -> None:
     now_clean = retractions.check_doi("10.2000/clean", transport=_transport)
     assert now_clean["status"] == "no_notice_found"

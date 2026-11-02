@@ -44,6 +44,13 @@ def is_deferred(name: str) -> bool:
     return bool(resource(name).get("docs_unverified"))
 
 
+def available_adapters() -> list[str]:
+    """API resources that may actually be selected for a lookup: ``kind: api``
+    and not deferred. A deferred adapter (docs unverified, e.g. ``core``) is
+    excluded so it cannot be chosen (P2-3)."""
+    return sorted(n for n in resources() if is_api(n) and not is_deferred(n))
+
+
 def env_value(var_name: str | None) -> str | None:
     """Live value of an env var by name; ``None`` if unset/blank. Never logged."""
     if not var_name:
