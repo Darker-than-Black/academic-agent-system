@@ -34,6 +34,7 @@ Import (M3): parse `w:ins`, `w:del`, `w:moveFrom/To`, `w:comment*` with author a
 |---|---|---|---|
 | `export.gaps_present` | D | info (draft) / blocker (verified) | FR-12 |
 | `export.style_missing` (no reference.docx / CSL for stack) | D | major (fallback to default style, recorded) | FR-43 |
+| `export.style_unvalidated` (references CSL is an unvalidated draft) | D | blocker on a verified export (H7; validate via the status slot) | FR-12, P1-2 |
 | `export.bookmark_missing` | D | blocker | FR-43 |
 | `import.unmapped_changes` | D | blocker until resolved | T46 |
 | `import.count_mismatch` | D | blocker | T46 |
@@ -42,4 +43,17 @@ Import (M3): parse `w:ins`, `w:del`, `w:moveFrom/To`, `w:comment*` with author a
 
 **Tests.** T46 (export M2, import M3), T11 (draft in M2, verified in M3), T43; fixtures F4-W, F5d, F7.
 
-**Open points.** [?] Availability of a CSL style for ДСТУ 8302:2015 (search Zotero style repository in M2-12; if none, write one and test against 10 reference examples from a real cat. «Б» journal). [?] Whether pandoc keeps custom bookmarks through `--reference-doc`; fallback — post-process with `python-docx`.
+**Open points.** [R] CSL for ДСТУ 8302:2015 — resolved (P1-2, 2026-11-02, H12):
+no maintained style exists in the official repository
+(`citation-style-language/styles`, 0 of 10902 paths match dstu/8302/ukrain). An
+in-house clean-room draft ships at `rulepacks/ua-fahove-b/csl/dstu-8302-2015.csl`
+(Apache-2.0, not derived from any third-party CSL → no H4 adoption). It is
+**unvalidated**: `assemble.compute_gaps` emits a blocker `export.style_unvalidated`
+(via the status slot `dstu-8302-2015.csl.status.yaml`) so a verified export is
+blocked, not faked (H7), until the author validates it against МОН Наказ № 928 and
+a target cat. «Б» journal on ≥10 real references and sets `validated: true`. The
+rendering harness (`tests/integration/test_csl_dstu.py`) is scaffolded and skips
+until the author supplies the real examples (`csl/examples/`). **[AUTHOR]** must
+decide to commission/validate the style and provide the examples.
+[?] Whether pandoc keeps custom bookmarks through `--reference-doc`; fallback —
+post-process with `python-docx`.

@@ -102,9 +102,32 @@ def test_g3_valid_only_for_current_snapshot(tmp_path: Path) -> None:
     assert verified.g3_valid(folder) is True
 
 
-def test_passes_and_produces_bundle_when_all_met(tmp_path: Path) -> None:
+def _validate_csl(monkeypatch, tmp_path: Path) -> None:
+    """Simulate the author having validated the clean-room ДСТУ 8302:2015 CSL
+    (P1-2) by pointing the pack dir at a temp copy with a validated status slot."""
+    packs = tmp_path / "rulepacks"
+    csl_dir = packs / "ua-fahove-b" / "csl"
+    csl_dir.mkdir(parents=True)
+    (csl_dir / "dstu-8302-2015.csl").write_text("<style/>", encoding="utf-8")
+    (csl_dir / "dstu-8302-2015.csl.status.yaml").write_text(
+        "validated: true\nvalidated_by: author\nchecked_examples: 10\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(assemble, "_PACK_DIR", packs)
+
+
+def test_unvalidated_csl_blocks_verified(tmp_path: Path) -> None:
+    # P1-2 / H7: the shipped CSL is an unvalidated draft, so a verified export
+    # is blocked even when every other FR-12 condition is met.
+    folder = _object(tmp_path)
+    _satisfy_all(folder)
+    ids = {f["check_id"] for f in verified.check_conditions(folder)}
+    assert "export.style_unvalidated" in ids
+
+
+def test_passes_and_produces_bundle_when_all_met(tmp_path: Path, monkeypatch) -> None:
     folder = _object(tmp_path)
     current = _satisfy_all(folder)
+    _validate_csl(monkeypatch, tmp_path)
 
     findings = verified.check_conditions(folder)
     assert findings == [], f"unexpected: {[f['check_id'] for f in findings]}"

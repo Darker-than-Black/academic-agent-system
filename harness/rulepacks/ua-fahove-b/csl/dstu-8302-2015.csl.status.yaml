@@ -1,0 +1,17 @@
+# Validation status of the clean-room ДСТУ 8302:2015 CSL draft (P1-2).
+#
+# No maintained ДСТУ 8302:2015 style exists in the official CSL repository
+# (citation-style-language/styles, checked 2026-11-02). The .csl beside this
+# file is an in-house clean-room DRAFT. A verified export is BLOCKED
+# (export.style_unvalidated, H7) until the author validates it and sets the
+# fields below — the harness never renders a verified reference list with an
+# unvalidated style.
+#
+# To validate: check the draft against МОН Наказ № 928 and a target cat. «Б»
+# journal's guidelines, render >= 10 real published references, confirm each,
+# then set validated: true, checked_examples to that count, and fill the rest.
+validated: false
+validated_by: unknown        # author name / id once validated
+validated_against: unknown   # МОН Наказ № 928 + target journal + example source
+checked_examples: 0          # must be >= 10 real references
+validated_at: unknown        # RFC3339 date once validated

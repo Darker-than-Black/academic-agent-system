@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
@@ -131,12 +133,56 @@ def export_draft(root: Path, *, fmt: str = "md", pack: str = "ua-fahove-b") -> d
     return {"dir": str(outdir), "format": fmt_used, "gaps": gaps, "manifest": manifest}
 
 
-def compute_gaps(root: Path) -> list[dict[str, Any]]:
+# Minimum real reference examples a CSL must be checked against before a
+# verified export may rely on it (docx.md open point; P1-2).
+_CSL_MIN_EXAMPLES = 10
+
+
+def _csl_validation_gaps(pack: str) -> list[dict[str, Any]]:
+    """Block a verified export while the pack's ДСТУ 8302:2015 CSL is an
+    unvalidated clean-room draft (H7). No maintained style exists in the official
+    CSL repository (citation-style-language/styles, checked 2026-11-02), so the
+    author must validate the draft against МОН Наказ № 928 and a target cat. «Б»
+    journal, testing ``>= _CSL_MIN_EXAMPLES`` real references, then record it in
+    ``csl/dstu-8302-2015.csl.status.yaml`` (validated: true, checked_examples).
+    Until then a verified export blocks rather than render with a draft style."""
+    csl = _PACK_DIR / pack / "csl" / "dstu-8302-2015.csl"
+    if not csl.is_file():
+        return []  # a missing style is `export.style_missing` (major) elsewhere
+    status_file = csl.with_suffix(".csl.status.yaml")
+    status: dict[str, Any] = {}
+    if status_file.is_file():
+        status = yaml.safe_load(status_file.read_text(encoding="utf-8")) or {}
+    checked = status.get("checked_examples")
+    validated = (
+        status.get("validated") is True
+        and isinstance(checked, int)
+        and (checked >= _CSL_MIN_EXAMPLES)
+    )
+    if validated:
+        return []
+    return [
+        {
+            "check_id": "export.style_unvalidated",
+            "severity": "blocker",
+            "reason": (
+                f"the ДСТУ 8302:2015 CSL in pack {pack!r} is an unvalidated clean-room draft; "
+                f"validate it against МОН Наказ № 928 and a target cat. «Б» journal on "
+                f">= {_CSL_MIN_EXAMPLES} real references, then set validated: true in "
+                "csl/dstu-8302-2015.csl.status.yaml (H7)"
+            ),
+            "location": {},
+            "proposed_action": "Validate the CSL and record it in the status slot.",
+        }
+    ]
+
+
+def compute_gaps(root: Path, *, pack: str = "ua-fahove-b") -> list[dict[str, Any]]:
     """Reference + content gaps (placeholders, unsupported claims, stale summaries,
-    unknown rules). In a draft these are listed; a verified export must have none
-    (FR-12). Pure read; writes nothing."""
+    unknown rules, an unvalidated references CSL). In a draft these are listed; a
+    verified export must have none (FR-12). Pure read; writes nothing."""
     bib_gaps = references.build(root)[1]
-    return bib_gaps + _gaps(root)
+    return bib_gaps + _gaps(root) + _csl_validation_gaps(pack)
 
 
 def export_verified(root: Path, *, fmt: str = "docx", pack: str = "ua-fahove-b") -> dict[str, Any]:
