@@ -1,0 +1,7 @@
+id: ua-mon-phd
+name: "Ukraine MON — PhD thesis integrity pack"
+version: "2026-11-02"
+layer: 6
+status: draft
+applies_when: {document_kind: [thesis]}
+description: "Integrity rules for a Ukrainian PhD (МОН): self-overlap thresholds, AI-use statement, primary-source checking. Draft until the author checks it against МОН Наказ № 928 and the specialised council's requirements. Overlap numeric thresholds live in overlap.yaml."

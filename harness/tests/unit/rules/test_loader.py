@@ -68,3 +68,24 @@ def test_lint_flags_core_overridable(tmp_path: Path) -> None:
     )
     problems = lint_pack(pdir)
     assert any("overridable: false" in p for p in problems)
+
+
+def test_m3_integrity_venue_packs_lint_clean() -> None:
+    # M3-23 packs: regulator integrity + venue-class rules.
+    for pid in ("ua-mon-phd", "scopus-indexed", "ua-fahove-b"):
+        assert lint_pack(_RULEPACKS / pid) == []
+
+
+def test_ua_mon_phd_overlap_thresholds_present() -> None:
+    import yaml
+
+    data = yaml.safe_load((_RULEPACKS / "ua-mon-phd" / "overlap.yaml").read_text(encoding="utf-8"))
+    assert data["shingle_size"] == 8
+    assert data["min_fragment_words"] == 25
+    assert data["uncited_severity"] == "blocker"
+
+
+def test_scopus_venue_rule_requires_included() -> None:
+    pack = load_pack(_RULEPACKS / "scopus-indexed")
+    rule = next(r for r in pack.rules if r["key"] == "integrity.venue_status")
+    assert rule["value"] == "included" and rule["severity"] == "blocker"

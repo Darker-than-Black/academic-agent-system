@@ -1,0 +1,16 @@
+- id: UAFAHOVEB-VENUE-PERELIK
+  pack: ua-fahove-b
+  version: "2026-11-02"
+  key: integrity.venue_status
+  kind: integrity
+  applies_to: [A12]
+  check: [deterministic, human]
+  severity: major
+  overridable: true
+  compare: required
+  value: included
+  statement: "The target journal is in the Ukrainian Перелік category «Б» on the submission date (наказ МОН № 928), with dated evidence."
+  source: {title: "МОН Наказ № 928 (Перелік, valid 2026-06-01..2029-06-01)", url: "https://mon.gov.ua/perelik-928", evidence_level: primary, accessed_at: "2026-11-02"}
+  checked_at: "2026-11-02"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
