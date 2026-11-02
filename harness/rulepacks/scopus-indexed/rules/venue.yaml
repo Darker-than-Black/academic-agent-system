@@ -1,0 +1,16 @@
+- id: SCOPUS-VENUE-INCLUDED
+  pack: scopus-indexed
+  version: "2026-11-02"
+  key: integrity.venue_status
+  kind: integrity
+  applies_to: [A12, A13]
+  check: [deterministic, human]
+  severity: blocker
+  overridable: true
+  compare: required
+  value: included
+  statement: "The target venue is covered by Scopus (status included) on the submission date, with dated evidence."
+  source: {title: "FR-37; Scopus Sources", url: "https://www.scopus.com/sources", evidence_level: primary, accessed_at: "2026-11-02"}
+  checked_at: "2026-11-02"
+  valid_from: "2026-01-01"
+  review_after: "2027-11-02"

@@ -1,0 +1,7 @@
+# Overlap thresholds for ua-mon-phd (integrity.md §overlap; read by integrity.overlap).
+# Rule-pack DATA, not a rule. Draft values; tune on F7 + the author's corpus (M3 open [P]).
+shingle_size: 8
+min_fragment_words: 25
+high_ratio: 0.30
+uncited_severity: blocker
+normalization: casefold_word_tokens

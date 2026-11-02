@@ -1,0 +1,7 @@
+id: scopus-indexed
+name: "Scopus-indexed venue pack"
+version: "2026-11-02"
+layer: 5
+status: draft
+applies_when: {document_kind: [article]}
+description: "Venue rule for a Scopus-indexed target: the journal must be covered (status included) on the date that matters, with dated evidence from Scopus Sources. Status is derived from coverage years (06-research-agent §3.1); no evidence → unknown (D14)."

@@ -1,0 +1,42 @@
+- id: UAMONPHD-OVERLAP-UNCITED
+  pack: ua-mon-phd
+  version: "2026-11-02"
+  key: integrity.overlap_uncited
+  kind: integrity
+  applies_to: [A11, A12]
+  check: [deterministic, human]
+  severity: blocker
+  overridable: true
+  statement: "Uncited overlap with the author's own prior texts blocks thesis counting (self-plagiarism)."
+  source: {title: "ADR-018; МОН Наказ № 928", url: "https://rh.spec/decisions/ADR-018.md", evidence_level: primary, accessed_at: "2026-11-02"}
+  checked_at: "2026-11-02"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
+- id: UAMONPHD-AI-STATEMENT
+  pack: ua-mon-phd
+  version: "2026-11-02"
+  key: process.ai_statement_required
+  kind: process
+  applies_to: [A12]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  statement: "The thesis carries an AI-use statement generated from the provenance record."
+  source: {title: "FR-32; FR-53", url: "https://rh.spec/03-requirements-v0.2.md#FR-32", evidence_level: primary, accessed_at: "2026-11-02"}
+  checked_at: "2026-11-02"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
+- id: UAMONPHD-PRIMARY-SOURCES
+  pack: ua-mon-phd
+  version: "2026-11-02"
+  key: integrity.primary_sources
+  kind: integrity
+  applies_to: [A6, A11]
+  check: [deterministic, human]
+  severity: major
+  overridable: true
+  statement: "Claims about a regulation or standard cite the primary text, not a secondary summary."
+  source: {title: "FR-27", url: "https://rh.spec/03-requirements-v0.2.md#FR-27", evidence_level: primary, accessed_at: "2026-11-02"}
+  checked_at: "2026-11-02"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
