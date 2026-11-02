@@ -34,6 +34,7 @@ from research_harness_dev.guards import (
     scan_envelope_literals,
     scan_forbidden_imports,
     scan_lockfile,
+    scan_yaml_truthiness,
     validate_adoptions,
 )
 
@@ -92,6 +93,11 @@ def check_main(argv: list[str] | None = None) -> int:
     _static("import guard", "H5, T15", scan_forbidden_imports(package_root))
     _static("envelope-literal guard", "02 §1.6", scan_envelope_literals(package_root))
     _static("i18n catalog guard", "02 §1.6", check_i18n_catalogs(package_root / "i18n"))
+    _static(
+        "yaml truthiness guard",
+        "PH-2",
+        scan_yaml_truthiness((cwd / "config", cwd / "intake", cwd / "rulepacks")),
+    )
     _static("lockfile guard", "01 §3", scan_lockfile(cwd / "uv.lock"))
     _static("adoption records", "H4, T24", validate_adoptions(repo))
 

@@ -99,6 +99,63 @@ def check_i18n_catalogs(i18n_dir: Path, langs: tuple[str, ...] = ("uk", "en")) -
     return problems
 
 
+# --- YAML truthiness guard (PH-2) -------------------------------------------
+
+# YAML 1.1 (PyYAML's default resolver) coerces these bare tokens to booleans.
+# ``yes/no/on/off`` are almost never meant as booleans in our config/intake, so
+# a bare one is always flagged; ``true/false`` are legitimate boolean values, so
+# a bare one is flagged only inside a sequence (a string-list context such as an
+# intake question's ``options: [yes, no]``, which silently became ``[True,
+# False]`` and broke validation). Quoting the token fixes it.
+_ALWAYS_STRING_BOOLS = frozenset({"yes", "no", "on", "off", "y", "n"})
+
+
+def _walk_yaml_bools(node: object, path: Path, in_sequence: bool, out: list[str]) -> None:
+    import yaml
+
+    if isinstance(node, yaml.ScalarNode):
+        plain = node.style in (None, "")
+        if plain and node.tag == "tag:yaml.org,2002:bool":
+            raw = node.value
+            if raw.lower() in _ALWAYS_STRING_BOOLS or in_sequence:
+                line = node.start_mark.line + 1
+                out.append(
+                    f"{path}:{line} bare YAML boolean {raw!r} "
+                    f"(parsed as {yaml.safe_load(raw)!r}) — quote it if it is a string"
+                )
+    elif isinstance(node, yaml.SequenceNode):
+        for item in node.value:
+            _walk_yaml_bools(item, path, in_sequence=True, out=out)
+    elif isinstance(node, yaml.MappingNode):
+        for key, value in node.value:
+            _walk_yaml_bools(key, path, in_sequence=False, out=out)
+            _walk_yaml_bools(value, path, in_sequence=False, out=out)
+
+
+def scan_yaml_truthiness(roots: tuple[Path, ...]) -> list[str]:
+    """Flag bare yes/no/on/off/true/false tokens that YAML coerces to booleans
+    where a string is almost certainly meant (PH-2)."""
+    import yaml
+
+    problems: list[str] = []
+    for root in roots:
+        if not root.is_dir():
+            continue
+        for yml in sorted(root.rglob("*.yaml")) + sorted(root.rglob("*.yml")):
+            try:
+                text = yml.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            try:
+                docs = list(yaml.compose_all(text))
+            except yaml.YAMLError:
+                continue
+            for doc in docs:
+                if doc is not None:
+                    _walk_yaml_bools(doc, yml, in_sequence=False, out=problems)
+    return problems
+
+
 # --- Lockfile guard ---------------------------------------------------------
 
 FORBIDDEN_DEPS = frozenset({"pymupdf", "paper-qa-pymupdf", "paper-qa", "paperqa"})
