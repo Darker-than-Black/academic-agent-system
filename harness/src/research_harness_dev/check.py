@@ -13,12 +13,22 @@ M1-02, the full PR check with T41 in M3).
 
 from __future__ import annotations
 
-import re
 import subprocess
 import sys
-from collections.abc import Iterable
 from pathlib import Path
 
+# The repository / PR check now lives in the core package (integrity.repo, card
+# M3-14) so both `rh repo check` and this gate run identical logic; the names
+# below are re-exported for callers and tests that import them from here.
+from research_harness.integrity.repo import (
+    FORBIDDEN_PATTERNS,
+    findings_from,
+    forbidden_hits,
+    git_root,
+    scan_forbidden_paths,
+    tracked_paths,
+)
+from research_harness.integrity.repo import run as repo_check
 from research_harness_dev.guards import (
     check_i18n_catalogs,
     scan_envelope_literals,
@@ -27,98 +37,21 @@ from research_harness_dev.guards import (
     validate_adoptions,
 )
 
-# Patterns that must never be tracked by git (01 §5). A pattern without a slash
-# is matched against each path's basename (gitignore semantics); a pattern with
-# a slash or `**` is matched against the full POSIX path relative to the repo
-# root. The hash-based part (files whose hash is in holdout.lock.json, datasets
-# with storage: no_copy) is enforced by the full PR check in M3 (T41); it is a
-# no-op here while those files do not exist.
-FORBIDDEN_PATTERNS: tuple[str, ...] = (
-    "**/holdout/**",
-    "Projects/**/sources/inbox/**",
-    "Projects/**/sources/fulltext/**",
-    "Projects/**/sources/pagetext/**",
-    "Projects/**/materials/private/**",
-    ".env",
-    "*.local.yaml",
-    "**/secrets/**",
-    "source-policy.local.yaml",
-    "Projects/**/.rh/staging/**",
-    "Projects/**/.rh/quarantine/**",
-    "Projects/**/.rh/lock",
-    "Projects/**/work/**",
-    "Projects/**/.rh/library.sqlite",
-    "Projects/**/analysis/data/**",
-)
+__all__ = [
+    "FORBIDDEN_PATTERNS",
+    "forbidden_hits",
+    "git_root",
+    "scan_forbidden_paths",
+    "tracked_paths",
+    "check_main",
+    "main",
+]
 
 
-def _glob_to_regex(pattern: str) -> re.Pattern[str]:
-    """Translate a limited glob (``**``, ``*``, ``?``) to an anchored regex."""
-    out: list[str] = ["^"]
-    i, n = 0, len(pattern)
-    while i < n:
-        if pattern.startswith("**/", i):
-            out.append(r"(?:.*/)?")
-            i += 3
-        elif pattern.startswith("/**", i):
-            out.append(r"(?:/.*)?")
-            i += 3
-        elif pattern[i] == "*":
-            out.append(r"[^/]*")
-            i += 1
-        elif pattern[i] == "?":
-            out.append(r"[^/]")
-            i += 1
-        else:
-            out.append(re.escape(pattern[i]))
-            i += 1
-    out.append("$")
-    return re.compile("".join(out))
-
-
-_COMPILED = [(p, "/" not in p, _glob_to_regex(p)) for p in FORBIDDEN_PATTERNS]
-
-
-def git_root(start: Path | None = None) -> Path:
-    """Return the git top-level directory containing ``start`` (default cwd)."""
-    result = subprocess.run(
-        ["git", "rev-parse", "--show-toplevel"],
-        cwd=start or Path.cwd(),
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return Path(result.stdout.strip())
-
-
-def tracked_paths(repo_root: Path) -> list[str]:
-    """POSIX paths of every file git tracks or has staged in ``repo_root``."""
-    result = subprocess.run(
-        ["git", "ls-files"],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return [line for line in result.stdout.splitlines() if line]
-
-
-def forbidden_hits(paths: Iterable[str]) -> list[str]:
-    """Return the subset of ``paths`` that match a forbidden pattern."""
-    hits: list[str] = []
-    for path in paths:
-        basename = path.rsplit("/", 1)[-1]
-        for _pattern, basename_only, regex in _COMPILED:
-            target = basename if basename_only else path
-            if regex.match(target):
-                hits.append(path)
-                break
-    return hits
-
-
-def scan_forbidden_paths(repo_root: Path) -> list[str]:
-    """Scan tracked/staged files; return forbidden paths (empty = clean)."""
-    return forbidden_hits(tracked_paths(repo_root))
+def _repo_problems(repo_root: Path) -> list[str]:
+    """Forbidden paths, holdout-hash matches and secrets as gate problem lines."""
+    report = repo_check(repo_root)
+    return [f"{f['check_id']}: {f['location']['path']}" for f in findings_from(report)]
 
 
 def _run(label: str, cmd: list[str], cwd: Path) -> bool:
@@ -153,7 +86,7 @@ def check_main(argv: list[str] | None = None) -> int:
         else:
             print(f"    PASS: {label}")
 
-    _static("forbidden-path scan", "01 §5", scan_forbidden_paths(repo))
+    _static("repo check (paths, holdout hashes, secrets)", "T41, NFR-11", _repo_problems(repo))
 
     package_root = cwd / "src" / "research_harness"
     _static("import guard", "H5, T15", scan_forbidden_imports(package_root))
