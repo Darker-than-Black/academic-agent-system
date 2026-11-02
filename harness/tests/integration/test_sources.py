@@ -141,6 +141,55 @@ def test_cli_lookup_rejects_deferred_adapter(tmp_path: Path) -> None:
     assert "core" in env["message"] and "openalex" in env["message"]
 
 
+def test_cli_fulltext_missing_file_returns_blocked_envelope(tmp_path: Path) -> None:
+    # A non-existent --file must yield a clean blocked envelope, not a raw
+    # FileNotFoundError traceback from shutil.copy2 (Finding 8).
+    from types import SimpleNamespace
+
+    from research_harness.cli import sources as cli
+
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="Д", kind="article", document_kind="article")
+    registry.add_records(folder, [{"title": "A source"}])  # -> S-0001
+    args = SimpleNamespace(
+        object=None,
+        root=str(folder),
+        workspace=None,
+        source_action="fulltext",
+        id="S-0001",
+        file=str(folder / "nope" / "missing.pdf"),
+        version="published",
+        obtained_via="author",
+    )
+    env, code = cli.route(args, "en")
+    assert code == 3 and env["status"] == "blocked"
+    assert any(f["check_id"] == "source.fulltext_invalid" for f in env["findings"])
+
+
+def test_cli_fulltext_unknown_source_returns_blocked_envelope(tmp_path: Path) -> None:
+    from types import SimpleNamespace
+
+    from research_harness.cli import sources as cli
+
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="Д", kind="article", document_kind="article")
+    existing = tmp_path / "ft.pdf"
+    existing.write_text("x", encoding="utf-8")
+    args = SimpleNamespace(
+        object=None,
+        root=str(folder),
+        workspace=None,
+        source_action="fulltext",
+        id="S-9999",
+        file=str(existing),
+        version="published",
+        obtained_via="author",
+    )
+    env, code = cli.route(args, "en")
+    assert code == 3 and env["status"] == "blocked"
+    assert "S-9999" in env["message"]
+
+
 def test_retraction_states(tmp_path: Path) -> None:
     now_clean = retractions.check_doi("10.2000/clean", transport=_transport)
     assert now_clean["status"] == "no_notice_found"

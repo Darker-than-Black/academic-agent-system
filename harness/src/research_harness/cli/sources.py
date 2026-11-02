@@ -130,12 +130,7 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
             data={"source": rec},
         )
     if action == "fulltext":
-        rec = import_files.add_fulltext(
-            root, args.id, Path(args.file), version=args.version, obtained_via=args.obtained_via
-        )
-        return _env(
-            _COMMAND, lang, "source.fulltext_added", params={"id": args.id}, data={"source": rec}
-        )
+        return _fulltext(args, root, lang)
     if action == "fetch-oa":
         updated, findings = enrich.fetch_oa(root, args.ids, transport=None)
         return _env(
@@ -155,6 +150,39 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
             _COMMAND, lang, "source.listed", params={"n": len(recs)}, data={"sources": recs}
         )
     raise InvalidInputError("error.invalid")
+
+
+def _fulltext_error(lang: str, detail: str) -> tuple[dict[str, Any], int]:
+    return _env(
+        _COMMAND,
+        lang,
+        "source.fulltext_invalid",
+        status="blocked",
+        params={"detail": detail},
+        findings=[
+            {
+                "check_id": "source.fulltext_invalid",
+                "severity": "blocker",
+                "reason": detail,
+                "location": {},
+                "proposed_action": "",
+            }
+        ],
+    )
+
+
+def _fulltext(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
+    if registry.get(root, args.id) is None:
+        return _fulltext_error(lang, f"unknown source: {args.id}")
+    path = Path(args.file)
+    if not path.is_file():
+        return _fulltext_error(lang, f"file not found: {args.file}")
+    rec = import_files.add_fulltext(
+        root, args.id, path, version=args.version, obtained_via=args.obtained_via
+    )
+    return _env(
+        _COMMAND, lang, "source.fulltext_added", params={"id": args.id}, data={"source": rec}
+    )
 
 
 def _import(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
