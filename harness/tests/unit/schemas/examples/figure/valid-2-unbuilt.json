@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.2",
+  "id": "FIG-002",
+  "created_at": "2026-11-02T12:00:00Z",
+  "producer": { "kind": "model", "name": "analysis", "version": "0.1.0" },
+  "rows": [],
+  "script": { "path": "analysis/scripts/plot.py", "sha256": "aa11bb22cc33dd44ee55ff6677889900aabbccddeeff00112233445566778899" },
+  "data_sha256": [],
+  "format": "png",
+  "built_at": null
+}

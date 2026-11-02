@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/figure.schema.json",
+  "title": "Figure built from rows (analysis-sandbox.md, FR-18)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "created_at", "producer", "rows", "script", "data_sha256", "format", "built_at"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "id": { "type": "string", "pattern": "^FIG-[0-9]{3,}$" },
+    "created_at": { "$ref": "common.schema.json#/$defs/datetime" },
+    "producer": { "$ref": "common.schema.json#/$defs/producer" },
+    "rows": { "type": "array", "items": { "type": "string" } },
+    "script": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": { "path": { "type": "string" }, "sha256": { "$ref": "common.schema.json#/$defs/hash" } }
+    },
+    "data_sha256": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/hash" } },
+    "format": { "enum": ["svg", "png"] },
+    "image_sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "const": "unknown" }] },
+    "built_at": { "type": ["string", "null"] }
+  }
+}
