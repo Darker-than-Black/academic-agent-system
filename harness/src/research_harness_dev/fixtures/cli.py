@@ -15,6 +15,10 @@ BUILDERS = {
     "F4-W-working": ("f4w", "build_f4w"),
     "F5b-lifecycle": ("f5b", "build_f5b_lifecycle"),
     "F5d": ("f5d_docx", "build_f5d"),
+    "F5c": ("f5c_injection", "build_f5c"),
+    "F5g": ("f5g_venue", "build_f5g"),
+    "F8": ("f8_analysis", "build_f8"),
+    "F7-defects": ("f7_structure", "build_f7_defects"),
 }
 
 # Committed location of the F4-W working set (no full texts, H8).

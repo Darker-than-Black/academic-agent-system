@@ -68,3 +68,42 @@ def build_f7_article(dest: Path) -> Path:
     )
     ops.sync(folder, "uk")
     return folder
+
+
+# A 40+ word shingle shared verbatim by two subsections → D16 (repeated fragment).
+_SHARED = " ".join(f"повторюване слово{i}" for i in range(1, 31))
+
+
+def _append_body(folder: Path, uid: str, body: str) -> None:
+    """Append manuscript body text under a unit's front matter (synthetic, H6)."""
+    from research_harness.structure import ops as ops_mod
+
+    tf = ops_mod.current_folders(folder)[uid] / "text.md"
+    tf.write_text(tf.read_text(encoding="utf-8") + "\n" + body + "\n", encoding="utf-8")
+
+
+def build_f7_defects(dest: Path) -> Path:
+    """F7 with seeded structural defects D15–D19 (M3-22).
+
+    Deterministic (CLI) defects: D16 repeated fragment, D18 dangling cross-ref.
+    Semantic (critic baseline) defects seeded as text: D15 contradictory
+    cross-chapter definition, D17 chapter conclusion with no basis, D19 a defined
+    term used outside the glossary."""
+    folder = build_f7_structure(dest)
+
+    # D18 — a cross-reference to a unit that does not exist (blocker).
+    _append_body(folder, CH1_SUBS[0], "Див. {{ref:U-99999999}} (неіснуючий блок). " + _SHARED)
+    # D16 — the same long fragment appears in a second subsection (major).
+    _append_body(folder, CH2_SUBS[0], _SHARED)
+    # D15 — chapter 1 and chapter 2 define the same term incompatibly (semantic).
+    _append_body(folder, CH1_SUBS[1], "Терміном «валідність» ми позначаємо точність вимірювання.")
+    _append_body(folder, CH2_SUBS[1], "Терміном «валідність» ми позначаємо швидкість обчислення.")
+    # D17 — a chapter conclusion asserting a result not grounded in its subsections.
+    _append_body(
+        folder, CH1_CONCL, "Отже, метод пришвидшує навчання вдесятеро (у підрозділах не показано)."
+    )
+    # D19 — a defined term used far from any glossary definition (semantic).
+    _append_body(
+        folder, CH3_SUBS[0], "Застосовуємо «гіперконвергентність» без означення в глосарії."
+    )
+    return folder
