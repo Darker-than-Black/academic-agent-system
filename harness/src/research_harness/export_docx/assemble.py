@@ -131,6 +131,67 @@ def export_draft(root: Path, *, fmt: str = "md", pack: str = "ua-fahove-b") -> d
     return {"dir": str(outdir), "format": fmt_used, "gaps": gaps, "manifest": manifest}
 
 
+def compute_gaps(root: Path) -> list[dict[str, Any]]:
+    """Reference + content gaps (placeholders, unsupported claims, stale summaries,
+    unknown rules). In a draft these are listed; a verified export must have none
+    (FR-12). Pure read; writes nothing."""
+    bib_gaps = references.build(root)[1]
+    return bib_gaps + _gaps(root)
+
+
+def export_verified(root: Path, *, fmt: str = "docx", pack: str = "ua-fahove-b") -> dict[str, Any]:
+    """Produce the verified export bundle. The caller must have confirmed every
+    FR-12 condition first (integrity.verified); this only assembles the bundle in
+    ``export/verified-<snapshot>/`` with a manifest whose mode is ``verified``."""
+    from research_harness.state import snapshot as snap
+
+    clock = default_clock()
+    snapshot_id = snap.read_current(root) or "unknown"
+    outdir = root / "export" / f"verified-{snapshot_id}"
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    md_path = outdir / "manuscript.md"
+    md_path.write_text(assemble_markdown(root), encoding="utf-8")
+    bib = references.build(root)[0]
+    (outdir / "references.bib").write_text(bib, encoding="utf-8")
+
+    produced = md_path
+    fmt_used = "md"
+    if fmt == "docx" and pandoc.have_pandoc():
+        ref_docx = _PACK_DIR / pack / "reference.docx"
+        csl = _PACK_DIR / pack / "csl" / "dstu-8302-2015.csl"
+        produced = pandoc.to_docx(
+            md_path,
+            outdir / "manuscript.docx",
+            reference_docx=ref_docx if ref_docx.is_file() else None,
+            csl=csl if csl.is_file() else None,
+            bib=outdir / "references.bib",
+        )
+        fmt_used = "docx"
+
+    files = [p for p in (produced, outdir / "references.bib") if p.is_file()]
+    manifest = {
+        "schema_version": "0.2",
+        "created_at": clock.now_rfc3339(),
+        "mode": "verified",
+        "snapshot_id": snapshot_id,
+        "format": fmt_used,
+        "pack": pack,
+        "files": [{"path": p.name, "sha256": file_hash(p)} for p in files],
+        "bookmarks": bookmark_map(root),
+        "gaps": 0,
+    }
+    (outdir / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    return {
+        "dir": str(outdir),
+        "format": fmt_used,
+        "snapshot_id": snapshot_id,
+        "manifest": manifest,
+    }
+
+
 def _render_gaps(gaps: list[dict[str, Any]]) -> str:
     if not gaps:
         return "# Gaps\n\nNone found.\n"
