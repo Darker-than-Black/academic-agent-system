@@ -41,6 +41,21 @@ def test_abstract_only_excerpt_cannot_be_supported(tmp_path: Path) -> None:  # D
     assert any(f["check_id"] == "claims.support_cap_exceeded" for f in findings)
 
 
+def test_rebuild_tolerates_bare_list_claims_json(tmp_path: Path) -> None:
+    # Units are seeded with a bare-list claims.json ([]); setting claims on one
+    # unit rebuilds the ledger over all units and must not crash on the others
+    # (regression: 'list' object has no attribute 'get' in load_unit_claims).
+    _oid, folder = _object(tmp_path)
+    other = ledger_mod.unit_dir(folder, "U-BBBBBBBB")
+    other.mkdir(parents=True, exist_ok=True)
+    (other / "claims.json").write_text("[]\n", encoding="utf-8")
+    stored, _ = ledger_mod.set_claims(
+        folder, _UNIT, [_claim("Y", support="unreviewed", evidence=[])]
+    )
+    assert stored
+    assert ledger_mod.load_unit_claims(folder, "U-BBBBBBBB") == []
+
+
 def test_source_not_found_blocks(tmp_path: Path) -> None:  # DoD
     _oid, folder = _object(tmp_path)
     stored, findings = ledger_mod.set_claims(

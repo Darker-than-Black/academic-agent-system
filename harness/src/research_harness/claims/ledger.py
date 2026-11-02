@@ -33,7 +33,11 @@ def load_unit_claims(root: Path, unit_id: str) -> list[dict[str, Any]]:
     path = claims_file(root, unit_id)
     if not path.is_file():
         return []
-    return json.loads(path.read_text(encoding="utf-8")).get("claims", [])
+    data = json.loads(path.read_text(encoding="utf-8"))
+    # Seeded units hold a bare list ([]); `set_claims` later writes the dict
+    # form {"claims": [...]}. Tolerate both so rebuild_ledger / coverage over a
+    # mix of claimed and unclaimed units does not crash.
+    return data if isinstance(data, list) else data.get("claims", [])
 
 
 def _unit_ids(root: Path) -> list[str]:
