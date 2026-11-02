@@ -199,3 +199,36 @@ def test_integration_deterministic_numbers_and_crossref(tmp_path: Path) -> None:
     ids = {f["check_id"] for f in findings}
     assert "integration.number_not_in_body" in ids  # 42 not in body
     assert "integration.cross_ref_unresolved" in ids  # U-ZZZZZZZZ missing
+
+
+def test_integration_ignores_anchor_comment_digits(tmp_path: Path) -> None:
+    # Paragraph-provenance anchors (<!-- PG-XXXXXX -->) carry digits in their ids;
+    # those must not be treated as abstract numbers missing from the body.
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="Якорі", kind="article", document_kind="article")
+    model.save(
+        folder,
+        {
+            "schema_version": "0.2",
+            "object_id": _oid,
+            "labels": {},
+            "units": [
+                {"id": "U-AAAAAAAA", "kind": "abstract", "title": "Abstract"},
+                {"id": "U-BBBBBBBB", "kind": "section", "title": "Body"},
+            ],
+        },
+    )
+    (folder / "manuscript" / "abs").mkdir(parents=True)
+    (folder / "manuscript" / "sec").mkdir(parents=True)
+    (folder / "manuscript" / "abs" / "text.md").write_text(
+        "---\nid: U-AAAAAAAA\ntitle: Abstract\nkind: abstract\n---\n"
+        "<!-- PG-HR0TV0 -->\nПроаналізовано джерела без числових показників.\n",
+        encoding="utf-8",
+    )
+    (folder / "manuscript" / "sec" / "text.md").write_text(
+        "---\nid: U-BBBBBBBB\ntitle: Body\nkind: section\n---\n"
+        "<!-- PG-ZZ9HX1 -->\nТекст розділу.\n",
+        encoding="utf-8",
+    )
+    findings = integration_v0.check(folder)
+    assert "integration.number_not_in_body" not in {f["check_id"] for f in findings}

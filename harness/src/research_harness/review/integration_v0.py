@@ -17,6 +17,14 @@ from research_harness.summaries.deterministic import body_of
 
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
 _CROSSREF = re.compile(r"\{\{ref:(U-[0-9A-HJKMNP-TV-Z]{8})\}\}")
+# Paragraph-provenance anchors (<!-- PG-XXXXXX -->) and other HTML comments
+# carry alphanumeric ids whose digits are not content numbers; strip them
+# before counting numbers so anchor ids are not flagged as abstract numbers.
+_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+
+
+def _numbers(text: str) -> set[str]:
+    return set(_NUMBER.findall(_COMMENT.sub(" ", text)))
 
 
 def _kinds(root: Path) -> dict[str, str]:
@@ -45,10 +53,10 @@ def check(root: Path) -> list[dict[str, Any]]:
     body_numbers: set[str] = set()
     for uid, body in bodies.items():
         if uid not in abstract_ids:
-            body_numbers |= set(_NUMBER.findall(body))
+            body_numbers |= _numbers(body)
 
     for uid in abstract_ids:
-        for num in set(_NUMBER.findall(bodies[uid])):
+        for num in _numbers(bodies[uid]):
             if num not in body_numbers:
                 findings.append(
                     _f(
