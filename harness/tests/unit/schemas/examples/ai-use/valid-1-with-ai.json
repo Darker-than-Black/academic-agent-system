@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.2",
+  "object_id": "A-2026-001",
+  "entries": [
+    {
+      "stage": "drafting",
+      "role": "writer",
+      "model_id": "claude-strong",
+      "model_tier": "strong",
+      "purpose": "draft a unit",
+      "units": [],
+      "at": "2026-11-02T10:00:00Z"
+    }
+  ],
+  "provenance_shares": { "author": 4, "agent_edited_by_author": 3, "agent": 1 },
+  "generated_from": [
+    { "ref": "model-calls", "sha256": "abc123" },
+    { "ref": "provenance:U-AAAAAAAA", "sha256": "def456" }
+  ]
+}

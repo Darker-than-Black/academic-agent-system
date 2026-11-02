@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.2",
+  "object_id": "A-2026-004",
+  "entries": [ { "role": "writer", "model_id": "x" } ],
+  "provenance_shares": { "author": 1, "agent_edited_by_author": 0, "agent": 0 },
+  "generated_from": []
+}

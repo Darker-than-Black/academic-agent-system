@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/ai-use.schema.json",
+  "title": "AI-use record (04-modules/integrity.md, FR-32)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_id", "entries", "provenance_shares", "generated_from"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "object_id": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stage", "role", "model_id", "model_tier", "purpose", "units", "at"],
+        "properties": {
+          "stage": { "type": "string" },
+          "role": { "type": "string" },
+          "model_id": { "type": "string" },
+          "model_tier": { "type": "string" },
+          "purpose": { "type": "string" },
+          "units": { "type": "array", "items": { "type": "string" } },
+          "at": { "type": "string" }
+        }
+      }
+    },
+    "provenance_shares": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["author", "agent_edited_by_author", "agent"],
+      "properties": {
+        "author": { "type": "integer", "minimum": 0 },
+        "agent_edited_by_author": { "type": "integer", "minimum": 0 },
+        "agent": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "generated_from": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "sha256"],
+        "properties": {
+          "ref": { "type": "string" },
+          "sha256": { "type": "string" }
+        }
+      }
+    }
+  }
+}

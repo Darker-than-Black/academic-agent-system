@@ -191,6 +191,8 @@ error.dispute_closed_or_capped: "Не можна додати доказ: {why}.
 export.done: "Чернетку експортовано ({format}); прогалин: {gaps}."
 error.pandoc_missing: "pandoc не знайдено; встановіть його або експортуйте у форматі md."
 error.pandoc_failed: "pandoc завершився з помилкою під час створення .docx."
+ai_use.shown: "Запис про використання ШІ побудовано: записів — {entries}."
+ai_use.statement: "Чернетку заяви про використання ШІ створено ({lang})."
 import.done: "Імпортовано змін: {count}; зіставлено з одиницями: {mapped}, незіставлено: {unmapped}."
 import.blocked: "Імпорт заблоковано: незіставлених змін {unmapped} з {count}; розв'яжіть перед прийняттям."
 error.import_file_missing: "Немає такого файлу: {path}."
