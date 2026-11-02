@@ -42,6 +42,20 @@
     "seeds": { "type": "array", "items": { "type": "integer" } },
     "argv": { "type": "array", "items": { "type": "string" } },
     "network": { "enum": ["disabled", "allowed"] },
+    "purpose": { "enum": ["analysis", "instrument_pilot"] },
+    "sandbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["network", "timeout_s", "cwd", "python"],
+      "properties": {
+        "network": { "enum": ["disabled", "guard_only"] },
+        "timeout_s": { "type": "integer", "minimum": 1 },
+        "memory_mb": { "type": "integer", "minimum": 1 },
+        "cwd": { "type": "string" },
+        "python": { "type": "string" },
+        "lockfile_sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "const": "unknown" }] }
+      }
+    },
     "started_at": { "type": "string" },
     "finished_at": { "type": "string" },
     "exit_code": { "type": "integer" },

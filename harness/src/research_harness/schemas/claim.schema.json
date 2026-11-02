@@ -72,6 +72,15 @@
       }
     },
     "result_ref": { "type": "string" },
+    "shown_value": {},
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expression": { "type": "string" },
+        "factor": { "type": "number" }
+      }
+    },
     "dependencies": { "$ref": "common.schema.json#/$defs/inputs" }
   },
   "allOf": [

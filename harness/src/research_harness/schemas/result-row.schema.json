@@ -26,6 +26,17 @@
       "required": ["method", "value"],
       "properties": { "method": { "type": "string" }, "value": {} }
     },
-    "output_locator": { "type": "string" }
+    "output_locator": { "type": "string" },
+    "derived": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expression", "input_row_ids", "precision_policy", "script_sha256"],
+      "properties": {
+        "expression": { "type": "string" },
+        "input_row_ids": { "type": "array", "items": { "type": "string" } },
+        "precision_policy": { "type": "string" },
+        "script_sha256": { "$ref": "common.schema.json#/$defs/hash" }
+      }
+    }
   }
 }
