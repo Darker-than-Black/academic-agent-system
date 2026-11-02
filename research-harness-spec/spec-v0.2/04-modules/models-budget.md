@@ -40,4 +40,16 @@
 
 **Tests.** T63 (M1 config, M2 gate), T12 (M3); fixtures F5b + host mock.
 
-**Open points.** [?] Whether Claude Code exposes per-call token usage to the agent; if not, calls log `"unknown"` and budget relies on call counts and wall time (to verify in M2-13).
+**Resolved (P1-3, 2026-11-02, H12).** Claude Code does **not** expose a
+structured per-call token count to the orchestrator agent that `rh` can ingest
+(the session surfaces only an aggregate hint, not a per-subagent-call figure).
+Decision: on the Claude Code host, `rh model log` records `tokens_in`/`tokens_out`
+as `"unknown"` (H7 — never a guessed number), and the budget relies on the
+`model_calls` count (always known) and `wall_time_s`. To make wall time usable,
+`rh model log` now takes `--duration-s`; the agent records the measured duration
+of each call. `tokens`/`cost` propagate `unknown` into the aggregate and raise a
+`budget.unknown_usage` **major** finding (not a blocker), so an unknown-tokens
+run still proceeds while the `model_calls` and `wall_time_s` limits are enforced
+as blockers. A host that *does* expose usage — e.g. the Codex critic, whose
+`turn.completed.usage` is parsed in `review.engine.run_codex` (P1-1) — logs the
+real token counts.

@@ -98,3 +98,29 @@ def test_paid_enabled_without_approval_still_blocks() -> None:
     budget = {"scope": "object", "paid_calls": "enabled"}  # no enabled_by
     r = c.check(budget, {"model_calls": 0}, paid=True)
     assert r["allowed"] is False
+
+
+def test_unknown_tokens_path_relies_on_calls_and_wall(tmp_path: Path) -> None:
+    """P1-3: when a host (Claude Code) cannot report per-call tokens, calls log
+    tokens 'unknown'; the budget still enforces model_calls and wall_time_s, and
+    the unknown tokens raise a major (not a blocker)."""
+    # Two calls: tokens unknown (default), duration known.
+    _log(tmp_path, duration_s=30.0)
+    _log(tmp_path, duration_s=45.0)
+    usage = c.usage_from_calls(tmp_path)
+    assert usage["model_calls"] == 2
+    assert usage["tokens"] == "unknown"
+    assert usage["wall_time_s"] == 75.0
+
+    # Limits on the known dimensions still bite; tokens-unknown is only a major.
+    budget = {"limits": {"model_calls": 10, "wall_time_s": 100, "tokens": 1000}}
+    res = c.check(budget, usage)
+    assert res["allowed"] is True
+    sev = {f["check_id"]: f["severity"] for f in res["findings"]}
+    assert sev.get("budget.unknown_usage") == "major"
+    assert not any(f["severity"] == "blocker" for f in res["findings"])
+
+    # Exhausted wall-time is a blocker even though tokens are unknown.
+    res2 = c.check({"limits": {"model_calls": 10, "wall_time_s": 50}}, usage)
+    assert res2["allowed"] is False
+    assert any(f["check_id"] == "budget.exhausted" for f in res2["findings"])

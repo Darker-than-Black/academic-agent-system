@@ -29,6 +29,7 @@ def register(sub: argparse._SubParsersAction) -> None:
     lg.add_argument("--tokens-in", dest="tokens_in", type=int)
     lg.add_argument("--tokens-out", dest="tokens_out", type=int)
     lg.add_argument("--cost", type=float)
+    lg.add_argument("--duration-s", dest="duration_s", type=float)
     lg.add_argument("--status", choices=["ok", "failed"], default="ok")
     lg.add_argument("--purpose")
 
@@ -106,6 +107,7 @@ def _log(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         tokens_in=args.tokens_in if args.tokens_in is not None else calls.UNKNOWN,
         tokens_out=args.tokens_out if args.tokens_out is not None else calls.UNKNOWN,
         cost=args.cost if args.cost is not None else calls.UNKNOWN,
+        duration_s=args.duration_s if args.duration_s is not None else calls.UNKNOWN,
         status=args.status,
     )
     return (
