@@ -1,0 +1,21 @@
+#!/bin/sh
+# Tracked pre-commit hook (PH-4). Enable it with:
+#
+#     uv run rh-dev install-hooks        # sets core.hooksPath to this dir
+#
+# It runs the fast lint (ruff check + ruff format --check) so E501 / format
+# churn is caught before the commit, not later in `rh-dev check`. It does NOT
+# run pytest — commit stays fast; the full gate still runs in CI / before a PR.
+#
+# Skip once (e.g. a WIP commit):  git commit --no-verify
+set -e
+
+# Resolve the repo root and run inside harness/, where the ruff config lives.
+root=$(git rev-parse --show-toplevel)
+cd "$root/harness"
+
+if command -v uv >/dev/null 2>&1; then
+    uv run rh-dev lint
+else
+    python -m research_harness_dev.check lint
+fi

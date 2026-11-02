@@ -37,7 +37,14 @@ uv sync
 cd harness
 uv run rh version          # версія harness (JSON-конверт)
 uv run rh-dev check        # перевірки репозиторію (ruff, format, pytest, заборонені шляхи)
+uv run rh-dev lint         # лише ruff check + ruff format --check (швидко, без pytest)
+uv run rh-dev install-hooks  # увімкнути git-хук pre-commit (запускає rh-dev lint)
 ```
+
+Хук `pre-commit` лежить у `harness/scripts/git-hooks/` і відстежується в git.
+Після `install-hooks` кожен коміт запускає `rh-dev lint`, щоб помилки E501 та
+форматування ловилися до коміту, а не пізніше у `rh-dev check`. Пропустити
+разово: `git commit --no-verify`.
 
 `rh` — єдиний компонент, якому дозволено змінювати стан об'єктів. `rh-dev` —
 окрема точка входу для перевірок репозиторію та генерації фікстур; кінцевим

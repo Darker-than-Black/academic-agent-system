@@ -63,14 +63,33 @@ def _run(label: str, cmd: list[str], cwd: Path) -> bool:
     return ok
 
 
+# The fast lint steps, shared by `rh-dev check` and `rh-dev lint` (PH-4). The
+# pre-commit hook runs `lint` so E501 / format churn is caught before commit
+# rather than in the gate.
+_RUFF_STEPS: list[tuple[str, list[str]]] = [
+    ("ruff check", [sys.executable, "-m", "ruff", "check", "."]),
+    ("ruff format --check", [sys.executable, "-m", "ruff", "format", "--check", "."]),
+]
+
+
+def lint_main(argv: list[str] | None = None) -> int:
+    """`rh-dev lint` — ruff check + ruff format --check only (no pytest)."""
+    cwd = Path.cwd()
+    failures = [label for label, cmd in _RUFF_STEPS if not _run(label, cmd, cwd)]
+    if failures:
+        print(f"\nrh-dev lint: FAILED ({', '.join(failures)})")
+        return 1
+    print("\nrh-dev lint: OK")
+    return 0
+
+
 def check_main(argv: list[str] | None = None) -> int:
     cwd = Path.cwd()
     repo = git_root(cwd)
     failures: list[str] = []
 
     steps: list[tuple[str, list[str]]] = [
-        ("ruff check", [sys.executable, "-m", "ruff", "check", "."]),
-        ("ruff format --check", [sys.executable, "-m", "ruff", "format", "--check", "."]),
+        *_RUFF_STEPS,
         ("pytest", [sys.executable, "-m", "pytest", "-q"]),
     ]
     for label, cmd in steps:
@@ -108,8 +127,29 @@ def check_main(argv: list[str] | None = None) -> int:
     return 0
 
 
+_HOOKS_RELPATH = "harness/scripts/git-hooks"
+
+
+def install_hooks_main(argv: list[str] | None = None) -> int:
+    """`rh-dev install-hooks` — point git at the tracked pre-commit hook (PH-4)."""
+    repo = git_root(Path.cwd())
+    hooks_dir = repo / _HOOKS_RELPATH
+    hook = hooks_dir / "pre-commit"
+    if not hook.is_file():
+        print(f"FAIL: hook not found at {hook}")
+        return 1
+    hook.chmod(0o755)
+    rc = subprocess.run(["git", "config", "core.hooksPath", _HOOKS_RELPATH], cwd=repo).returncode
+    if rc != 0:
+        print("FAIL: could not set core.hooksPath")
+        return rc
+    print(f"OK: core.hooksPath -> {_HOOKS_RELPATH} (pre-commit runs `rh-dev lint`)")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
-    """`rh-dev` dispatcher: ``check`` (default) and ``fixtures generate <name>``."""
+    """`rh-dev` dispatcher: ``check`` (default), ``lint``, ``install-hooks``,
+    ``fixtures …`` and ``host …``."""
     args = list(sys.argv[1:] if argv is None else argv)
     if args and args[0] == "fixtures":
         from research_harness_dev.fixtures.cli import main as fixtures_main
@@ -119,6 +159,10 @@ def main(argv: list[str] | None = None) -> int:
         from research_harness_dev.host import main as host_main
 
         return host_main(args[1:])
+    if args and args[0] == "lint":
+        return lint_main(args[1:])
+    if args and args[0] == "install-hooks":
+        return install_hooks_main(args[1:])
     if args and args[0] == "check":
         args = args[1:]
     return check_main(args)
