@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from research_harness.core import tokenize_uk as tok
 from research_harness.integrity import overlap as ov
 
 _RUN = "один два три чотири п'ять шість сім вісім дев'ять десять one two three four five"
@@ -15,7 +16,9 @@ def _index(text: str, n: int) -> dict:
 
 def test_shingles_and_tokens_cyrillic() -> None:
     words, spans = ov._tokens("Привіт, Світе! 42")
-    assert words == ["привіт", "світе", "42"]  # casefolded, punctuation dropped
+    # Tokens are normalized via tokenize_uk (lemma when pymorphy3 is installed,
+    # casefold otherwise); assert against the active backend, punctuation dropped.
+    assert words == [tok.normalize("Привіт"), tok.normalize("Світе"), tok.normalize("42")]
     assert len(spans) == 3
     assert ov.shingles(["a", "b", "c"], 2) == {("a", "b"), ("b", "c")}
 

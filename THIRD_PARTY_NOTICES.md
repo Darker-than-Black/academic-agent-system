@@ -62,3 +62,21 @@ repository (hard rule H4, ADR-008, FR-24).
   `diff_from_snapshot`; added `three_way()` per-paragraph three-way conflict
   detection for agent edits (02 §5.6, T07). difflib is Unicode, so diffs are
   Cyrillic-safe.
+
+## Runtime dependencies (not vendored)
+
+These are installed via `uv` (pyproject/uv.lock) and are **not** copied into the
+repository, so they carry no `manifest.json` adoption record (that manifest is
+for adapted/vendored source). They are listed here for attribution (P2-2).
+
+### pymorphy3 — Ukrainian morphological analysis
+- Package: `pymorphy3` (PyPI), code license **MIT** — Copyright (c) Mikhail
+  Korobov and pymorphy3 contributors. Source: https://github.com/no-plagiarism/pymorphy3
+- Package: `pymorphy3-dicts-uk` (PyPI) — Ukrainian dictionary **data** under
+  **CC BY-SA** (derived from the LanguageTool Ukrainian dictionaries / lang-uk).
+  The data is used at runtime only and is not redistributed in this repository.
+- Transitive: `pymorphy3-dicts-ru` and `dawg2-python` are pulled in by
+  `pymorphy3`; the Russian dictionary is unused (the analyzer runs with
+  `lang="uk"`).
+- Used in: `harness/src/research_harness/core/tokenize_uk.py` (optional backend;
+  the harness falls back to casefolding when the package is absent).

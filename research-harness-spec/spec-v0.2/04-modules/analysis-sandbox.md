@@ -106,5 +106,11 @@ Authoritative records: `06-reuse-adoption.md`.
 
 - [?] F8 dataset terms (PISA / TALIS / УЦОЯО): is a local copy allowed? If not, a synthetic set with the same variables, marked `synthetic`. The author approves the dataset.
 - [P] Network isolation per OS; the author's laptop OS to confirm at the start of M3.
-- [?] Ukrainian tokenization library and its license.
+- [R] Ukrainian tokenization library and its license — resolved (P2-2,
+  author-approved). Adopted `pymorphy3` (code MIT) + `pymorphy3-dicts-uk`
+  (dictionary data CC BY-SA, attribution in `THIRD_PARTY_NOTICES.md`) as a
+  runtime dependency (not vendored → no `manifest.json` entry; the manifest is
+  for adapted source). `research_harness.core.tokenize_uk.normalize` lemmatizes
+  words for overlap/shingle comparison when the package is present and falls back
+  to casefolding (prior behavior) when it is absent (H5-clean: not an LLM SDK).
 - [P] Bibliometrics of the literature corpus (FR-54 p.3: keyword co-occurrence, clusters, time trends) run as sandbox scripts over registry metadata — added here in M3 (`research-lab.md` open point).

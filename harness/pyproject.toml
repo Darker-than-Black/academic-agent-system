@@ -11,6 +11,8 @@ dependencies = [
   "python-dotenv>=1.0",
   "pypdf>=4.0",
   "pdfminer.six>=20231228",
+  "pymorphy3>=2.0",
+  "pymorphy3-dicts-uk>=2.4.1.1.1663094765",
 ]
 
 [project.scripts]

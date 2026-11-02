@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from research_harness.core import tokenize_uk
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import text_hash
 from research_harness.schemas import validate
@@ -26,7 +27,10 @@ _WORD = re.compile(r"[^\W_]+", re.UNICODE)
 SHINGLE_SIZE = 8
 MIN_FRAGMENT_WORDS = 20
 HIGH_RATIO = 0.30
-NORMALIZATION = "casefold_word_tokens"
+# Word tokens are normalized by research_harness.core.tokenize_uk: lemma when the
+# optional Ukrainian analyzer is installed (inflection-insensitive overlap),
+# casefold otherwise (identical to the prior behavior). P2-2.
+NORMALIZATION = "tokenize_uk_normalize"
 _CORPUS_GLOBS = ("*.txt", "*.md")
 
 
@@ -34,7 +38,7 @@ def _tokens(text: str) -> tuple[list[str], list[tuple[int, int]]]:
     words: list[str] = []
     spans: list[tuple[int, int]] = []
     for m in _WORD.finditer(text):
-        words.append(m.group(0).casefold())
+        words.append(tokenize_uk.normalize(m.group(0)))
         spans.append((m.start(), m.end()))
     return words, spans
 
