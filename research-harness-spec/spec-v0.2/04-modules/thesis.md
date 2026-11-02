@@ -79,6 +79,7 @@ Give a dissertation what an article does not need: a thesis index, a publication
 | `thesis.volume_out_of_range` | D | major | FR-50 |
 | `thesis.unit_over_target` | D | minor | FR-50 |
 | `thesis.import_uncited` | D | blocker | FR-15b, D21 |
+| `thesis.regulatory_unfilled` | D | blocker | P3-1 (author must supply the slot) |
 
 ## Reuse
 
@@ -95,6 +96,12 @@ None adopted; the OpenDraft thesis flow is an idea only (registry §3).
 
 ## Open points
 
-- [?] Primary text of постанова КМУ № 1240 and current Порядок / ОНП volume limits — read in M4 before `verified`.
+- [P→slot] Primary text of постанова КМУ № 1240 and current Порядок / ОНП
+  volume limits — slots prepared (P3-1) in `rulepacks/ua-mon-phd/regulatory.yaml`
+  (`volume_limits`, `self_plagiarism_exclusion`), default `unknown`;
+  `thesis.regulatory_unfilled` blocks `verified` until the author fills them from
+  the primary text (H6/H7). Validator: `research_harness.thesis.regulatory`.
 - [P] Anchor format for introduction elements: headings first, HTML-comment anchors as fallback.
-- [?] Which of УДУ's local rules (ОНП, regulation on AI) apply — the author supplies them.
+- [P→slot] Which of УДУ's local rules (ОНП, regulation on AI) apply — slots
+  prepared (P3-1) in `regulatory.yaml` (`local_rules_udu`), default `unknown`;
+  the author sets the flags true/false and cites the source when true.

@@ -1,0 +1,26 @@
+# Thesis regulatory inputs the AUTHOR must supply (P3-1).
+#
+# Every value defaults to `unknown`. While any required slot is `unknown`, a
+# thesis cannot be `verified` (thesis.regulatory_unfilled, blocker) — the harness
+# never invents a legal value (H6) and `unknown` never passes a required check
+# (H7). Fill each slot from the PRIMARY text and record its source (title,
+# article/point, URL, date). Do not paraphrase a secondary summary.
+
+# постанова КМУ № 1240 / чинний Порядок / ОНП — main-text volume limits.
+# Author's sheets: 1 а.а. = 40 000 characters with spaces (thesis.md).
+volume_limits:
+  main_text_author_sheets_min: unknown   # lower bound in а.а. (number)
+  main_text_author_sheets_max: unknown   # upper bound in а.а. (number)
+  source: unknown                         # primary citation of the limit
+
+# постанова КМУ № 1240 — when a publication does NOT count (self-plagiarism).
+self_plagiarism_exclusion:
+  rule: unknown                           # what disqualifies a publication
+  source: unknown                         # primary citation
+
+# УДУ local rules the author confirms apply (true/false — not yes/no).
+local_rules_udu:
+  onp_applies: unknown                    # does the ОНП apply to this thesis?
+  onp_source: unknown                     # required only if onp_applies is true
+  ai_regulation_applies: unknown          # does УДУ's AI-use regulation apply?
+  ai_regulation_source: unknown           # required only if ai_regulation_applies is true
