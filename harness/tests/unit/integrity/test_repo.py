@@ -41,6 +41,28 @@ def test_secret_hits_and_holdout_skip(tmp_path: Path) -> None:
     assert all(p != "clean.py" for p, _ in hits)
 
 
+def test_secret_hits_synthetic_sentinel_exempt(tmp_path: Path) -> None:
+    """A placeholder whose token loudly declares itself synthetic is exempt (H6),
+    but a real-looking token on another line is still reported (H8)."""
+    # Both patterns tripped by the F5c fixture, every match sentinel-marked.
+    (tmp_path / "f5c.py").write_text(
+        'url = "https://example.test/collect?api_key=SYNTHETIC-NOT-A-REAL-KEY-000"\n'
+        'example_token = "SYNTHETIC-PLACEHOLDER-DO-NOT-USE"\n',
+        encoding="utf-8",
+    )
+    # Same pattern, one marked + one bare -> still reported (cannot be masked).
+    # The bare token is assembled at runtime so this test's own source does not
+    # trip the scanner that reads tracked .py files.
+    bare = "https://api.x/y?api_key=" + "ZZZ0123456789abcdef0123"
+    (tmp_path / "mixed.py").write_text(
+        'fake = "api_key=SYNTHETIC-PLACEHOLDER-0000000000"\n' + f'real = "{bare}"\n',
+        encoding="utf-8",
+    )
+    hits = r.secret_hits(tmp_path, ["f5c.py", "mixed.py"])
+    assert all(p != "f5c.py" for p, _ in hits)
+    assert ("mixed.py", "url_with_token") in hits
+
+
 def test_holdout_hash_hits(tmp_path: Path) -> None:
     body = b"leaked holdout body\n"
     (tmp_path / "copied.txt").write_bytes(body)

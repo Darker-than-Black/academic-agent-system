@@ -95,6 +95,15 @@ SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ),
 )
 
+# A secret match is exempted only when the matched token itself loudly declares
+# that it is a synthetic placeholder (H6: fixtures are marked synthetic). The
+# sentinel must appear *inside* the matched value, not merely on the same line,
+# so a real credential cannot be hidden by a nearby comment. A genuine key
+# (e.g. ``sk-ant-…``) never contains these words.
+_SYNTHETIC_SENTINEL: re.Pattern[str] = re.compile(
+    r"(?i)synthetic|placeholder|not[-_]?a[-_]?real|do[-_]?not[-_]?use"
+)
+
 # Extensions that are safe to read as text; others are skipped (binary).
 _TEXT_SUFFIXES = frozenset(
     {
@@ -131,7 +140,9 @@ def secret_hits(repo_root: Path, paths: Iterable[str]) -> list[tuple[str, str]]:
     """Scan the content of text files for secret patterns.
 
     Returns ``(path, pattern_name)`` pairs. Forbidden paths (holdout included)
-    are never read (H1)."""
+    are never read (H1). A match is exempted only when every occurrence of that
+    pattern carries a synthetic sentinel inside the matched token; one bare
+    occurrence still reports the pattern (H6/H8)."""
     hits: list[tuple[str, str]] = []
     for rel in paths:
         if _is_forbidden(rel):
@@ -143,8 +154,12 @@ def secret_hits(repo_root: Path, paths: Iterable[str]) -> list[tuple[str, str]]:
         if text is None:
             continue
         for name, pattern in SECRET_PATTERNS:
-            if pattern.search(text):
-                hits.append((rel, name))
+            matches = list(pattern.finditer(text))
+            if not matches:
+                continue
+            if all(_SYNTHETIC_SENTINEL.search(m.group(0)) for m in matches):
+                continue
+            hits.append((rel, name))
     return hits
 
 
