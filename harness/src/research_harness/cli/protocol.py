@@ -36,13 +36,60 @@ def _oid(root: Path) -> str:
     return json.loads((root / "object.json").read_text(encoding="utf-8"))["id"]
 
 
+def _file_error(lang: str, detail: str) -> tuple[dict[str, Any], int]:
+    """A bad ``--file`` yields a clean blocked envelope, never a traceback."""
+    return (
+        build_envelope(
+            command="protocol",
+            status="blocked",
+            lang=lang,
+            message_key="protocol.file_invalid",
+            message_params={"detail": detail},
+            findings=[
+                {
+                    "check_id": "protocol.file_invalid",
+                    "severity": "blocker",
+                    "reason": detail,
+                    "location": {},
+                    "proposed_action": "",
+                }
+            ],
+        ),
+        3,
+    )
+
+
+def _read_fields(
+    path: str, lang: str
+) -> tuple[dict[str, Any] | None, tuple[dict[str, Any], int] | None]:
+    """Load protocol fields from a YAML/JSON file. Returns (fields, None) on
+    success or (None, error_envelope) on any read/parse/shape problem."""
+    try:
+        raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None, _file_error(lang, f"file not found: {path}")
+    except (OSError, yaml.YAMLError) as exc:
+        return None, _file_error(lang, f"cannot read protocol fields from {path}: {exc}")
+    if raw is None:
+        return {}, None
+    if not isinstance(raw, dict):
+        return None, _file_error(
+            lang,
+            f"protocol fields file must be a YAML/JSON mapping, got {type(raw).__name__}",
+        )
+    return raw, None
+
+
 def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     root = object_root(args)
     action = args.protocol_action
     if action == "draft":
-        fields = {}
+        fields: dict[str, Any] = {}
         if args.file:
-            fields = yaml.safe_load(Path(args.file).read_text(encoding="utf-8")) or {}
+            fields, err = _read_fields(args.file, lang)
+            if err is not None:
+                return err
+            assert fields is not None
         proto, findings, discovery = proto_mod.draft(root, fields)
         blocked = any(f["severity"] == "blocker" for f in findings)
         key = "protocol.discovery" if proto["status"] == "discovery" else "protocol.drafted"

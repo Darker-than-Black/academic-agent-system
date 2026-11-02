@@ -172,6 +172,22 @@ def draft(
                 }
             )
 
+    # Supplied fields may be mistyped (e.g. a list where a string is wanted).
+    # Report that as a blocker finding, never a raw exception (clean envelope),
+    # and do not persist an invalid protocol.
+    errors = validate("protocol", proto)
+    if errors:
+        findings.append(
+            {
+                "check_id": "protocol.invalid_fields",
+                "severity": "blocker",
+                "reason": "supplied fields produce an invalid protocol: " + "; ".join(errors),
+                "location": {},
+                "proposed_action": "fix the fields and run `rh protocol draft --file` again",
+            }
+        )
+        return proto, findings, discovery
+
     _write(root, proto)
     return proto, findings, discovery
 

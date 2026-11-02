@@ -137,6 +137,7 @@ protocol.discovery: "Topic only for now — a discovery plan was created (protoc
 protocol.shown: "Current protocol."
 protocol.freeze_blocked: "The protocol cannot be frozen: blockers remain."
 protocol.frozen_g1: "Protocol frozen; opened request {ar} for G1. Briefing: {briefing}."
+protocol.file_invalid: "Could not read the protocol fields file: {detail}"
 synth.excerpt_added: "Excerpt {id} added (quote check: {result})."
 synth.matrix_added: "Matrix row {id} added."
 synth.premise_added: "Premise {id} added."

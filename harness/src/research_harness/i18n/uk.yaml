@@ -137,6 +137,7 @@ protocol.discovery: "Поки лише тема — створено план р
 protocol.shown: "Поточний протокол."
 protocol.freeze_blocked: "Протокол не можна заморозити: є блокери."
 protocol.frozen_g1: "Протокол заморожено; відкрито запит {ar} на G1. Брифінг: {briefing}."
+protocol.file_invalid: "Не вдалося прочитати файл полів протоколу: {detail}"
 synth.excerpt_added: "Витяг {id} додано (перевірка цитати: {result})."
 synth.matrix_added: "Рядок матриці {id} додано."
 synth.premise_added: "Засновок {id} додано."

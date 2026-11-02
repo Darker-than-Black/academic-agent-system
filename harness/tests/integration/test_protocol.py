@@ -64,6 +64,50 @@ def test_draft_then_freeze_opens_g1(tmp_path: Path) -> None:
     assert requests.open_requests(folder, "G1")
 
 
+def test_draft_invalid_fields_blocks_cleanly(tmp_path: Path) -> None:  # Finding 3
+    # A mistyped field (list where a string belongs) must surface as a blocker
+    # finding, not a raw ValueError, and no protocol file is written.
+    _oid, folder = _lit_object(tmp_path)
+    bad = dict(_FIELDS)
+    bad["scope"] = ["this", "should", "be", "a", "string"]
+    proto, findings, _ = proto_mod.draft(folder, bad)
+    assert any(f["check_id"] == "protocol.invalid_fields" for f in findings)
+    assert all(f["severity"] in {"blocker", "major", "minor", "info"} for f in findings)
+    assert proto_mod.latest_version(folder) == 0  # nothing persisted
+
+
+def test_cli_draft_missing_file_returns_blocked_envelope(tmp_path: Path) -> None:  # Finding 3
+    oid, folder = _lit_object(tmp_path)
+    args = SimpleNamespace(
+        protocol_action="draft",
+        file=str(tmp_path / "nope.yaml"),
+        object=oid,
+        workspace=str(tmp_path / "Projects"),
+        root=None,
+    )
+    env, code = cli_protocol.route(args, "uk")
+    assert code == 3 and env["status"] == "blocked"
+    assert any(f["check_id"] == "protocol.file_invalid" for f in env["findings"])
+    assert proto_mod.latest_version(folder) == 0
+
+
+def test_cli_draft_non_mapping_file_returns_blocked_envelope(tmp_path: Path) -> None:  # Finding 3
+    oid, folder = _lit_object(tmp_path)
+    bad = tmp_path / "fields.yaml"
+    bad.write_text("- just\n- a\n- list\n", encoding="utf-8")
+    args = SimpleNamespace(
+        protocol_action="draft",
+        file=str(bad),
+        object=oid,
+        workspace=str(tmp_path / "Projects"),
+        root=None,
+    )
+    env, code = cli_protocol.route(args, "uk")
+    assert code == 3 and env["status"] == "blocked"
+    assert any(f["check_id"] == "protocol.file_invalid" for f in env["findings"])
+    assert "mapping" in env["findings"][0]["reason"]
+
+
 def test_freeze_blocked_when_required_field_missing(tmp_path: Path) -> None:
     _oid, folder = _lit_object(tmp_path)
     partial = {k: v for k, v in _FIELDS.items() if k != "synthesis_method"}
