@@ -164,4 +164,13 @@ Authoritative details: 06-reuse-adoption.md.
 
 - [P] Default repeated-fragment threshold (40 words / 2 paragraphs) — confirm on F7 in M3.
 - [P] Unit review is run per unit after drafting; chapter review after all its units pass unit review. The pilot (M5, variant C) decides whether unit-level review is kept for articles.
-- [?] Exact non-interactive Codex CLI invocation and output capture — verify in M3 (H12).
+- [R] Exact non-interactive Codex CLI invocation and output capture — resolved
+  (M3-17 / P1-1, verified against learn.chatgpt.com/docs/non-interactive-mode,
+  2026-11-02, H12). Invocation: `codex exec --json --cd <work_dir> <prompt>`
+  (read-only sandbox is the default). Output is JSON Lines keyed by `type`; the
+  critic's answer is the last `item.completed` whose `item.type == "agent_message"`
+  (its `text`, a JSON object of `findings`/`verdicts`), and token counts are in
+  the `usage` object of `turn.completed` (`input_tokens`/`output_tokens`).
+  Implemented in `review.engine.run_codex` behind the paid-budget guard (H9),
+  proven with a local stub codex in `tests/unit/review/test_codex_run.py`; a real
+  end-to-end run needs paid_calls enabled via ADR-017/021 governance (author).
