@@ -55,7 +55,8 @@ def findings(root: Path) -> list[dict[str, Any]]:
     if not man.is_dir():
         return out
     for cf in man.rglob("claims.json"):
-        for claim in json.loads(cf.read_text(encoding="utf-8")).get("claims", []):
+        data = json.loads(cf.read_text(encoding="utf-8"))
+        for claim in data if isinstance(data, list) else data.get("claims", []):
             bad = sorted(
                 {
                     rid

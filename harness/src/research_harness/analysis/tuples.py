@@ -133,7 +133,8 @@ def check(root: Path) -> list[dict]:
     if not man.is_dir():
         return findings
     for cf in man.rglob("claims.json"):
-        claims = json.loads(cf.read_text(encoding="utf-8")).get("claims", [])
+        data = json.loads(cf.read_text(encoding="utf-8"))
+        claims = data if isinstance(data, list) else data.get("claims", [])
         for claim in claims:
             findings += check_claim(claim, rows_by_id)
     return findings

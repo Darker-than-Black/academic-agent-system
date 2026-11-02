@@ -54,6 +54,15 @@ def _object(tmp_path: Path):
     return folder
 
 
+def test_build_unit_tolerates_bare_list_claims_json(tmp_path: Path) -> None:
+    # A unit seeded with a bare-list claims.json ([]) must not crash the
+    # deterministic summary (regression: 'list' object has no attribute 'get').
+    folder = _object(tmp_path)
+    (folder / "manuscript" / "ch1" / "s1" / "claims.json").write_text("[]\n", encoding="utf-8")
+    summary = det_mod.build_unit(folder, _UA)
+    assert summary["deterministic"]["claims"] == []
+
+
 def test_build_then_change_propagates_staleness(tmp_path: Path) -> None:  # T51
     folder = _object(tmp_path)
     map_mod.build(folder)

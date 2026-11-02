@@ -48,7 +48,8 @@ def _claims(folder: Path) -> list[str]:
         data = json.loads(cf.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return []
-    return [c["id"] for c in data.get("claims", []) if isinstance(c, dict) and "id" in c]
+    claims = data if isinstance(data, list) else data.get("claims", [])
+    return [c["id"] for c in claims if isinstance(c, dict) and "id" in c]
 
 
 def compute(
