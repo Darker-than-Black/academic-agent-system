@@ -13,7 +13,7 @@ import yaml
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
-from research_harness.export_docx import pandoc, references
+from research_harness.export_docx import figures_embed, pandoc, references
 from research_harness.export_docx.bookmarks import bookmark_map
 from research_harness.structure import model, ops
 from research_harness.units import anchors
@@ -42,13 +42,20 @@ def assemble_markdown(root: Path) -> str:
     folders = ops.current_folders(root)
     units = model.parse_units(model.load(root))
     title = {u.id: u.title for u in _flatten(units)}
-    out: list[str] = []
+
+    ids: list[str] = []
+    bodies: list[str] = []
     for uid in _ordered_ids(root):
         folder = folders.get(uid)
         if folder is None or not (folder / "text.md").is_file():
             continue
-        body = anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()
-        out.append(f"# {title.get(uid, uid)}\n\n{body}")
+        ids.append(uid)
+        bodies.append(anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip())
+
+    # Number and render figure markers across the whole manuscript (M4-14).
+    rendered, _gaps_fig = figures_embed.bind(root, bodies)
+
+    out = [f"# {title.get(uid, uid)}\n\n{body}" for uid, body in zip(ids, rendered, strict=True)]
     return "\n\n".join(out) + "\n"
 
 
@@ -84,6 +91,12 @@ def _gaps(root: Path) -> list[dict[str, Any]]:
                 gaps.append(_g("export.summary_stale", f"{uid}: summary is stale"))
     except Exception:  # noqa: BLE001 — summaries are optional for a draft
         pass
+    bodies = [
+        anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()
+        for uid in _ordered_ids(root)
+        if (folders.get(uid) is not None) and (folders[uid] / "text.md").is_file()
+    ]
+    gaps += figures_embed.bind(root, bodies)[1]
     return gaps
 
 
