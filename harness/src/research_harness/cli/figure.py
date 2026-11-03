@@ -19,6 +19,9 @@ def register(sub: argparse._SubParsersAction) -> None:
     add.add_argument("--script", required=True)
     add.add_argument("--row", dest="rows", action="append", default=None, help="Result row id.")
     add.add_argument("--format", dest="fmt", default="svg", choices=["svg", "png"])
+    add.add_argument("--caption", default=None, help="Figure caption (manuscript language).")
+    add.add_argument("--alt", default=None, help="Alt text for accessibility.")
+    add.add_argument("--kind", default="chart", choices=["chart", "image", "table"])
     bl = sa.add_parser("build", help="Rebuild a figure from its rows and script.")
     bl.add_argument("fig_id")
     sa.add_parser("check", help="Report stale figures.")
@@ -33,7 +36,15 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     root = object_root(args)
     action = args.figure_action
     if action == "add":
-        rec = figures.add(root, script=args.script, row_ids=args.rows or [], fmt=args.fmt)
+        rec = figures.add(
+            root,
+            script=args.script,
+            row_ids=args.rows or [],
+            fmt=args.fmt,
+            caption=args.caption,
+            alt=args.alt,
+            kind=args.kind,
+        )
         return _ok("figure.added", {"id": rec["id"]}, {"figure": rec}, lang)
     if action == "build":
         rec = figures.build(root, args.fig_id)

@@ -13,7 +13,13 @@ import yaml
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
-from research_harness.export_docx import citations, methods_inject, pandoc, references
+from research_harness.export_docx import (
+    citations,
+    figures_embed,
+    methods_inject,
+    pandoc,
+    references,
+)
 from research_harness.export_docx.bookmarks import bookmark_map
 from research_harness.structure import model, ops
 from research_harness.units import anchors
@@ -59,8 +65,11 @@ def assemble_markdown(root: Path) -> str:
             continue
         seq.append((uid, anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()))
 
-    injected = methods_inject.inject(root, [b for _uid, b in seq])
-    rendered, bib, _gaps = citations.bind(root, injected)
+    # Expand the methodology marker (M4-17), render figure markers (M4-14), then
+    # bind citation markers to numbers + the bibliography (M4-16), in that order.
+    seq_bodies = methods_inject.inject(root, [b for _uid, b in seq])
+    seq_bodies, _fig_gaps = figures_embed.bind(root, seq_bodies)
+    rendered, bib, _cite_gaps = citations.bind(root, seq_bodies)
     bodies = {uid: text for (uid, _b), text in zip(seq, rendered, strict=True)}
 
     out: list[str] = []
@@ -110,6 +119,7 @@ def _gaps(root: Path) -> list[dict[str, Any]]:
         if folders.get(uid) is not None and (folders[uid] / "text.md").is_file()
     ]
     gaps += methods_inject.gaps(root, bodies)
+    gaps += figures_embed.bind(root, bodies)[1]
     return gaps
 
 

@@ -65,13 +65,22 @@ def _row_hashes(root: Path, row_ids: list[str]) -> tuple[list[str], list[str]]:
     return sorted(hashes), missing
 
 
-def add(root: Path, *, script: str, row_ids: list[str], fmt: str = "svg") -> dict[str, Any]:
+def add(
+    root: Path,
+    *,
+    script: str,
+    row_ids: list[str],
+    fmt: str = "svg",
+    caption: str | None = None,
+    alt: str | None = None,
+    kind: str = "chart",
+) -> dict[str, Any]:
     """Register a figure definition (rows + plotting script); not built yet."""
     script_path = root / script if (root / script).is_file() else Path(script)
     if not script_path.is_file():
         raise BlockedError("error.figure_script_missing", params={"path": str(script)})
     fig_id = _next_id(root)
-    record = {
+    record: dict[str, Any] = {
         "schema_version": "0.2",
         "id": fig_id,
         "created_at": default_clock().now_rfc3339(),
@@ -81,9 +90,21 @@ def add(root: Path, *, script: str, row_ids: list[str], fmt: str = "svg") -> dic
         "data_sha256": [],
         "format": fmt,
         "built_at": None,
+        "kind": kind,
     }
+    if caption is not None:
+        record["caption"] = caption
+    if alt is not None:
+        record["alt"] = alt
     _save(root, record)
     return record
+
+
+def image_path(root: Path, fig_id: str) -> Path:
+    """Path to the built image for a figure (may not exist until built)."""
+    record = load(root, fig_id)
+    fmt = record["format"] if record else "svg"
+    return figures_dir(root) / f"{fig_id}.{fmt}"
 
 
 def _save(root: Path, record: dict[str, Any]) -> None:
