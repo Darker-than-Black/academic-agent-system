@@ -1,0 +1,44 @@
+- id: UAFAHOVEB-SOURCE-LANG-RU
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: integrity.source_language_forbidden
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: blocker
+  overridable: true
+  statement: "Do not cite or include in the bibliography sources published in Russian, in any country."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (language of sources)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+
+- id: UAFAHOVEB-SOURCE-JURISDICTION-RU-BY
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: integrity.source_jurisdiction_forbidden
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: blocker
+  overridable: true
+  statement: "Do not cite or include sources published on the territory of russia or belarus, regardless of language."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (publication jurisdiction)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+
+- id: UAFAHOVEB-SOURCE-ORIGIN-UNKNOWN
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: integrity.source_origin_unknown
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic, human]
+  severity: major
+  overridable: true
+  statement: "A cited source whose language/jurisdiction is unresolved cannot be confirmed permitted; resolve its metadata or drop it (H7)."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (source identification)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"

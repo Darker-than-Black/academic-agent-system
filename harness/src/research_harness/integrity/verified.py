@@ -24,7 +24,7 @@ from typing import Any
 from research_harness.export_docx import assemble
 from research_harness.findings import index as findings_index
 from research_harness.gates.records import approvals_path
-from research_harness.integrity import ai_use, assets, overlap, venue
+from research_harness.integrity import ai_use, assets, overlap, source_origin, venue
 from research_harness.review import verdicts
 from research_harness.rules import freshness
 from research_harness.state import snapshot as snap
@@ -135,4 +135,5 @@ def check_conditions(root: Path, *, pack: str = "ua-fahove-b") -> list[dict[str,
         findings.append(mf)
     findings += assets.rights_findings(root)
     findings += venue.status_findings(root)
+    findings += source_origin.origin_findings(root)
     return findings
