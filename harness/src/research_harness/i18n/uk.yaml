@@ -160,6 +160,7 @@ claims.coverage: "Покриття: знаменник = всі суттєві �
 methodology.saved: "Запис методології збережено."
 methodology.shown: "Запис методології."
 methodology.checked: "Недоліки методології: {n}."
+substance.report: "Звіт про суттєвість: слабких суттєвих тверджень — {w}."
 brief.set: "Бриф одиниці {unit} збережено."
 brief.checked: "Бриф {unit} перевірено."
 brief.answered: "Відповідь на внесок {point} записано."

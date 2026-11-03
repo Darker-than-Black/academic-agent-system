@@ -1,0 +1,16 @@
+- id: UAFAHOVEB-SUBSTANCE-ANALYSIS-FREE-RATIO
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: substance.analysis_free_ratio
+  kind: process
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: max
+  value: "0.25"
+  statement: "If more than 25% of narrative sentences state a limitation or absence of a result, warn that the article describes the absence of a result, not a result."
+  source: {title: "ADR-023 — substance readiness gate and rework flow", url: "research-harness-spec/stage-0/adr/ADR-023-substance-gate-rework-flow.md", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
