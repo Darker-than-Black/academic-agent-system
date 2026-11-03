@@ -16,6 +16,7 @@ from research_harness.core.hashing import file_hash
 from research_harness.export_docx import (
     citations,
     figures_embed,
+    format_profile,
     methods_inject,
     pandoc,
     references,
@@ -120,6 +121,7 @@ def _gaps(root: Path) -> list[dict[str, Any]]:
     ]
     gaps += methods_inject.gaps(root, bodies)
     gaps += figures_embed.bind(root, bodies)[1]
+    gaps += format_profile.volume_findings(root)
     return gaps
 
 
