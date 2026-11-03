@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 from typing import Any
 
@@ -54,6 +55,10 @@ def register(sub: argparse._SubParsersAction) -> None:
 
     rc = sa.add_parser("retraction-check", help="Check retraction notices (Crossref metadata).")
     rc.add_argument("ids", nargs="+")
+
+    rl = sa.add_parser("relabel", help="Set a source's citation key (bib_key); must be unique.")
+    rl.add_argument("id")
+    rl.add_argument("--bib-key", dest="bib_key", required=True)
 
     sa.add_parser("list", help="List registered sources.")
 
@@ -144,6 +149,8 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         )
     if action == "retraction-check":
         return _retraction(args, root, lang)
+    if action == "relabel":
+        return _relabel(args, root, lang)
     if action == "list":
         recs = sorted(registry.load(root), key=registry.sort_key)
         return _env(
@@ -209,6 +216,62 @@ def _import(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
         status="partial" if findings else "ok",
         findings=findings,
         data={"sources": added},
+    )
+
+
+_BIB_KEY = re.compile(r"^[A-Za-z0-9:_-]+$")
+
+
+def _relabel(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
+    """Set a source's citation key. The key must be cite-marker-safe and unique."""
+    key = args.bib_key
+    if not _BIB_KEY.match(key):
+        return _env(
+            _COMMAND,
+            lang,
+            "source.bib_key_invalid",
+            status="blocked",
+            params={"key": key},
+            findings=[
+                {
+                    "check_id": "source.bib_key_invalid",
+                    "severity": "blocker",
+                    "reason": f"citation key {key!r} must match [A-Za-z0-9:_-]+",
+                    "location": {"ref": f"source:{args.id}"},
+                    "proposed_action": "Use letters, digits, ':', '_' or '-' only.",
+                }
+            ],
+        )
+    if registry.get(root, args.id) is None:
+        raise InvalidInputError("error.invalid")
+    clash = next(
+        (r["id"] for r in registry.load(root) if r.get("bib_key") == key and r["id"] != args.id),
+        None,
+    )
+    if clash is not None:
+        return _env(
+            _COMMAND,
+            lang,
+            "source.bib_key_taken",
+            status="blocked",
+            params={"key": key, "id": clash},
+            findings=[
+                {
+                    "check_id": "source.bib_key_taken",
+                    "severity": "blocker",
+                    "reason": f"citation key {key!r} is already used by {clash}",
+                    "location": {"ref": f"source:{args.id}"},
+                    "proposed_action": "Choose a unique citation key.",
+                }
+            ],
+        )
+    updated = registry.update(root, args.id, {"bib_key": key})
+    return _env(
+        _COMMAND,
+        lang,
+        "source.relabeled",
+        params={"id": args.id, "key": key},
+        data={"source": updated},
     )
 
 
