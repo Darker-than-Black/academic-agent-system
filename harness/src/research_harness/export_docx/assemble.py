@@ -13,7 +13,7 @@ import yaml
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
-from research_harness.export_docx import pandoc, references
+from research_harness.export_docx import citations, pandoc, references
 from research_harness.export_docx.bookmarks import bookmark_map
 from research_harness.structure import model, ops
 from research_harness.units import anchors
@@ -42,13 +42,32 @@ def assemble_markdown(root: Path) -> str:
     folders = ops.current_folders(root)
     units = model.parse_units(model.load(root))
     title = {u.id: u.title for u in _flatten(units)}
-    out: list[str] = []
+    kind = {u.id: u.kind for u in _flatten(units)}
+
+    # Collect bodies in reading order; the references unit (if any) is filled with
+    # the generated numbered bibliography after cite markers are bound (M4-16).
+    seq: list[tuple[str, str]] = []  # (uid, body) for non-reference units
+    ref_uid: str | None = None
+    ordered: list[str] = []
     for uid in _ordered_ids(root):
         folder = folders.get(uid)
         if folder is None or not (folder / "text.md").is_file():
             continue
-        body = anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()
-        out.append(f"# {title.get(uid, uid)}\n\n{body}")
+        ordered.append(uid)
+        if kind.get(uid) == "references":
+            ref_uid = uid
+            continue
+        seq.append((uid, anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()))
+
+    rendered, bib, _gaps = citations.bind(root, [b for _uid, b in seq])
+    bodies = {uid: text for (uid, _b), text in zip(seq, rendered, strict=True)}
+
+    out: list[str] = []
+    for uid in ordered:
+        if uid == ref_uid:
+            out.append(f"# {title.get(uid, uid)}\n\n{bib}".rstrip())
+        else:
+            out.append(f"# {title.get(uid, uid)}\n\n{bodies.get(uid, '')}")
     return "\n\n".join(out) + "\n"
 
 

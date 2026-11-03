@@ -13,7 +13,7 @@ from research_harness.sources import registry
 from research_harness.structure import ops
 from research_harness.summaries.deterministic import body_of
 
-_CITE = re.compile(r"@([A-Za-z0-9:_-]+)|\[\[cite:([^\]]+)\]\]")
+_CITE = re.compile(r"@([A-Za-z0-9:_-]+)|\[\[cite:([^\]|]+)(?:\|[^\]]+)?\]\]")
 
 
 def cited_keys(root: Path) -> set[str]:
