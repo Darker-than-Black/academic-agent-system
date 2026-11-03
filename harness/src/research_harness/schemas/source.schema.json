@@ -38,6 +38,7 @@
     "url": { "type": "string" },
     "issn": { "type": "array", "items": { "type": "string" } },
     "language": { "type": "string" },
+    "publication_country": { "type": "string", "description": "ISO 3166-1 alpha-2 country of publication/publisher (e.g. UA, GB, RU); used by the source origin check (M4-13)." },
     "type": { "type": "string" },
     "identifiers": { "type": "object" },
     "metadata_status": { "$ref": "common.schema.json#/$defs/metadata_status" },

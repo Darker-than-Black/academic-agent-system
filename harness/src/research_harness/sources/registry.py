@@ -150,6 +150,8 @@ def build_source(
         source["issn"] = rec["issn"]
     if rec.get("language"):
         source["language"] = rec["language"]
+    if rec.get("publication_country"):
+        source["publication_country"] = rec["publication_country"]
     if rec.get("identifiers"):
         source["identifiers"] = rec["identifiers"]
     if metadata_sources:

@@ -46,6 +46,7 @@ def run(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         from research_harness.cli.state import resolve_object_root
         from research_harness.core.errors import InvalidInputError
         from research_harness.structure import checks as structure_checks  # noqa: F401
+        from research_harness.validate import source_origin_checks  # noqa: F401
 
         explicit = getattr(args, "root", None)
         if explicit is None and getattr(args, "object", None):
