@@ -35,6 +35,23 @@ inventing data (H6/H7).
   data/sources/experiment → excerpts/claims/figures update → re-draft + re-report.
   Each step logged. Report envelope carries `next_actions` (who: author).
 - **Thresholds in rulepacks** (`ua-fahove-b` / general), as data, draft.
+- **Specific substance checks (test-run pasted items 1–4):**
+  - *synthesis vs restatement* — flag results units that mostly restate single
+    sources without cross-source synthesis (deterministic proxy: claims each
+    citing one source, no comparative/aggregated claim; semantic depth → critic).
+  - *effect-evidence detail* — a material "effect" claim with no structured
+    evidence (direction/magnitude/sample/context from a fulltext excerpt) is
+    flagged as needing extraction; never invented.
+  - *scope/thesis calibration* — the stated topic/thesis vs the evidence base: if
+    the corpus is mostly indirect (e.g. HE students, general special-ed tech) for
+    a claim about a specific population (ООП), flag that the thesis overreaches and
+    should be scoped to "gap + indirect evidence".
+  - *conclusion-vs-evidence calibration* — a conclusion whose certainty wording
+    ("підтверджено з помірною певністю", "погіршення успішності") exceeds the
+    supported level of its claims is flagged to soften or cite.
+  - *cross-unit consistency* — contradictory statements across units (e.g. intro
+    "дані не містять змінної" vs result "не зміг перевірити") are flagged; a
+    categorical claim must be downgraded to the verifiable form or documented.
 
 ## Not in this card
 
