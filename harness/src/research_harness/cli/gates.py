@@ -216,7 +216,9 @@ def _record_external(
         gate,
         decision=args.decision,
         reason=args.reason or "",
-        target=requests.current_target(root),
+        target=requests.current_target(
+            root, requests.request_refs(root, req["id"] if req else None)
+        ),
         actor_role=role,
         actor_label=args.actor_label or role,
         channel="external_document",
