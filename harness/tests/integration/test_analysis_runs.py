@@ -43,6 +43,33 @@ def _script(tmp_path: Path, body: str) -> Path:
     return p
 
 
+def test_interpreter_defaults_to_harness(tmp_path: Path) -> None:
+    import sys
+
+    from research_harness.analysis import project
+
+    interp, source = runner._interpreter(tmp_path)
+    assert source == "harness" and interp == sys.executable
+    # Provenance field reflects the fallback.
+    _ = project.project_dir  # keep import meaningful
+
+
+def test_interpreter_prefers_analysis_venv(tmp_path: Path) -> None:
+    from research_harness.analysis import project
+
+    venv_py = project.project_dir(tmp_path) / ".venv" / "bin" / "python"
+    venv_py.parent.mkdir(parents=True, exist_ok=True)
+    venv_py.write_text("#!/bin/sh\n", encoding="utf-8")
+    interp, source = runner._interpreter(tmp_path)
+    assert source == "analysis-venv" and interp == str(venv_py)
+
+
+def test_run_records_interpreter(tmp_path: Path) -> None:
+    report = runner.run(tmp_path, _script(tmp_path, _ROWS_SCRIPT))
+    run_json = json.loads((Path(report["dir"]) / "run.json").read_text(encoding="utf-8"))
+    assert run_json["sandbox"]["interpreter"] in ("analysis-venv", "harness")
+
+
 def test_run_produces_rows(tmp_path: Path) -> None:
     report = runner.run(tmp_path, _script(tmp_path, _ROWS_SCRIPT))
     assert report["status"] == "succeeded" and report["rows"] == 1

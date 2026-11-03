@@ -34,6 +34,21 @@ def _next_run_id(root: Path) -> str:
     return f"R-{max(nums, default=0) + 1:04d}"
 
 
+def _interpreter(root: Path) -> tuple[str, str]:
+    """Pick the interpreter for an analysis run.
+
+    Prefer the per-object analysis venv (``analysis/.venv/bin/python``) so the
+    script runs against the project's pinned scientific stack (numpy/pandas/…),
+    which is the point of ``rh analysis init``. Fall back to the harness
+    interpreter only when that venv has not been synced yet. Returns
+    ``(python_path, source)`` where source is ``"analysis-venv"`` or ``"harness"``.
+    """
+    venv_py = project.project_dir(root) / ".venv" / "bin" / "python"
+    if venv_py.is_file():
+        return str(venv_py), "analysis-venv"
+    return sys.executable, "harness"
+
+
 def _lockfile_sha(root: Path) -> str:
     lock = project.project_dir(root) / "uv.lock"
     return file_hash(lock) if lock.is_file() else UNKNOWN
@@ -86,7 +101,8 @@ def run(
     # No -I/-E/-s: the sitecustomize network guard is injected via PYTHONPATH and
     # must load at startup (guard_only). The script is the author's own analysis
     # code under analysis/scripts, not an untrusted download.
-    argv = [sys.executable, str(script_path.resolve())]
+    interpreter, interp_source = _interpreter(root)
+    argv = [interpreter, str(script_path.resolve())]
     if caps.namespace:
         argv = ["unshare", "-n", *argv]
 
@@ -134,6 +150,7 @@ def run(
             "timeout_s": timeout_s,
             "cwd": str(work),
             "python": sys.version.split()[0],
+            "interpreter": interp_source,
             "lockfile_sha256": lockfile_sha,
         },
         "code": {"path": str(script_path), "sha256": file_hash(script_path)},
