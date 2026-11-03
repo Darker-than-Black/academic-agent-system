@@ -13,7 +13,7 @@ import yaml
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
-from research_harness.export_docx import citations, pandoc, references
+from research_harness.export_docx import citations, methods_inject, pandoc, references
 from research_harness.export_docx.bookmarks import bookmark_map
 from research_harness.structure import model, ops
 from research_harness.units import anchors
@@ -59,7 +59,8 @@ def assemble_markdown(root: Path) -> str:
             continue
         seq.append((uid, anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()))
 
-    rendered, bib, _gaps = citations.bind(root, [b for _uid, b in seq])
+    injected = methods_inject.inject(root, [b for _uid, b in seq])
+    rendered, bib, _gaps = citations.bind(root, injected)
     bodies = {uid: text for (uid, _b), text in zip(seq, rendered, strict=True)}
 
     out: list[str] = []
@@ -103,6 +104,12 @@ def _gaps(root: Path) -> list[dict[str, Any]]:
                 gaps.append(_g("export.summary_stale", f"{uid}: summary is stale"))
     except Exception:  # noqa: BLE001 — summaries are optional for a draft
         pass
+    bodies = [
+        anchors.ANCHOR_RE.sub("", read_body(root, uid)).strip()
+        for uid in _ordered_ids(root)
+        if folders.get(uid) is not None and (folders[uid] / "text.md").is_file()
+    ]
+    gaps += methods_inject.gaps(root, bodies)
     return gaps
 
 
