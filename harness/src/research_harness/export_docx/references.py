@@ -57,18 +57,28 @@ def build(root: Path) -> tuple[str, list[dict[str, Any]]]:
     return _bibtex(records), gaps
 
 
+def _clean(value: Any) -> str:
+    """Strip BibTeX field delimiters so a stray brace cannot break the .bib.
+
+    Some imported records carry literal ``{``/``}`` in author names; emitting
+    them raw produces a malformed bibliography that pandoc/citeproc rejects.
+    """
+    return str(value).replace("{", "").replace("}", "")
+
+
 def _bibtex(records: list[dict[str, Any]]) -> str:
     out: list[str] = []
     for r in records:
         authors = " and ".join(
-            f"{a.get('family', '')}, {a.get('given', '')}".strip(", ") for a in r.get("authors", [])
+            _clean(f"{a.get('family', '')}, {a.get('given', '')}".strip(", "))
+            for a in r.get("authors", [])
         )
         fields = {
             "author": authors,
-            "title": r.get("title", ""),
-            "year": r.get("year", ""),
-            "journal": r.get("container", ""),
-            "doi": r.get("doi", ""),
+            "title": _clean(r.get("title", "")),
+            "year": _clean(r.get("year", "")),
+            "journal": _clean(r.get("container", "")),
+            "doi": _clean(r.get("doi", "")),
         }
         body = ",\n  ".join(f"{k} = {{{v}}}" for k, v in fields.items() if v)
         out.append(f"@article{{{r['bib_key']},\n  {body}\n}}")
