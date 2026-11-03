@@ -1,0 +1,5 @@
+{
+  "schema_version": "0.2",
+  "selection_criteria": { "inclusion": ["x"] },
+  "bogus_field": true
+}

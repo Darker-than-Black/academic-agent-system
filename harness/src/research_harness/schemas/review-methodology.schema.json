@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rh.spec/schemas/review-methodology.schema.json",
+  "title": "Review methodology: reproducible corpus (M4-17, ADR-023)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "selection_criteria": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "inclusion": { "type": "array", "items": { "type": "string" } },
+        "exclusion": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "search_log": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "query": { "type": "string" },
+              "date": { "type": "string" },
+              "found": { "type": ["integer", "null"] }
+            }
+          }
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "found": { "type": ["integer", "null"] },
+            "screened": { "type": ["integer", "null"] },
+            "included": { "type": ["integer", "null"] },
+            "excluded": { "type": ["integer", "null"] }
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["reason"],
+            "properties": {
+              "reason": { "type": "string" },
+              "count": { "type": ["integer", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "included": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id"],
+        "properties": {
+          "source_id": { "type": "string" },
+          "role": { "type": "string" }
+        }
+      }
+    }
+  }
+}
