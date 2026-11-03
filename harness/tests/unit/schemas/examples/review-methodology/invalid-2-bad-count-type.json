@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.2",
+  "search_log": {
+    "databases": [{ "query": "no name field" }],
+    "counts": { "found": "many" }
+  }
+}

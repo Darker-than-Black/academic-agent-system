@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.2",
+  "selection_criteria": { "inclusion": ["topic match"] },
+  "search_log": {
+    "counts": { "found": null, "screened": null, "included": 9, "excluded": null }
+  }
+}
