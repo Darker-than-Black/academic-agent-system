@@ -1,0 +1,1 @@
+{"date": "2026-11-01", "event": "run", "fixture": "F4-H", "lock_sha256": "eef234814df9b2b1afd6c0f393d2e0b8e4314bdb04313e9304206f4f6ec272d8", "set_hash": "e4dbb241d94b792d67a8c0ec606097dcdf22d59215bfeb63ba44069a4879c472", "model_id": null, "run_kind": null, "cases": {"total": 4, "scored": 0, "pending": 4}, "metrics": {}, "hard_failures": [], "all_pass": true}

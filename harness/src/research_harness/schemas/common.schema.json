@@ -48,7 +48,7 @@
     "study_kind": {
       "enum": ["literature", "conceptual", "empirical_quantitative", "empirical_qualitative", "computational_ml", "mixed", "unknown"]
     },
-    "metadata_status": { "enum": ["unresolved", "matched", "ambiguous", "not_found", "lookup_failed"] },
+    "metadata_status": { "enum": ["unresolved", "matched", "ambiguous", "not_found", "lookup_failed", "author_provided"] },
     "access_level": { "enum": ["metadata", "abstract", "fulltext", "local_original"] },
     "support": {
       "enum": ["unreviewed", "supported", "partial", "insufficient", "contradicted", "not_found", "unverifiable"]

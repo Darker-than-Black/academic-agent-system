@@ -1,0 +1,212 @@
+{
+  "suite": "M2-semantic",
+  "date": "2026-11-02",
+  "total": 4,
+  "passed": 4,
+  "failed": 0,
+  "pending": 0,
+  "all_pass": true,
+  "results": [
+    {
+      "id": "T06",
+      "title": "relevance != support — extraction, verdicts, seeded defects, zero critical false PASS",
+      "kind": "semantic",
+      "fixture": "F4-W",
+      "passed": true,
+      "run_kind": "host",
+      "metrics": {
+        "MX": {
+          "metric": "MX",
+          "recall": {
+            "value": 1.0,
+            "n": 40,
+            "k": 40,
+            "lo": 0.9124,
+            "hi": 1.0
+          },
+          "precision": {
+            "value": 0.4483,
+            "n": 87,
+            "k": 39,
+            "lo": 0.3482,
+            "hi": 0.5528
+          }
+        },
+        "MV": {
+          "metric": "MV",
+          "n": 44,
+          "accuracy": {
+            "value": 0.6136,
+            "n": 44,
+            "k": 27,
+            "lo": 0.4662,
+            "hi": 0.7428
+          },
+          "macro_f1": 0.654,
+          "per_class": {
+            "supported": {
+              "precision": 0.7857,
+              "recall": 0.5789,
+              "f1": 0.6667,
+              "support": 19
+            },
+            "partial": {
+              "precision": 0.3,
+              "recall": 0.6,
+              "f1": 0.4,
+              "support": 5
+            },
+            "insufficient": {
+              "precision": 0.5,
+              "recall": 0.7143,
+              "f1": 0.5882,
+              "support": 7
+            },
+            "contradicted": {
+              "precision": 0.7143,
+              "recall": 0.8333,
+              "f1": 0.7692,
+              "support": 6
+            },
+            "not_found": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1
+            },
+            "unverifiable": {
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5,
+              "support": 6
+            }
+          },
+          "critical_recall": {
+            "value": 1.0,
+            "n": 9,
+            "k": 9,
+            "lo": 0.7009,
+            "hi": 1.0
+          }
+        },
+        "MS": {
+          "metric": "MS",
+          "recall": {
+            "value": 0.9412,
+            "n": 17,
+            "k": 16,
+            "lo": 0.7302,
+            "hi": 0.9895
+          },
+          "precision": {
+            "value": 0.7619,
+            "n": 21,
+            "k": 16,
+            "lo": 0.5491,
+            "hi": 0.8937
+          },
+          "missed_defects": [
+            "D9"
+          ]
+        },
+        "MF": {
+          "metric": "MF",
+          "false_pass": 3,
+          "false_pass_claims": [
+            "C-029",
+            "C-033",
+            "C-034"
+          ],
+          "critical_false_pass": 0,
+          "critical_false_pass_claims": [],
+          "critical_target_met": true
+        }
+      },
+      "hard_failures": [],
+      "evidence": "scored MX,MV,MS,MF against evals/fixtures/F4W/runs/F4W-host-2026-11-02.run.json (model=claude-fable-5-1)"
+    },
+    {
+      "id": "T22",
+      "title": "integration review: abstract <-> conclusions contradiction (D13)",
+      "kind": "semantic",
+      "fixture": "F4-W",
+      "passed": true,
+      "run_kind": "host",
+      "metrics": {
+        "MS": {
+          "metric": "MS",
+          "recall": {
+            "value": 0.9412,
+            "n": 17,
+            "k": 16,
+            "lo": 0.7302,
+            "hi": 0.9895
+          },
+          "precision": {
+            "value": 0.7619,
+            "n": 21,
+            "k": 16,
+            "lo": 0.5491,
+            "hi": 0.8937
+          },
+          "missed_defects": [
+            "D9"
+          ]
+        }
+      },
+      "hard_failures": [],
+      "evidence": "scored MS against evals/fixtures/F4W/runs/F4W-host-2026-11-02.run.json (model=claude-fable-5-1)"
+    },
+    {
+      "id": "T30",
+      "title": "conceptual: premise without a source is flagged (D11)",
+      "kind": "semantic",
+      "fixture": "F4-W",
+      "passed": true,
+      "run_kind": "host",
+      "metrics": {
+        "MS": {
+          "metric": "MS",
+          "recall": {
+            "value": 0.9412,
+            "n": 17,
+            "k": 16,
+            "lo": 0.7302,
+            "hi": 0.9895
+          },
+          "precision": {
+            "value": 0.7619,
+            "n": 21,
+            "k": 16,
+            "lo": 0.5491,
+            "hi": 0.8937
+          },
+          "missed_defects": [
+            "D9"
+          ]
+        }
+      },
+      "hard_failures": [],
+      "evidence": "scored MS against evals/fixtures/F4W/runs/F4W-host-2026-11-02.run.json (model=claude-fable-5-1)"
+    },
+    {
+      "id": "T49",
+      "title": "author contribution points: placeholder, never an invented position (MA=0)",
+      "kind": "semantic",
+      "fixture": "F4-W",
+      "passed": true,
+      "run_kind": "host",
+      "metrics": {
+        "MA": {
+          "metric": "MA",
+          "n": 0,
+          "invented": 0,
+          "invented_points": [],
+          "target_met": true
+        }
+      },
+      "hard_failures": [],
+      "evidence": "scored MA against evals/fixtures/F4W/runs/F4W-host-2026-11-02.run.json (model=claude-fable-5-1)"
+    }
+  ]
+}

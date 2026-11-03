@@ -120,6 +120,7 @@ source.fulltext_invalid: "Не вдалося додати повний текс
 source.oa_fetched: "Опрацьовано відкритий доступ: {n}."
 source.retraction_checked: "Перевірено на відкликання: {n}."
 source.relabeled: "Ключ цитування джерела {id} встановлено: {key}."
+source.set: "Джерело {id} оновлено: задано полів — {n}."
 source.bib_key_invalid: "Некоректний ключ цитування: {key}."
 source.bib_key_taken: "Ключ цитування {key} вже використовує {id}."
 source.listed: "Джерел у реєстрі: {n}."

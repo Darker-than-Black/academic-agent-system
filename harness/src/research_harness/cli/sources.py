@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from research_harness.cli.context import object_root
+from research_harness.core.clock import default_clock
 from research_harness.core.envelope import build_envelope
 from research_harness.core.errors import InvalidInputError
 from research_harness.sources import enrich, import_files, policy, registry, retractions
@@ -59,6 +60,37 @@ def register(sub: argparse._SubParsersAction) -> None:
     rl = sa.add_parser("relabel", help="Set a source's citation key (bib_key); must be unique.")
     rl.add_argument("id")
     rl.add_argument("--bib-key", dest="bib_key", required=True)
+
+    st = sa.add_parser(
+        "set", help="Set author-attested source metadata (language, country, bibliographic fields)."
+    )
+    st.add_argument("id")
+    st.add_argument("--language", help="Language code/name, e.g. en, uk (clears origin_unknown).")
+    st.add_argument(
+        "--publication-country", dest="publication_country", help="ISO country, e.g. UA, GB."
+    )
+    st.add_argument("--title")
+    st.add_argument("--year", type=int)
+    st.add_argument("--container", help="Journal/venue/publisher.")
+    st.add_argument("--type", help="Source type, e.g. article, report.")
+    st.add_argument(
+        "--author",
+        action="append",
+        dest="authors",
+        metavar='"Family, Given"',
+        help='Author as "Family, Given"; repeatable.',
+    )
+    st.add_argument(
+        "--unresolve",
+        action="store_true",
+        help="Revert to metadata_status=unresolved and drop the author attestation.",
+    )
+    st.add_argument(
+        "--clear-authors",
+        dest="clear_authors",
+        action="store_true",
+        help="Remove the authors list (e.g. to clear garbled import data).",
+    )
 
     sa.add_parser("list", help="List registered sources.")
 
@@ -151,6 +183,8 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         return _retraction(args, root, lang)
     if action == "relabel":
         return _relabel(args, root, lang)
+    if action == "set":
+        return _set(args, root, lang)
     if action == "list":
         recs = sorted(registry.load(root), key=registry.sort_key)
         return _env(
@@ -271,6 +305,87 @@ def _relabel(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
         lang,
         "source.relabeled",
         params={"id": args.id, "key": key},
+        data={"source": updated},
+    )
+
+
+_RESOLVABLE_STATUS = ("unresolved", "not_found", "lookup_failed", None)
+
+
+def _parse_author(raw: str) -> dict[str, str]:
+    """Parse ``"Family, Given"`` into a schema author object; family is required."""
+    family, _, given = raw.partition(",")
+    family = family.strip()
+    given = given.strip()
+    if not family:
+        raise InvalidInputError("error.invalid")
+    author = {"family": family}
+    if given:
+        author["given"] = given
+    return author
+
+
+def _set(args: Any, root: Path, lang: str) -> tuple[dict[str, Any], int]:
+    """Set author-attested metadata on a source.
+
+    The author supplies the values (H6: never fabricated by lookup). When a
+    title and at least one author are present and the record was not yet
+    identified, the status becomes ``author_provided`` and an author attestation
+    is appended to ``metadata_sources`` so the provenance stays explicit.
+    """
+    rec = registry.get(root, args.id)
+    if rec is None:
+        raise InvalidInputError("error.invalid")
+
+    patch: dict[str, Any] = {}
+    for field in ("language", "publication_country", "title", "container", "type"):
+        value = getattr(args, field, None)
+        if value is not None:
+            patch[field] = value
+    if args.year is not None:
+        patch["year"] = args.year
+    if args.authors:
+        patch["authors"] = [_parse_author(a) for a in args.authors]
+    if args.clear_authors:
+        patch["authors"] = []
+
+    if args.unresolve:
+        # Revert an identification: status back to unresolved and drop any author
+        # attestation, so an unverified source is not shown as author-confirmed.
+        patch["metadata_status"] = "unresolved"
+        patch["metadata_sources"] = [
+            s for s in (rec.get("metadata_sources") or []) if s.get("resource") != "author"
+        ]
+    if not patch:
+        raise InvalidInputError("error.invalid")
+
+    # Only this call supplying a title or authors attests identification; a
+    # language-only edit must not flip the status on pre-existing (possibly
+    # garbled) fields. --unresolve takes precedence over the flip.
+    supplies_biblio = "title" in patch or "authors" in patch
+    eff_title = patch.get("title", rec.get("title"))
+    eff_authors = patch.get("authors", rec.get("authors"))
+    if (
+        not args.unresolve
+        and supplies_biblio
+        and eff_title
+        and eff_authors
+        and rec.get("metadata_status") in _RESOLVABLE_STATUS
+    ):
+        patch["metadata_status"] = "author_provided"
+        attest = {
+            "resource": "author",
+            "record_id": "author-provided",
+            "retrieved_at": default_clock().now_rfc3339(),
+        }
+        patch["metadata_sources"] = [*(rec.get("metadata_sources") or []), attest]
+
+    updated = registry.update(root, args.id, patch)
+    return _env(
+        _COMMAND,
+        lang,
+        "source.set",
+        params={"id": args.id, "n": len(patch)},
         data={"source": updated},
     )
 
