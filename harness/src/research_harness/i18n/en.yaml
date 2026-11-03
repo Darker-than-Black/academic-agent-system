@@ -154,6 +154,7 @@ synth.findings_blocked: "Findings not saved: a central claim lacks counter-evide
 claims.set: "Unit claims stored ({n})."
 claims.checked: "Checked claims ({n})."
 claims.coverage: "Coverage: denominator = all material claims ({d})."
+substance.report: "Substance report: {w} material claim(s) still weak."
 brief.set: "Unit brief {unit} saved."
 brief.checked: "Brief {unit} checked."
 brief.answered: "Answer to contribution point {point} recorded."
