@@ -13,7 +13,7 @@ import yaml
 from research_harness.claims import ledger as ledger_mod
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import file_hash
-from research_harness.export_docx import pandoc, references
+from research_harness.export_docx import format_profile, pandoc, references
 from research_harness.export_docx.bookmarks import bookmark_map
 from research_harness.structure import model, ops
 from research_harness.units import anchors
@@ -84,6 +84,7 @@ def _gaps(root: Path) -> list[dict[str, Any]]:
                 gaps.append(_g("export.summary_stale", f"{uid}: summary is stale"))
     except Exception:  # noqa: BLE001 — summaries are optional for a draft
         pass
+    gaps += format_profile.volume_findings(root)
     return gaps
 
 

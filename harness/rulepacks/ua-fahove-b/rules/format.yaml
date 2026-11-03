@@ -1,0 +1,46 @@
+- id: UAFAHOVEB-FORMAT-VOLUME
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: format.volume
+  kind: format
+  applies_to: [A]
+  check: [deterministic]
+  severity: major
+  overridable: true
+  compare: max
+  value: "20"
+  statement: "An article must not exceed 20 A4 pages at the cat. «Б» profile (TNR 14, 1.5 spacing, 2 cm margins); estimated at ~1800 characters per page."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (manuscript volume and formatting)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+
+- id: UAFAHOVEB-FORMAT-SELF-CITATION
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: format.self_citation
+  kind: format
+  applies_to: [A]
+  check: [human]
+  severity: minor
+  overridable: true
+  statement: "Self-citations should be a small share of the reference list (advisory; confirm against the venue guidelines)."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (self-citation)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+
+- id: UAFAHOVEB-FORMAT-OUTDATED-SOURCES
+  pack: ua-fahove-b
+  version: "2026-11-03"
+  key: format.outdated_sources
+  kind: format
+  applies_to: [A]
+  check: [human]
+  severity: minor
+  overridable: true
+  statement: "A review should favour recent sources (advisory; the exact window is set by the venue)."
+  source: {title: "Ukrainian cat. «Б» journal author guidelines (currency of sources)", url: "https://mon.gov.ua/perelik-928", evidence_level: secondary, accessed_at: "2026-11-03"}
+  checked_at: "2026-11-03"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
