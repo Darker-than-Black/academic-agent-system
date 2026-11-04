@@ -112,6 +112,24 @@ def test_included_table_uses_citation_numbers_and_order(tmp_path: Path) -> None:
     assert rows[2].startswith("| — |") and "Gamma" in rows[2]
 
 
+def test_methods_markdown_blocks_are_blank_separated(tmp_path: Path) -> None:
+    """Headings, the search list and the table must be separated by blank lines
+    so pandoc parses each as its own block; without them it renders the whole
+    methods section as one paragraph (literal ## and | in the .docx)."""
+    folder = _object(tmp_path)
+    record_mod.save(folder, dict(_COMPLETE))
+    _identified_source(folder)
+    md = record_mod.methods_markdown(folder)
+    # A blank line precedes the table and the table rows stay contiguous.
+    assert "## Включені джерела\n\n| № | Джерело | Доступ | Роль |\n|" in md
+    # The heading is not glued to the following paragraph.
+    assert "## Критерії відбору\n\n**Включення:**" in md
+    # Every table row line is adjacent (no blank line splits the table body).
+    table_part = md.split("## Включені джерела\n\n", 1)[1]
+    rows = table_part.splitlines()
+    assert all(r.startswith("|") for r in rows if r.strip())
+
+
 def test_unknown_count_renders_as_unknown(tmp_path: Path) -> None:
     folder = _object(tmp_path)
     record_mod.save(

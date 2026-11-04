@@ -132,25 +132,29 @@ def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> 
     standalone row index. Uncited sources sort last and show "—".
     """
     data = load(root) or {}
-    out: list[str] = []
+    # Each entry in ``blocks`` is one Markdown block (heading, paragraph, list or
+    # table); they are joined by a blank line so pandoc parses each as its own
+    # block. Multi-line blocks (the list, the table) keep single newlines inside.
+    blocks: list[str] = []
 
     sc = data.get("selection_criteria") or {}
     if sc.get("inclusion") or sc.get("exclusion"):
-        out.append("## Критерії відбору")
+        blocks.append("## Критерії відбору")
         if sc.get("inclusion"):
-            out.append("**Включення:** " + "; ".join(sc["inclusion"]))
+            blocks.append("**Включення:** " + "; ".join(sc["inclusion"]))
         if sc.get("exclusion"):
-            out.append("**Виключення:** " + "; ".join(sc["exclusion"]))
+            blocks.append("**Виключення:** " + "; ".join(sc["exclusion"]))
 
     sl = data.get("search_log") or {}
     if sl.get("databases") or sl.get("counts"):
-        out.append("## Стратегія пошуку")
+        blocks.append("## Стратегія пошуку")
+        items: list[str] = []
         for db in sl.get("databases", []):
             found = db.get("found")
             found_s = "невідомо" if found is None else str(found)
             q = f": «{db['query']}»" if db.get("query") else ""
             date = f", {db['date']}" if db.get("date") else ""
-            out.append(f"- {db['name']}{q}{date}; знайдено: {found_s}")
+            items.append(f"- {db['name']}{q}{date}; знайдено: {found_s}")
         counts = sl.get("counts") or {}
         if counts:
 
@@ -158,10 +162,12 @@ def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> 
                 v = counts.get(k)
                 return "невідомо" if v is None else str(v)
 
-            out.append(
+            items.append(
                 f"- Усього: знайдено {c('found')}, відсіяно {c('screened')}, "
                 f"включено {c('included')}, виключено {c('excluded')}"
             )
+        if items:
+            blocks.append("\n".join(items))
 
     sources = registry.load(root)
     if sources:
@@ -170,14 +176,14 @@ def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> 
             # Order by citation number; uncited sources (no number) keep registry
             # order after the cited ones.
             sources = sorted(sources, key=lambda s: cite_numbers.get(s.get("bib_key"), 10**6))
-        out.append("## Включені джерела")
-        out.append("| № | Джерело | Доступ | Роль |")
-        out.append("|---|---------|--------|------|")
+        blocks.append("## Включені джерела")
+        table = ["| № | Джерело | Доступ | Роль |", "|---|---------|--------|------|"]
         for i, s in enumerate(sources, start=1):
             sid = s.get("id", "?")
             access = s.get("access_level", "unknown")
             num = (cite_numbers or {}).get(s.get("bib_key"))
             label = str(num) if num is not None else (str(i) if cite_numbers is None else "—")
-            out.append(f"| {label} | {_citation(s)} | {access} | {roles.get(sid, '')} |")
+            table.append(f"| {label} | {_citation(s)} | {access} | {roles.get(sid, '')} |")
+        blocks.append("\n".join(table))
 
-    return "\n".join(out)
+    return "\n\n".join(blocks)
