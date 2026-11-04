@@ -81,3 +81,45 @@ def test_missing_row_makes_stale_and_build_refuses(tmp_path: Path) -> None:
 def test_unknown_figure_refuses(tmp_path: Path) -> None:
     with pytest.raises(BlockedError):
         figures.build(tmp_path, "FIG-999")
+
+
+def test_set_metadata_updates_caption_and_alt(tmp_path: Path) -> None:
+    root, rid = _object(tmp_path)
+    figures.add(
+        root,
+        script="analysis/scripts/plot.py",
+        row_ids=[rid],
+        caption="old caption",
+        alt="old alt",
+    )
+    built = figures.build(root, "FIG-001")
+    assert built["built_at"] is not None
+
+    rec = figures.set_metadata(root, "FIG-001", caption="new caption", alt="new alt")
+    assert rec["caption"] == "new caption" and rec["alt"] == "new alt"
+    # Metadata-only: the build is not invalidated.
+    assert figures.is_stale(root, "FIG-001") is False
+    # Persisted.
+    assert figures.load(root, "FIG-001")["alt"] == "new alt"
+
+
+def test_set_metadata_partial_keeps_other_field(tmp_path: Path) -> None:
+    root, rid = _object(tmp_path)
+    figures.add(
+        root, script="analysis/scripts/plot.py", row_ids=[rid], caption="keep", alt="keep-alt"
+    )
+    rec = figures.set_metadata(root, "FIG-001", alt="only-alt")
+    assert rec["caption"] == "keep" and rec["alt"] == "only-alt"
+
+
+def test_set_metadata_unknown_figure_blocks(tmp_path: Path) -> None:
+    root, _rid = _object(tmp_path)
+    with pytest.raises(BlockedError):
+        figures.set_metadata(root, "FIG-404", caption="x")
+
+
+def test_set_metadata_requires_a_field(tmp_path: Path) -> None:
+    root, rid = _object(tmp_path)
+    figures.add(root, script="analysis/scripts/plot.py", row_ids=[rid])
+    with pytest.raises(BlockedError):
+        figures.set_metadata(root, "FIG-001")

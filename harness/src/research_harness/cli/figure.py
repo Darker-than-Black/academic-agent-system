@@ -24,6 +24,10 @@ def register(sub: argparse._SubParsersAction) -> None:
     add.add_argument("--kind", default="chart", choices=["chart", "image", "table"])
     bl = sa.add_parser("build", help="Rebuild a figure from its rows and script.")
     bl.add_argument("fig_id")
+    st = sa.add_parser("set", help="Update a figure's caption and/or alt text.")
+    st.add_argument("fig_id")
+    st.add_argument("--caption", default=None, help="Figure caption (manuscript language).")
+    st.add_argument("--alt", default=None, help="Alt text for accessibility.")
     sa.add_parser("check", help="Report stale figures.")
     sa.add_parser("list", help="List figures.")
 
@@ -49,6 +53,9 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     if action == "build":
         rec = figures.build(root, args.fig_id)
         return _ok("figure.built", {"id": rec["id"]}, {"figure": rec}, lang)
+    if action == "set":
+        rec = figures.set_metadata(root, args.fig_id, caption=args.caption, alt=args.alt)
+        return _ok("figure.set", {"id": rec["id"]}, {"figure": rec}, lang)
     if action == "list":
         ids = figures.list_ids(root)
         return _ok("figure.list", {"n": len(ids)}, {"figures": ids}, lang)
