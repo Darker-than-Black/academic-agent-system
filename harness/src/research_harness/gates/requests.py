@@ -29,6 +29,21 @@ def current_target(root: Path, refs: list[str] | None = None) -> dict[str, Any]:
     return {"snapshot_id": cur, "manifest_sha256": manifest["manifest_sha256"], "refs": refs or []}
 
 
+def request_refs(root: Path, request_id: str | None) -> list[str]:
+    """The scoped refs a request was opened with (e.g. G0's intake subset).
+
+    An approval must inherit these so ``approval_valid`` can scope its binding:
+    without them the approval falls back to whole-snapshot matching and any later
+    checkpoint invalidates a gate that only ever approved the intake context.
+    """
+    if not request_id:
+        return []
+    rf = requests_dir(root) / f"{request_id}.json"
+    if not rf.is_file():
+        return []
+    return json.loads(rf.read_text(encoding="utf-8")).get("target", {}).get("refs", []) or []
+
+
 def open_request(
     root: Path, gate: str, *, briefing_text: str, summary_path: str, refs: list[str] | None = None
 ) -> str:

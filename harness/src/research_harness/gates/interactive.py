@@ -64,7 +64,7 @@ def run_record(
     """Interactive author flow. Returns the recorded approval, or None if aborted."""
     prefill = prefill or {}
     p = _P.get(lang, _P["en"])
-    target = requests.current_target(root)
+    target = requests.current_target(root, requests.request_refs(root, request_id))
     code = confirmation_code(gate, target["manifest_sha256"])
 
     output_fn(briefing.render(root, gate, lang))
