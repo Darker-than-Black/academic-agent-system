@@ -53,6 +53,7 @@
         "memory_mb": { "type": "integer", "minimum": 1 },
         "cwd": { "type": "string" },
         "python": { "type": "string" },
+        "interpreter": { "enum": ["analysis-venv", "harness"] },
         "lockfile_sha256": { "oneOf": [{ "$ref": "common.schema.json#/$defs/hash" }, { "const": "unknown" }] }
       }
     },
