@@ -17,6 +17,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from research_harness.export_docx import citations
 from research_harness.methodology import record as methodology
 
 MARKER = "{{methodology}}"
@@ -26,7 +27,10 @@ def inject(root: Path, bodies: list[str]) -> list[str]:
     """Replace the methodology marker in each body with the rendered methods block."""
     if not any(MARKER in b for b in bodies):
         return list(bodies)
-    rendered_methods = methodology.methods_markdown(root)
+    # Number the included-sources table with the same citation numbers the
+    # bibliography uses, so its № column matches the in-text [n] markers.
+    cite_numbers = citations.allocate_number_map(root, bodies)
+    rendered_methods = methodology.methods_markdown(root, cite_numbers=cite_numbers)
     return [b.replace(MARKER, rendered_methods) if MARKER in b else b for b in bodies]
 
 

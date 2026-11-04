@@ -86,6 +86,32 @@ def test_methods_markdown_renders_table_and_search(tmp_path: Path) -> None:
     assert "| 1 | Smith J. (2020) On inclusion |" in md
 
 
+def test_included_table_uses_citation_numbers_and_order(tmp_path: Path) -> None:
+    """With cite_numbers, the included-sources table is ordered by and labelled
+    with the citation number (so it lines up with in-text [n]), not a standalone
+    row index that follows registry order."""
+    folder = _object(tmp_path)
+    record_mod.save(folder, dict(_COMPLETE))
+    registry.add_records(
+        folder,
+        [
+            {"title": "Alpha", "bib_key": "alpha", "metadata_status": "matched"},
+            {"title": "Beta", "bib_key": "beta", "metadata_status": "matched"},
+            {"title": "Gamma", "bib_key": "gamma", "metadata_status": "matched"},
+        ],
+    )
+    # Citation order (first appearance) differs from registry order: beta, alpha.
+    # gamma is uncited.
+    cite_numbers = {"beta": 1, "alpha": 2}
+    md = record_mod.methods_markdown(folder, cite_numbers=cite_numbers)
+    rows = [ln for ln in md.splitlines() if ln.startswith("| ") and "Доступ" not in ln]
+    rows = [r for r in rows if "---" not in r]
+    # Ordered by citation number: beta(1), alpha(2), then the uncited gamma.
+    assert rows[0].startswith("| 1 |") and "Beta" in rows[0]
+    assert rows[1].startswith("| 2 |") and "Alpha" in rows[1]
+    assert rows[2].startswith("| — |") and "Gamma" in rows[2]
+
+
 def test_unknown_count_renders_as_unknown(tmp_path: Path) -> None:
     folder = _object(tmp_path)
     record_mod.save(

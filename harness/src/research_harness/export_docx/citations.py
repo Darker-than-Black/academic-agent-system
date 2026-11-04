@@ -92,6 +92,18 @@ def bibliography_markdown(order: list[str], index: dict[str, dict[str, Any]]) ->
     return "\n".join(lines)
 
 
+def allocate_number_map(root: Path, bodies_in_order: list[str]) -> dict[str, int]:
+    """Map each resolved cited bib_key to its citation number (first-appearance order).
+
+    This is the same numbering ``bind`` applies to the in-text markers and the
+    reference list, exposed so other rendered blocks (e.g. the methodology
+    included-sources table) can label rows with the matching citation number.
+    """
+    index = _index(root)
+    order = allocate_numbers(bodies_in_order)
+    return {key: i + 1 for i, key in enumerate(k for k in order if _resolved(index, k))}
+
+
 def bind(root: Path, bodies_in_order: list[str]) -> tuple[list[str], str, list[dict[str, Any]]]:
     """Render cite markers across the manuscript bodies.
 
