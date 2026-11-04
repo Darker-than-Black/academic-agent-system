@@ -132,7 +132,10 @@ def check_repeated_fragment(
 
 def run(root: Path) -> list[dict[str, Any]]:
     bodies = _bodies(root)
-    source_ids = {s["id"] for s in registry_mod.load(root)}
+    # Cite markers carry the source's bib_key (e.g. [[cite:meng2024]]), not its
+    # internal id (S-0001), so the bibliography is the set of bib_keys. Matching
+    # against ids falsely blocked every real citation.
+    source_ids = {s["bib_key"] for s in registry_mod.load(root) if s.get("bib_key")}
     findings: list[dict[str, Any]] = []
     findings.extend(check_crossref(bodies))
     findings.extend(check_cite_keys(bodies, source_ids))
