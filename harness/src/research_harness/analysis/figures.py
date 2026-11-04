@@ -100,6 +100,32 @@ def add(
     return record
 
 
+def set_metadata(
+    root: Path,
+    fig_id: str,
+    *,
+    caption: str | None = None,
+    alt: str | None = None,
+) -> dict[str, Any]:
+    """Update an existing figure's caption and/or alt text in place.
+
+    Caption and alt are display metadata only, so this does not touch the built
+    image, its rows or hashes and never invalidates the figure. At least one of
+    caption/alt must be given.
+    """
+    if caption is None and alt is None:
+        raise BlockedError("error.figure_nothing_to_set", params={"id": fig_id})
+    record = load(root, fig_id)
+    if record is None:
+        raise BlockedError("error.figure_unknown", params={"id": fig_id})
+    if caption is not None:
+        record["caption"] = caption
+    if alt is not None:
+        record["alt"] = alt
+    _save(root, record)
+    return record
+
+
 def image_path(root: Path, fig_id: str) -> Path:
     """Path to the built image for a figure (may not exist until built)."""
     record = load(root, fig_id)
