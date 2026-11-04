@@ -123,8 +123,14 @@ def _citation(source: dict[str, Any]) -> str:
     return " ".join(bits)
 
 
-def methods_markdown(root: Path) -> str:
-    """Render selection criteria, the search summary and the included-studies table."""
+def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> str:
+    """Render selection criteria, the search summary and the included-studies table.
+
+    When ``cite_numbers`` (bib_key -> citation number) is given, the included-
+    sources table is ordered by that number and its № column shows it, so the
+    table lines up with the in-text citations and the reference list instead of a
+    standalone row index. Uncited sources sort last and show "—".
+    """
     data = load(root) or {}
     out: list[str] = []
 
@@ -160,12 +166,18 @@ def methods_markdown(root: Path) -> str:
     sources = registry.load(root)
     if sources:
         roles = {i["source_id"]: i.get("role", "") for i in data.get("included", [])}
+        if cite_numbers:
+            # Order by citation number; uncited sources (no number) keep registry
+            # order after the cited ones.
+            sources = sorted(sources, key=lambda s: cite_numbers.get(s.get("bib_key"), 10**6))
         out.append("## Включені джерела")
         out.append("| № | Джерело | Доступ | Роль |")
         out.append("|---|---------|--------|------|")
-        for n, s in enumerate(sources, start=1):
+        for i, s in enumerate(sources, start=1):
             sid = s.get("id", "?")
             access = s.get("access_level", "unknown")
-            out.append(f"| {n} | {_citation(s)} | {access} | {roles.get(sid, '')} |")
+            num = (cite_numbers or {}).get(s.get("bib_key"))
+            label = str(num) if num is not None else (str(i) if cite_numbers is None else "—")
+            out.append(f"| {label} | {_citation(s)} | {access} | {roles.get(sid, '')} |")
 
     return "\n".join(out)
