@@ -63,6 +63,8 @@ def test_dstu_csl_renders_real_examples(tmp_path: Path) -> None:
         "markdown",
         "--to",
         "plain",
+        "--wrap",
+        "none",
         "--citeproc",
         "--bibliography",
         str(bib),

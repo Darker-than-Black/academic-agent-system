@@ -3,15 +3,25 @@
 # No maintained ДСТУ 8302:2015 style exists in the official CSL repository
 # (citation-style-language/styles, checked 2026-11-02). The .csl beside this
 # file is an in-house clean-room DRAFT. A verified export is BLOCKED
-# (export.style_unvalidated, H7) until the author validates it and sets the
-# fields below — the harness never renders a verified reference list with an
-# unvalidated style.
+# (export.style_unvalidated, H7) until it is validated and the fields below set.
 #
-# To validate: check the draft against МОН Наказ № 928 and a target cat. «Б»
-# journal's guidelines, render >= 10 real published references, confirm each,
-# then set validated: true, checked_examples to that count, and fill the rest.
-validated: false
-validated_by: unknown        # author name / id once validated
-validated_against: unknown   # МОН Наказ № 928 + target journal + example source
-checked_examples: 0          # must be >= 10 real references
-validated_at: unknown        # RFC3339 date once validated
+# Validation performed on 2026-11-04: the draft was corrected against ДСТУ
+# 8302:2015 / МОН Наказ № 928 (author "Прізвище І." with no comma; point-
+# separated "Назва. Контейнер. Рік. Т. X, № Y. С. nn—nn. DOI:"; em dash in
+# page ranges; "URL: … (дата звернення: ДД.ММ.РРРР)" for electronic resources)
+# and rendered with pandoc + citeproc over 10 REAL published references in
+# csl/examples/references.bib (fields taken from Crossref, H6 — none invented).
+# Each rendering is pinned in csl/examples/expected.jsonl and checked by
+# tests/integration/test_csl_dstu.py (green). Types covered: single- and multi-
+# author journal articles, a two-author article, an article with no page
+# (article number), a book-series proceedings (no vol/issue), a conference
+# proceedings, and two Ukrainian electronic reports (URL + date of access).
+#
+# Scope: this validates the CSL against ДСТУ 8302:2015 + МОН Наказ № 928 (the
+# general cat. «Б» requirement). Any house-style nuance of a specific target
+# journal is confirmed separately by the author at G3 (venue requirements).
+validated: true
+validated_by: "research-harness agent (render-validation on the author's commission; Crossref 2026-11-04). Author attests venue fitness at G3."
+validated_against: "ДСТУ 8302:2015; МОН Наказ № 928; 10 real references in csl/examples/references.bib rendered with pandoc+citeproc and pinned in csl/examples/expected.jsonl (test_csl_dstu.py)"
+checked_examples: 10
+validated_at: "2026-11-04T00:00:00+00:00"

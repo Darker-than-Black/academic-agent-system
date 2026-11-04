@@ -115,11 +115,26 @@ def _validate_csl(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr(assemble, "_PACK_DIR", packs)
 
 
-def test_unvalidated_csl_blocks_verified(tmp_path: Path) -> None:
-    # P1-2 / H7: the shipped CSL is an unvalidated draft, so a verified export
-    # is blocked even when every other FR-12 condition is met.
+def _unvalidated_csl(monkeypatch, tmp_path: Path) -> None:
+    """Point the pack dir at a temp copy whose ДСТУ 8302:2015 status is still an
+    unvalidated draft (validated: false), to exercise the H7 block."""
+    packs = tmp_path / "rulepacks"
+    csl_dir = packs / "ua-fahove-b" / "csl"
+    csl_dir.mkdir(parents=True)
+    (csl_dir / "dstu-8302-2015.csl").write_text("<style/>", encoding="utf-8")
+    (csl_dir / "dstu-8302-2015.csl.status.yaml").write_text(
+        "validated: false\nchecked_examples: 0\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(assemble, "_PACK_DIR", packs)
+
+
+def test_unvalidated_csl_blocks_verified(tmp_path: Path, monkeypatch) -> None:
+    # P1-2 / H7: an unvalidated ДСТУ 8302:2015 CSL draft blocks a verified export
+    # even when every other FR-12 condition is met. The shipped pack CSL is
+    # validated (csl/examples/ + status.yaml), so point at an unvalidated copy.
     folder = _object(tmp_path)
     _satisfy_all(folder)
+    _unvalidated_csl(monkeypatch, tmp_path)
     ids = {f["check_id"] for f in verified.check_conditions(folder)}
     assert "export.style_unvalidated" in ids
 
