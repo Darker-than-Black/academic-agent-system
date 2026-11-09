@@ -1,0 +1,98 @@
+- id: WRITING-ABSTRACT-NO-CONCLUSIONS
+  pack: writing
+  version: "2026-11-09"
+  key: writing.abstract_no_conclusions
+  kind: structure
+  applies_to: [A, T]
+  check: [semantic]
+  severity: major
+  overridable: true
+  statement: "The abstract gives only a short introduction (what was done) and why the topic matters; results and conclusions are not placed in the abstract."
+  statement_original: "Анотація дає лише короткий вступ (що зроблено) та актуальність теми; результати й висновки в анотацію не виносяться."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (presentation)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-CITATIONS-IN-REFERENCES-ONLY
+  pack: writing
+  version: "2026-11-09"
+  key: writing.citations_in_references
+  kind: format
+  applies_to: [A, T]
+  check: [semantic]
+  severity: minor
+  overridable: true
+  statement: "Full bibliographic entries appear only in the References section; the body uses in-text citation references (at most a source title), never repeated full source listings."
+  statement_original: "Повний бібліографічний запис — лише у списку джерел у кінці; у тілі тексту — відсилки (максимум назва статті), без повторення повних записів."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (presentation)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-NO-PREMATURE-CONCLUSIONS
+  pack: writing
+  version: "2026-11-09"
+  key: writing.no_premature_conclusions
+  kind: structure
+  applies_to: [A, T]
+  check: [semantic]
+  severity: major
+  overridable: true
+  statement: "Final conclusions appear only in the Conclusions unit; the introduction and body lead the reader toward them and do not state the end results up front or mid-text."
+  statement_original: "Кінцеві висновки — лише в розділі «Висновки»; вступ і тіло ведуть до них, а не оголошують результати наперед чи в середині."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (presentation)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-NARRATIVE-DEPTH
+  pack: writing
+  version: "2026-11-09"
+  key: writing.narrative_depth
+  kind: process
+  applies_to: [A, T]
+  check: [semantic, human]
+  severity: major
+  overridable: true
+  statement: "The body narrates the work done: the hypotheses and how they were tested, and the reasoning path to each conclusion — not a bare summary of results."
+  statement_original: "Тіло статті оповідає пророблену роботу: гіпотези і як їх перевіряли, та шлях міркувань до кожного висновку — не лише підсумок результатів."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (narrative substance; extends ADR-023)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-SECTION-MIN-SUBSTANCE
+  pack: writing
+  version: "2026-11-09"
+  key: writing.section_min_substance
+  kind: structure
+  applies_to: [A, T]
+  check: [semantic]
+  severity: minor
+  overridable: true
+  compare: min
+  value: "3"
+  statement: "A section carries at least 3 paragraphs of substance; one- or two-paragraph sections are grouped into a larger section (or several), not left as standalone blocks."
+  statement_original: "Розділ несе щонайменше 3 абзаци змісту; розділи на 1–2 абзаци групуються в один більший (або кілька), а не лишаються окремими блоками."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (presentation)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-FIGURE-REQUIRES-EXPLANATION
+  pack: writing
+  version: "2026-11-09"
+  key: writing.figure_requires_explanation
+  kind: format
+  applies_to: [A, T]
+  check: [semantic]
+  severity: major
+  overridable: true
+  statement: "Every figure or chart carries explanatory text: how the result was obtained and what the figure shows. A figure with no accompanying explanation is flagged."
+  statement_original: "Кожен графік / фігура має пояснювальний текст: як отримано результат і що саме фігура відображає. Фігура без пояснення підсвічується."
+  lang: uk
+  source: {title: "ADR-024 — writing-quality (presentation; relates M4-14 figures)", url: "research-harness-spec/stage-0/adr/ADR-024-writing-quality-presentation.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
