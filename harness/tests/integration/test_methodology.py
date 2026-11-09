@@ -74,7 +74,7 @@ def test_complete_methodology_and_identified_corpus_passes(tmp_path: Path) -> No
     assert record_mod.deficits(folder) == []
 
 
-def test_methods_markdown_renders_table_and_search(tmp_path: Path) -> None:
+def test_methods_markdown_renders_list_and_search(tmp_path: Path) -> None:
     folder = _object(tmp_path)
     record_mod.save(folder, dict(_COMPLETE))
     _identified_source(folder)
@@ -83,11 +83,13 @@ def test_methods_markdown_renders_table_and_search(tmp_path: Path) -> None:
     assert "## Стратегія пошуку" in md
     assert "Scopus" in md and "знайдено: 142" in md
     assert "## Включені джерела" in md
-    assert "| 1 | Smith J. (2020) On inclusion |" in md
+    # Sources are a list, not a wide table (unreadable in Word).
+    assert "| № | Джерело |" not in md
+    assert "- **[1]** Smith J. (2020) On inclusion — доступ:" in md
 
 
-def test_included_table_uses_citation_numbers_and_order(tmp_path: Path) -> None:
-    """With cite_numbers, the included-sources table is ordered by and labelled
+def test_included_list_uses_citation_numbers_and_order(tmp_path: Path) -> None:
+    """With cite_numbers, the included-sources list is ordered by and labelled
     with the citation number (so it lines up with in-text [n]), not a standalone
     row index that follows registry order."""
     folder = _object(tmp_path)
@@ -104,30 +106,29 @@ def test_included_table_uses_citation_numbers_and_order(tmp_path: Path) -> None:
     # gamma is uncited.
     cite_numbers = {"beta": 1, "alpha": 2}
     md = record_mod.methods_markdown(folder, cite_numbers=cite_numbers)
-    rows = [ln for ln in md.splitlines() if ln.startswith("| ") and "Доступ" not in ln]
-    rows = [r for r in rows if "---" not in r]
+    rows = [ln for ln in md.splitlines() if ln.startswith("- **[")]
     # Ordered by citation number: beta(1), alpha(2), then the uncited gamma.
-    assert rows[0].startswith("| 1 |") and "Beta" in rows[0]
-    assert rows[1].startswith("| 2 |") and "Alpha" in rows[1]
-    assert rows[2].startswith("| — |") and "Gamma" in rows[2]
+    assert rows[0].startswith("- **[1]**") and "Beta" in rows[0]
+    assert rows[1].startswith("- **[2]**") and "Alpha" in rows[1]
+    assert rows[2].startswith("- **[—]**") and "Gamma" in rows[2]
 
 
 def test_methods_markdown_blocks_are_blank_separated(tmp_path: Path) -> None:
-    """Headings, the search list and the table must be separated by blank lines
-    so pandoc parses each as its own block; without them it renders the whole
-    methods section as one paragraph (literal ## and | in the .docx)."""
+    """Headings, the search list and the sources list must be separated by blank
+    lines so pandoc parses each as its own block; without them it renders the
+    whole methods section as one paragraph (literal ## and - in the .docx)."""
     folder = _object(tmp_path)
     record_mod.save(folder, dict(_COMPLETE))
     _identified_source(folder)
     md = record_mod.methods_markdown(folder)
-    # A blank line precedes the table and the table rows stay contiguous.
-    assert "## Включені джерела\n\n| № | Джерело | Доступ | Роль |\n|" in md
+    # A blank line precedes the sources list and its items stay contiguous.
+    assert "## Включені джерела\n\n- **[" in md
     # The heading is not glued to the following paragraph.
     assert "## Критерії відбору\n\n**Включення:**" in md
-    # Every table row line is adjacent (no blank line splits the table body).
-    table_part = md.split("## Включені джерела\n\n", 1)[1]
-    rows = table_part.splitlines()
-    assert all(r.startswith("|") for r in rows if r.strip())
+    # Every sources-list line is adjacent (no blank line splits the list body).
+    list_part = md.split("## Включені джерела\n\n", 1)[1]
+    rows = list_part.splitlines()
+    assert all(r.startswith("- ") for r in rows if r.strip())
 
 
 def test_unknown_count_renders_as_unknown(tmp_path: Path) -> None:

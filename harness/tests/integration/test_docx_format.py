@@ -47,7 +47,8 @@ def test_reference_docx_encodes_the_profile() -> None:
     assert 'w:sz w:val="28"' in styles  # 14 pt
     assert 'w:line="360"' in styles  # 1.5 spacing
     assert 'w:firstLine="709"' in styles  # 1.25 cm indent
-    assert 'w:top="1134"' in doc and 'w:left="1134"' in doc  # 2 cm margins
+    assert 'w:top="1134"' in doc and 'w:left="1701"' in doc  # top 2 cm, left 3 cm (МОН)
+    assert "tblBorders" in styles  # tables get a full border grid
     assert 'w:w="11906"' in doc  # A4 width
     assert "footerReference" in doc
     assert "PAGE" in z.read("word/footer1.xml").decode()

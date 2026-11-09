@@ -124,12 +124,14 @@ def _citation(source: dict[str, Any]) -> str:
 
 
 def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> str:
-    """Render selection criteria, the search summary and the included-studies table.
+    """Render selection criteria, the search summary and the included-sources list.
 
-    When ``cite_numbers`` (bib_key -> citation number) is given, the included-
-    sources table is ordered by that number and its № column shows it, so the
-    table lines up with the in-text citations and the reference list instead of a
-    standalone row index. Uncited sources sort last and show "—".
+    The included sources are rendered as a Markdown list (one item per source),
+    not a wide table: the citation + role text does not fit a readable Word table
+    column. When ``cite_numbers`` (bib_key -> citation number) is given, the list
+    is ordered by that number and each item is labelled ``[n]`` so it lines up
+    with the in-text citations and the reference list; uncited sources sort last
+    and show "—".
     """
     data = load(root) or {}
     # Each entry in ``blocks`` is one Markdown block (heading, paragraph, list or
@@ -177,13 +179,22 @@ def methods_markdown(root: Path, cite_numbers: dict[str, int] | None = None) -> 
             # order after the cited ones.
             sources = sorted(sources, key=lambda s: cite_numbers.get(s.get("bib_key"), 10**6))
         blocks.append("## Включені джерела")
-        table = ["| № | Джерело | Доступ | Роль |", "|---|---------|--------|------|"]
+        access_uk = {
+            "fulltext": "повний текст",
+            "abstract": "анотація",
+            "metadata": "метадані",
+            "unknown": "невідомо",
+        }
+        items = []
         for i, s in enumerate(sources, start=1):
             sid = s.get("id", "?")
-            access = s.get("access_level", "unknown")
+            raw_access = s.get("access_level", "unknown")
+            access = access_uk.get(raw_access, raw_access)
             num = (cite_numbers or {}).get(s.get("bib_key"))
             label = str(num) if num is not None else (str(i) if cite_numbers is None else "—")
-            table.append(f"| {label} | {_citation(s)} | {access} | {roles.get(sid, '')} |")
-        blocks.append("\n".join(table))
+            role = roles.get(sid, "")
+            role_part = f"; роль: {role}" if role else ""
+            items.append(f"- **[{label}]** {_citation(s)} — доступ: {access}{role_part}")
+        blocks.append("\n".join(items))
 
     return "\n\n".join(blocks)
