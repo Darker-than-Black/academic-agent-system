@@ -12,8 +12,19 @@ _RULEPACKS = Path(__file__).resolve().parents[3] / "rulepacks"
 
 
 def test_bundled_packs_lint_clean() -> None:
-    for pid in ("core", "article", "thesis", "screening"):
+    for pid in ("core", "article", "thesis", "screening", "writing"):
         assert lint_pack(_RULEPACKS / pid) == []
+
+
+def test_writing_pack_always_applies() -> None:
+    # ADR-024: general writing pack has no applies_when → on for every kind.
+    from research_harness.rules.selector import pack_applies
+
+    pack = load_pack(_RULEPACKS / "writing")
+    assert "applies_when" not in pack.meta
+    assert pack_applies(pack, {"document_kind": "article"})
+    assert pack_applies(pack, {"document_kind": "thesis"})
+    assert pack_applies(pack, {})
 
 
 def test_screening_pack_always_applies() -> None:

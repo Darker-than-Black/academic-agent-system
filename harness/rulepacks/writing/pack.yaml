@@ -1,0 +1,6 @@
+id: writing
+name: "Writing quality (general)"
+version: "2026-11-09"
+layer: 1
+status: draft
+description: "General editorial writing rules for any publication kind (ADR-024): abstract scope, citation placement, conclusion placement, narrative depth, section substance, figure explanation. Presentation rules never hard-block (ADR-022); narrative depth is a substance warning (ADR-023). Draft until the author confirms the thresholds. No applies_when — always on; a venue/type pack may override a threshold by the same key at a higher layer."
