@@ -12,8 +12,18 @@ _RULEPACKS = Path(__file__).resolve().parents[3] / "rulepacks"
 
 
 def test_bundled_packs_lint_clean() -> None:
-    for pid in ("core", "article", "thesis"):
+    for pid in ("core", "article", "thesis", "screening"):
         assert lint_pack(_RULEPACKS / pid) == []
+
+
+def test_screening_pack_always_applies() -> None:
+    # ADR-025: advisory screening pack has no applies_when → available always.
+    from research_harness.rules.selector import pack_applies
+
+    pack = load_pack(_RULEPACKS / "screening")
+    assert "applies_when" not in pack.meta
+    assert pack_applies(pack, {"study_kind": "literature"})
+    assert pack_applies(pack, {})
 
 
 def test_core_rules_are_non_overridable() -> None:

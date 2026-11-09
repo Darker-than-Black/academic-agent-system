@@ -1,0 +1,6 @@
+id: screening
+name: "Source-selection screening (general)"
+version: "2026-11-09"
+layer: 2
+status: draft
+description: "Advisory source-selection signals recorded at `rh screen` (ADR-025): prominence of the source and author (works count, citations, h-index, venue) as one signal among others, never the sole criterion and never a hard reject. Not surfaced in the manuscript. No applies_when — available for any study with a source corpus; harmless where there is no screening. Draft until the author confirms the thresholds."

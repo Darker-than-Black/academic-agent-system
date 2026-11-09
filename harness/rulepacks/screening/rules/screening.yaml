@@ -1,0 +1,16 @@
+- id: SCREENING-SOURCE-PROMINENCE
+  pack: screening
+  version: "2026-11-09"
+  key: screening.source_prominence
+  kind: process
+  applies_to: [A6]
+  check: [human, semantic]
+  severity: minor
+  overridable: true
+  statement: "At screening, record the prominence of the source and its author (works count, citations, h-index, venue) as advisory data. It is one signal among others, never the sole criterion: a relevant source is not rejected on low or unknown prominence alone, but including a low-/unknown-prominence source needs a stated reason. These signals stay in the screening log and are never placed in the manuscript."
+  statement_original: "На етапі відбору фіксуй помітність джерела та його автора (кількість праць, цитування, h-індекс, venue) як дорадчі дані. Це один сигнал серед інших, ніколи не єдиний критерій: релевантне джерело не відкидається лише через низьку чи невідому помітність, але включення мало-/невідомо-помітного джерела потребує явної причини. Ці показники лишаються у журналі відбору й ніколи не виносяться в текст роботи."
+  lang: uk
+  source: {title: "ADR-025 — source-selection prominence (advisory)", url: "research-harness-spec/stage-0/adr/ADR-025-source-selection-prominence.md", evidence_level: secondary, accessed_at: "2026-11-09"}
+  checked_at: "2026-11-09"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"

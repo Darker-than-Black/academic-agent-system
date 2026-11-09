@@ -14,6 +14,12 @@ required_fields:
   - saturation_rule
   - counter_evidence_rule
   - limits
+# Optional advisory field (ADR-025, not required, not a G2 field):
+#   selection_validation — source/author prominence (works count, citations,
+#   h-index, venue) recorded at `rh screen` as ONE signal among others, never the
+#   sole criterion and never a hard reject; stays in the screening log, never in
+#   the manuscript. Enforced advisorily by rule `screening.source_prominence`.
+#   Executable wiring (OpenAlex/S2 metrics → screening.jsonl) is a later slice.
 # A material change to any of these after G1 needs a fresh G2 (02-lifecycle §4).
 g2_fields:
   - question
