@@ -88,10 +88,22 @@ def test_source_overlap_no_fulltext_is_info_not_silent_pass(tmp_path: Path) -> N
     assert "no source fulltext" in ov[0]["reason"]
 
 
-def test_source_overlap_flags_copy_from_cited_source(tmp_path: Path) -> None:
+def test_source_overlap_flags_copy_from_uncited_source(tmp_path: Path) -> None:
+    # The unit copies S-0001 but never cites it → major/minor, "not cited here".
     folder, _oid = _object(tmp_path)
     write_body(folder, _U, f"<!-- {_P} -->\n{_PASSAGE}\n", by="author")
     _write_pagetext(folder, "S-0001", _PASSAGE)
     ov = [f for f in ft.run(folder) if f["check_id"] == "integrity.overlap"]
     assert ov and ov[0]["severity"] in ("major", "minor")
+    assert "not cited here" in ov[0]["reason"]
+
+
+def test_source_overlap_cited_source_is_info_not_major(tmp_path: Path) -> None:
+    # Same overlap, but the unit cites the source (bib_key meng2024) → info, so
+    # legitimately cited material does not shout (M4-24).
+    folder, _oid = _object(tmp_path)
+    write_body(folder, _U, f"<!-- {_P} -->\n[[cite:meng2024]] {_PASSAGE}\n", by="author")
+    _write_pagetext(folder, "S-0001", _PASSAGE)
+    ov = [f for f in ft.run(folder) if f["check_id"] == "integrity.overlap"]
+    assert ov and ov[0]["severity"] == "info"
     assert "cited source" in ov[0]["reason"]

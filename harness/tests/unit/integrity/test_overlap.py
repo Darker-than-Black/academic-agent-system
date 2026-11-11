@@ -84,8 +84,18 @@ def test_find_matches_tags_source_kind() -> None:
     unit = f"prefix words here {_RUN} tail differs completely now"
     matches = ov.find_matches("U-AAAAAAAA", unit, idx, corpus_kind="source", n=3, min_words=10)
     assert matches and matches[0]["corpus_kind"] == "source"
-    reason = ov.findings_from({"matches": matches})[0]["reason"]
-    assert "cited source" in reason
+    # find_matches leaves cited=False; findings_from then reports an uncited match.
+    finding = ov.findings_from({"matches": matches})[0]
+    assert "not cited here" in finding["reason"]
+
+
+def test_findings_cited_source_is_info() -> None:
+    idx = _index(_RUN, 3)
+    unit = f"prefix words here {_RUN} tail differs completely now"
+    matches = ov.find_matches("U-AAAAAAAA", unit, idx, corpus_kind="source", n=3, min_words=10)
+    matches[0]["cited"] = True  # unit cites this source
+    finding = ov.findings_from({"matches": matches})[0]
+    assert finding["severity"] == "info" and "cited source" in finding["reason"]
 
 
 def test_run_against_sources_no_fulltext_is_unknown(tmp_path: Path) -> None:

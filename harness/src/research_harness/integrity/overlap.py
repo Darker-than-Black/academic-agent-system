@@ -20,10 +20,15 @@ from research_harness.core import tokenize_uk
 from research_harness.core.clock import default_clock
 from research_harness.core.hashing import text_hash
 from research_harness.schemas import validate
+from research_harness.sources import registry as registry_mod
 from research_harness.structure import ops
 from research_harness.summaries.deterministic import body_of
 
 _WORD = re.compile(r"[^\W_]+", re.UNICODE)
+# Cite markers carry the source's bib_key (@meng2024 or [[cite:meng2024]]), the
+# same syntax the fulltext checks parse. Used to resolve whether a unit that
+# overlaps a cited source actually cites it (M4-24).
+_CITE = re.compile(r"@([A-Za-z0-9:_-]+)|\[\[cite:([^\]]+)\]\]")
 
 SHINGLE_SIZE = 8
 MIN_FRAGMENT_WORDS = 20
@@ -142,6 +147,32 @@ def find_matches(
     return matches
 
 
+def _cite_keys(body: str) -> set[str]:
+    return {m.group(1) or m.group(2) for m in _CITE.finditer(body)}
+
+
+def _resolve_cited(root: Path, matches: list[dict[str, Any]], bodies: dict[str, str]) -> None:
+    """Set ``cited`` on each source-kind match (M4-24).
+
+    A source-kind match's ``corpus_doc_id`` is the source id (the pagetext file
+    stem). The unit cites by bib_key, so a match counts as cited when the unit's
+    body cites either the source id or its bib_key. Author-corpus (self-overlap)
+    matches are left untouched: citation does not apply to one's own prior text.
+    """
+    if not any(m.get("corpus_kind") == "source" for m in matches):
+        return
+    bibkey_by_id = {
+        s["id"]: (s.get("bib_key") or s["id"]) for s in registry_mod.load(root) if s.get("id")
+    }
+    cite_by_unit = {uid: _cite_keys(body) for uid, body in bodies.items()}
+    for m in matches:
+        if m.get("corpus_kind") != "source":
+            continue
+        keys = cite_by_unit.get(m["unit_id"], set())
+        sid = m["corpus_doc_id"]
+        m["cited"] = sid in keys or bibkey_by_id.get(sid, sid) in keys
+
+
 def _bodies(root: Path, unit: str | None) -> dict[str, str]:
     folders = ops.current_folders(root)
     out: dict[str, str] = {}
@@ -193,7 +224,7 @@ def run(
             "min_fragment_words": min_words,
         },
         "matches": [],
-        "limitations": ["citation detection not applied (cited=false)"],
+        "limitations": [],
         "result": "ok",
     }
     have_author = author_selected and bool(author_corpus)
@@ -216,6 +247,9 @@ def run(
                 )
             )
 
+    _resolve_cited(root, report["matches"], bodies)
+    if have_author:
+        report["limitations"].append("author-corpus overlap is not citation-resolved")
     if source_selected and not source_corpus:
         report["limitations"].append("no cited-source fulltext available")
     # NFR-14: an empty author corpus is never a clean pass when it is a target.
@@ -240,25 +274,36 @@ def findings_from(report: dict[str, Any]) -> list[dict[str, Any]]:
     findings: list[dict[str, Any]] = []
     for m in report["matches"]:
         kind = m.get("corpus_kind", "author")
-        if kind == "source":
+        cited = m.get("cited", False)
+        span = f"{m['overlap_words']} words ({m['overlap_ratio']:.0%})"
+        if kind == "source" and cited:
+            # The unit cites this source: a citation alone does not license
+            # borrowed wording, but it is not an undisclosed copy — downgrade to
+            # info so legitimately cited material does not shout (M4-24).
+            severity = "info"
+            reason = f"{m['unit_id']}: {span} overlap cited source {m['corpus_doc_id']!r}"
+            action = (
+                "Make it a marked quotation (quotes + page) or reword in your own"
+                " words — a citation alone does not license borrowed wording"
+                " (writing.source_paraphrase)."
+            )
+        elif kind == "source":
+            severity = m["severity"]
             reason = (
-                f"{m['unit_id']}: {m['overlap_words']} words"
-                f" ({m['overlap_ratio']:.0%}) too close to cited source {m['corpus_doc_id']!r}"
+                f"{m['unit_id']}: {span} too close to source {m['corpus_doc_id']!r}, not cited here"
             )
             action = (
                 "Quote it (quotes + citation + page) or reword in your own words"
-                " keeping the citation (writing.source_paraphrase)."
+                " and add its citation (writing.source_paraphrase)."
             )
         else:
-            reason = (
-                f"{m['unit_id']}: {m['overlap_words']} words"
-                f" ({m['overlap_ratio']:.0%}) overlap author text {m['corpus_doc_id']!r}"
-            )
+            severity = m["severity"]
+            reason = f"{m['unit_id']}: {span} overlap author text {m['corpus_doc_id']!r}"
             action = "Quote and cite the source, or rewrite the fragment."
         findings.append(
             {
                 "check_id": "integrity.overlap",
-                "severity": m["severity"],
+                "severity": severity,
                 "reason": reason,
                 "location": {
                     "ref": f"unit:{m['unit_id']}",
