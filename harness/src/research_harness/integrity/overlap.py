@@ -5,8 +5,10 @@ Deterministic, no LLM. Compares the current unit text against the author corpus
 reports contiguous overlapping fragments of at least ``min_fragment_words``.
 An empty corpus yields ``result: unknown`` (never a clean pass — NFR-14).
 
-Rule-pack thresholds (ua-mon-phd / ua-fahove-b) refine severity and are wired in
-M3-23; the defaults here are conservative.
+The major-vs-minor similarity threshold is rule-pack governed
+(``integrity.overlap_high_ratio``): the ``writing`` pack's 0.30 default, tightened
+by ``ua-fahove-b`` (0.25) and ``ua-mon-phd`` (0.15). ``run`` resolves it per
+object; the module constant is the fallback (M4-25).
 """
 
 from __future__ import annotations
@@ -108,8 +110,15 @@ def find_matches(
     corpus_kind: str = "author",
     n: int = SHINGLE_SIZE,
     min_words: int = MIN_FRAGMENT_WORDS,
+    high_ratio: float = HIGH_RATIO,
 ) -> list[dict[str, Any]]:
-    """Maximal contiguous runs of corpus-matching shingles, >= min_words long."""
+    """Maximal contiguous runs of corpus-matching shingles, >= min_words long.
+
+    A fragment at or above ``high_ratio`` of the unit is ``major``, else
+    ``minor``. ``high_ratio`` is rule-pack governed (``integrity.overlap_high_ratio``)
+    and resolved per object in :func:`run`; the default here is the conservative
+    fallback.
+    """
     words, spans = _tokens(text)
     total = len(words)
     covered: list[str | None] = [
@@ -140,7 +149,7 @@ def find_matches(
                     "overlap_words": overlap_words,
                     "overlap_ratio": ratio,
                     "cited": False,
-                    "severity": "major" if ratio >= HIGH_RATIO else "minor",
+                    "severity": "major" if ratio >= high_ratio else "minor",
                 }
             )
         i = j + 1
@@ -171,6 +180,33 @@ def _resolve_cited(root: Path, matches: list[dict[str, Any]], bodies: dict[str, 
         keys = cite_by_unit.get(m["unit_id"], set())
         sid = m["corpus_doc_id"]
         m["cited"] = sid in keys or bibkey_by_id.get(sid, sid) in keys
+
+
+_HIGH_RATIO_KEY = "integrity.overlap_high_ratio"
+
+
+def _high_ratio(root: Path) -> tuple[float, str | None]:
+    """Resolve the major-vs-minor similarity threshold for this object.
+
+    Reads the effective ``integrity.overlap_high_ratio`` rule from the object's
+    resolved rule stack (``writing`` default 0.30, tightened by ``ua-mon-phd`` /
+    ``ua-fahove-b``). Any failure — no object, no rule, unparseable value — falls
+    back to the conservative :data:`HIGH_RATIO`. Returns (ratio, rule_id).
+    """
+    try:
+        from research_harness.rules.service import resolve_object
+
+        stack, _ = resolve_object(root, write=False)
+        for entry in stack.rules:
+            if (
+                entry.get("key") == _HIGH_RATIO_KEY
+                and entry.get("effective")
+                and "effective_value" in entry
+            ):
+                return float(entry["effective_value"]), entry.get("rule_id")
+    except Exception:
+        return HIGH_RATIO, None
+    return HIGH_RATIO, None
 
 
 def _bodies(root: Path, unit: str | None) -> dict[str, str]:
@@ -205,6 +241,7 @@ def run(
     source_selected = against in ("sources", "both")
     author_corpus = load_corpus(corpus_dir) if (author_selected and corpus_dir) else {}
     source_corpus = load_source_corpus(root) if source_selected else {}
+    high_ratio, ratio_rule = _high_ratio(root)
 
     combined = {
         **{f"author:{k}": v for k, v in author_corpus.items()},
@@ -217,11 +254,12 @@ def run(
         "corpus_index_sha256": text_hash(
             "\n".join(combined[k] for k in sorted(combined)).encode("utf-8")
         ),
-        "rule_refs": [],
+        "rule_refs": [f"rule:{ratio_rule}"] if ratio_rule else [],
         "method": {
             "normalization": NORMALIZATION,
             "shingle_size": n,
             "min_fragment_words": min_words,
+            "high_ratio": high_ratio,
         },
         "matches": [],
         "limitations": [],
@@ -235,7 +273,13 @@ def run(
         for uid in sorted(bodies):
             report["matches"].extend(
                 find_matches(
-                    uid, bodies[uid], index, corpus_kind="author", n=n, min_words=min_words
+                    uid,
+                    bodies[uid],
+                    index,
+                    corpus_kind="author",
+                    n=n,
+                    min_words=min_words,
+                    high_ratio=high_ratio,
                 )
             )
     if have_source:
@@ -243,7 +287,13 @@ def run(
         for uid in sorted(bodies):
             report["matches"].extend(
                 find_matches(
-                    uid, bodies[uid], index, corpus_kind="source", n=n, min_words=min_words
+                    uid,
+                    bodies[uid],
+                    index,
+                    corpus_kind="source",
+                    n=n,
+                    min_words=min_words,
+                    high_ratio=high_ratio,
                 )
             )
 

@@ -20,7 +20,8 @@
       "properties": {
         "normalization": { "type": "string" },
         "shingle_size": { "type": "integer", "minimum": 1 },
-        "min_fragment_words": { "type": "integer", "minimum": 1 }
+        "min_fragment_words": { "type": "integer", "minimum": 1 },
+        "high_ratio": { "type": "number", "minimum": 0, "maximum": 1 }
       }
     },
     "matches": {

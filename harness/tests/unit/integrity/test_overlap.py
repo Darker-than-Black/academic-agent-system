@@ -103,3 +103,35 @@ def test_run_against_sources_no_fulltext_is_unknown(tmp_path: Path) -> None:
     assert report["against"] == "sources"
     assert report["result"] == "unknown"
     assert "no cited-source fulltext available" in report["limitations"]
+
+
+def test_high_ratio_param_controls_severity() -> None:
+    idx = _index(_RUN, 3)
+    filler = " ".join(f"x{i}" for i in range(85))
+    unit = f"{_RUN} {filler}"  # 15 matching words / 100 total → ratio ~0.15
+    lo = ov.find_matches("U-AAAAAAAA", unit, idx, n=3, min_words=10, high_ratio=0.10)[0]
+    hi = ov.find_matches("U-AAAAAAAA", unit, idx, n=3, min_words=10, high_ratio=0.25)[0]
+    assert lo["severity"] == "major" and hi["severity"] == "minor"
+
+
+def test_high_ratio_falls_back_without_object(tmp_path: Path) -> None:
+    # No object.json → resolution fails → conservative default, no crash.
+    ratio, rule = ov._high_ratio(tmp_path)
+    assert ratio == ov.HIGH_RATIO and rule is None
+
+
+def _make_object(tmp_path: Path, kind: str, document_kind: str) -> Path:
+    from research_harness.workspace.objects import create_object
+    from research_harness.workspace.workspace import Workspace
+
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="T", kind=kind, document_kind=document_kind)
+    return folder
+
+
+def test_high_ratio_resolves_article_and_thesis(tmp_path: Path) -> None:
+    article = _make_object(tmp_path / "a", "article", "article")
+    thesis = _make_object(tmp_path / "t", "thesis", "thesis")
+    assert ov._high_ratio(article)[0] == 0.25  # ua-fahove-b tightens 0.30 → 0.25
+    assert ov._high_ratio(thesis)[0] == 0.15  # ua-mon-phd tightens → 0.15
+    assert ov.run(article, against="corpus")["method"]["high_ratio"] == 0.25
