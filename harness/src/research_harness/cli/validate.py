@@ -52,16 +52,17 @@ def run(args: Any, lang: str) -> tuple[dict[str, Any], int]:
         if explicit is None and getattr(args, "object", None):
             from research_harness.workspace.workspace import Workspace
 
-            try:
-                explicit = str(
-                    Workspace.find(getattr(args, "workspace", None)).object_folder(args.object)
-                )
-            except InvalidInputError:
-                explicit = None
+            # An explicit --object that does not resolve is an error the author
+            # must see (clean envelope), never a silent fall back to the cwd.
+            explicit = str(
+                Workspace.find(getattr(args, "workspace", None)).object_folder(args.object)
+            )
         try:
             ctx.extra["object_root"] = str(resolve_object_root(explicit))
         except InvalidInputError:
-            pass  # no object in scope: nothing to report
+            if explicit is not None:
+                raise  # an explicit target that has no .rh/ is an error, not a no-op
+            # no --object/--root and no object at the cwd: nothing to report
     if getattr(args, "schema", None) and getattr(args, "file", None):
         ctx.extra["records_to_validate"] = [
             {"schema": args.schema, "ref": f"file:{p}", "record": _load(p)} for p in args.file

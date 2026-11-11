@@ -55,3 +55,31 @@ def test_a12_object_has_open_g3_request(tmp_path: Path) -> None:
     g3 = next(g for g in rep["gates"] if g["gate"] == "G3")
     assert g3["request_open"] is True
     assert g3["approval_valid"] is False
+
+
+def _orphan_workspace(tmp_path: Path) -> Path:
+    """Workspace whose only id-suffixed folder is a scratch dir without object.json."""
+    ws = Workspace.init(tmp_path / "Projects")
+    scratch = ws.root / "F4-W baseline__A-2026-002"
+    (scratch / ".rh").mkdir(parents=True)
+    return ws.root
+
+
+def test_status_on_idsuffix_dir_without_object_json_is_clean_envelope(
+    tmp_path: Path, capsys
+) -> None:
+    """status/continue/validate must not crash on a scratch dir (regression)."""
+    import json
+
+    from research_harness.cli.main import main as rh_main
+
+    root = _orphan_workspace(tmp_path)
+    for cmd in ("status", "continue", "validate"):
+        rc = rh_main(["--workspace", str(root), "--object", "A-2026-002", cmd])
+        out = capsys.readouterr().out
+        assert "Traceback" not in out
+        envelope = json.loads(out)
+        assert envelope["status"] == "invalid"
+        assert "A-2026-002" in envelope["message"]
+        assert "object.json" in envelope["message"]
+        assert rc == 2

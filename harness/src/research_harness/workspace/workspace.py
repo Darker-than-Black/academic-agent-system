@@ -90,10 +90,19 @@ class Workspace:
                 found = nfc_lookup(self.root, o["folder"])
                 if found is not None:
                     return found
-        # fall back to a scan of the folders on disk
+        # fall back to a scan of the folders on disk. A folder only counts as the
+        # object when it actually carries an object.json; a scratch directory that
+        # merely shares the id suffix (e.g. a library-only baseline) is not an
+        # object, so it must not resolve as one (otherwise downstream readers crash
+        # on the missing object.json).
+        matched_without_object = False
         for child in self.root.iterdir():
             if child.is_dir() and id_from_folder(child.name) == oid:
-                return child
+                if (child / "object.json").is_file():
+                    return child
+                matched_without_object = True
+        if matched_without_object:
+            raise InvalidInputError("error.not_an_object", params={"id": oid})
         raise InvalidInputError("error.no_object")
 
     def list_objects(self) -> list[dict[str, Any]]:
@@ -120,13 +129,16 @@ class Workspace:
             oid = id_from_folder(child.name)
             if oid is None:
                 continue
-            kind = "unknown"
             obj_file = child / "object.json"
-            if obj_file.is_file():
-                try:
-                    kind = json.loads(obj_file.read_text(encoding="utf-8")).get("kind", "unknown")
-                except json.JSONDecodeError:
-                    pass
+            if not obj_file.is_file():
+                # A folder sharing the id suffix but without object.json is a
+                # scratch directory, not an object; it must not enter the index.
+                continue
+            kind = "unknown"
+            try:
+                kind = json.loads(obj_file.read_text(encoding="utf-8")).get("kind", "unknown")
+            except json.JSONDecodeError:
+                pass
             objects.append({"id": oid, "kind": kind, "folder": child.name})
         data["objects"] = objects
         self.save(data)

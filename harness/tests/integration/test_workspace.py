@@ -76,3 +76,41 @@ def test_reindex_folders_win(tmp_path: Path) -> None:
     ws.save(data)
     objects = ws.reindex()
     assert any(o["id"] == oid for o in objects)
+
+
+def test_object_folder_rejects_idsuffix_dir_without_object_json(tmp_path: Path) -> None:
+    """A scratch dir that only shares the id suffix is not an object (resolver)."""
+    import pytest
+
+    from research_harness.core.errors import InvalidInputError
+
+    ws = Workspace.init(tmp_path / "Projects")
+    # A library-only baseline folder: has the id suffix and a .rh/ dir, no object.json.
+    scratch = ws.root / "F4-W baseline__A-2026-002"
+    (scratch / ".rh").mkdir(parents=True)
+    with pytest.raises(InvalidInputError) as exc:
+        ws.object_folder("A-2026-002")
+    assert exc.value.message_key == "error.not_an_object"
+    assert exc.value.params.get("id") == "A-2026-002"
+
+
+def test_object_folder_unknown_id_is_no_object(tmp_path: Path) -> None:
+    import pytest
+
+    from research_harness.core.errors import InvalidInputError
+
+    ws = Workspace.init(tmp_path / "Projects")
+    with pytest.raises(InvalidInputError) as exc:
+        ws.object_folder("A-2099-999")
+    assert exc.value.message_key == "error.no_object"
+
+
+def test_reindex_skips_idsuffix_dir_without_object_json(tmp_path: Path) -> None:
+    ws = Workspace.init(tmp_path / "Projects")
+    oid, _ = create_object(ws, title="Справжній", kind="article")
+    scratch = ws.root / "baseline__A-2026-999"
+    (scratch / ".rh").mkdir(parents=True)
+    objects = ws.reindex()
+    ids = {o["id"] for o in objects}
+    assert oid in ids
+    assert "A-2026-999" not in ids
