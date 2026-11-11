@@ -103,3 +103,45 @@ def test_run_against_sources_no_fulltext_is_unknown(tmp_path: Path) -> None:
     assert report["against"] == "sources"
     assert report["result"] == "unknown"
     assert "no cited-source fulltext available" in report["limitations"]
+
+
+def test_high_ratio_param_controls_severity() -> None:
+    idx = _index(_RUN, 3)
+    filler = " ".join(f"x{i}" for i in range(85))
+    unit = f"{_RUN} {filler}"  # 15 matching words / 100 total → ratio ~0.15
+    lo = ov.find_matches("U-AAAAAAAA", unit, idx, n=3, min_words=10, high_ratio=0.10)[0]
+    hi = ov.find_matches("U-AAAAAAAA", unit, idx, n=3, min_words=10, high_ratio=0.25)[0]
+    assert lo["severity"] == "major" and hi["severity"] == "minor"
+
+
+def test_thresholds_fall_back_without_object(tmp_path: Path) -> None:
+    # No object.json → resolution fails → conservative defaults, no crash.
+    values, refs = ov._thresholds(tmp_path)
+    assert values["high_ratio"] == ov.HIGH_RATIO
+    assert values["min_words"] == ov.MIN_FRAGMENT_WORDS
+    assert values["shingle_size"] == ov.SHINGLE_SIZE
+    assert refs == []
+
+
+def _make_object(tmp_path: Path, kind: str, document_kind: str) -> Path:
+    from research_harness.workspace.objects import create_object
+    from research_harness.workspace.workspace import Workspace
+
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(ws, title="T", kind=kind, document_kind=document_kind)
+    return folder
+
+
+def test_thresholds_resolve_article_and_thesis(tmp_path: Path) -> None:
+    article = _make_object(tmp_path / "a", "article", "article")
+    thesis = _make_object(tmp_path / "t", "thesis", "thesis")
+    a_vals, a_refs = ov._thresholds(article)
+    t_vals, _ = ov._thresholds(thesis)
+    # ua-fahove-b tightens the writing-pack defaults (0.30/20/8) → 0.25/18/7.
+    assert (a_vals["high_ratio"], a_vals["min_words"], a_vals["shingle_size"]) == (0.25, 18, 7)
+    # ua-mon-phd is strictest → 0.15/15/6.
+    assert (t_vals["high_ratio"], t_vals["min_words"], t_vals["shingle_size"]) == (0.15, 15, 6)
+    assert a_refs  # the resolved rule ids are recorded
+    method = ov.run(article, against="corpus")["method"]
+    assert method["high_ratio"] == 0.25
+    assert method["min_fragment_words"] == 18 and method["shingle_size"] == 7

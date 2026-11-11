@@ -12,6 +12,54 @@
   checked_at: "2026-11-02"
   valid_from: "2026-06-01"
   review_after: "2029-06-01"
+- id: UAMONPHD-OVERLAP-HIGH-RATIO
+  pack: ua-mon-phd
+  version: "2026-11-11"
+  key: integrity.overlap_high_ratio
+  kind: integrity
+  applies_to: [A11, A12]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "0.15"
+  statement: "A dissertation holds the strictest overlap threshold: a fragment reaching 15% of the unit is a major finding."
+  source: {title: "ADR-026; МОН Наказ № 928", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: primary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
+- id: UAMONPHD-OVERLAP-MIN-WORDS
+  pack: ua-mon-phd
+  version: "2026-11-11"
+  key: integrity.overlap_min_words
+  kind: integrity
+  applies_to: [A11, A12]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "15"
+  statement: "A dissertation reports shorter overlaps: fragments from 15 words."
+  source: {title: "ADR-026; МОН Наказ № 928", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: primary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
+- id: UAMONPHD-OVERLAP-SHINGLE-SIZE
+  pack: ua-mon-phd
+  version: "2026-11-11"
+  key: integrity.overlap_shingle_size
+  kind: integrity
+  applies_to: [A11, A12]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "6"
+  statement: "A dissertation uses a finer shingle (6 words) for higher overlap sensitivity."
+  source: {title: "ADR-026; МОН Наказ № 928", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: primary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-06-01"
+  review_after: "2029-06-01"
 - id: UAMONPHD-AI-STATEMENT
   pack: ua-mon-phd
   version: "2026-11-02"
