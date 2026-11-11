@@ -128,3 +128,27 @@ def test_article_depth1_same_code(tmp_path: Path) -> None:
     ops.renumber(folder, "uk")
     assert check_structure(folder, "uk") == []
     assert _dir(folder, "01 Секція 3")
+
+
+def test_colon_in_title_keeps_front_matter_valid(tmp_path: Path) -> None:
+    # A title with a YAML-significant ':' must not corrupt text.md front matter,
+    # otherwise current_folders — and every later structure op — fails to read it.
+    folder = build_f7_structure(tmp_path / "f7")
+    title = "Поняття: визначення, структура (UDL 3.0)"
+    new_id = ops.add_unit(
+        folder,
+        kind="subsection",
+        title=title,
+        parent_id=CH1,
+        index=0,
+        main_language="uk",
+    )
+    # A following op reads every unit's front matter; it must not raise.
+    ops.renumber(folder, "uk")
+    assert check_structure(folder, "uk") == []
+    unit_folder = ops.current_folders(folder)[new_id]
+    assert ops._front_matter((unit_folder / "text.md").read_text(encoding="utf-8")) == {
+        "id": new_id,
+        "title": title,
+        "kind": "subsection",
+    }

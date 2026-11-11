@@ -8,6 +8,8 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from research_harness.core.ids import new_unit_id
 from research_harness.state.faults import fault_point
 from research_harness.state.snapshot import atomic_write_bytes
@@ -23,8 +25,6 @@ _JOURNAL = ".rh/structure-journal.json"
 
 # --- unit folder discovery / materialization ------------------------------
 def _front_matter(text: str) -> dict[str, Any]:
-    import yaml
-
     if not text.startswith("---"):
         return {}
     _, _, rest = text.partition("\n")
@@ -48,11 +48,27 @@ def current_folders(root: Path) -> dict[str, Path]:
     return out
 
 
+def _front_matter_text(uid: str, title: str, kind: str) -> str:
+    """Render a unit's YAML front matter safely.
+
+    Titles may contain YAML-significant characters (``:``, ``#``, quotes); a raw
+    ``title: {title}`` template would emit invalid YAML that ``current_folders``
+    then fails to read, breaking every later structure op. ``yaml.safe_dump``
+    quotes such scalars correctly (and keeps Cyrillic with ``allow_unicode``).
+    """
+    meta = yaml.safe_dump(
+        {"id": uid, "title": title or "", "kind": kind},
+        allow_unicode=True,
+        sort_keys=False,
+        default_flow_style=False,
+    )
+    return f"---\n{meta}---\n"
+
+
 def materialize_unit(folder: Path, unit: Unit) -> None:
     folder.mkdir(parents=True, exist_ok=True)
-    tpl = (_TEMPLATES / "text.md").read_text(encoding="utf-8")
     (folder / "text.md").write_text(
-        tpl.format(id=unit.id, title=unit.title or "", kind=unit.kind), encoding="utf-8"
+        _front_matter_text(unit.id, unit.title or "", unit.kind) + "\n", encoding="utf-8"
     )
     for name in ("brief.md", "summary.md", "claims.json"):
         content = (_TEMPLATES / name).read_text(encoding="utf-8").format(id=unit.id)
@@ -242,14 +258,14 @@ def sync(root: Path, main_language: str = "uk") -> dict[str, Any]:
         folder = folders.get(u.id)
         if folder is None:
             continue
-        tpl = (_TEMPLATES / "text.md").read_text(encoding="utf-8")
         existing = (folder / "text.md").read_text(encoding="utf-8")
         if "\n---\n" not in existing:
             # No closing front-matter delimiter: do not risk clobbering content.
             continue
         _, _, after = existing.partition("\n---\n")
         body = after.lstrip("\n")
-        header = tpl.format(id=u.id, title=u.title or "", kind=u.kind)
+        # Trailing blank line separates front matter from the preserved body.
+        header = _front_matter_text(u.id, u.title or "", u.kind) + "\n"
         (folder / "text.md").write_text(header + body, encoding="utf-8")
     Store(root).checkpoint(by="human", note="structure sync")
     return summary
