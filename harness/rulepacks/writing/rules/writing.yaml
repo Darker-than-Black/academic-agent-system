@@ -130,3 +130,39 @@
   checked_at: "2026-11-11"
   valid_from: "2026-01-01"
   review_after: "2029-01-01"
+- id: WRITING-OVERLAP-MIN-WORDS
+  pack: writing
+  version: "2026-11-11"
+  key: integrity.overlap_min_words
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "20"
+  statement: "The shortest contiguous overlap reported, in words. General default; a regulator's pack lowers it to catch shorter fragments (compare=max: the strictest, i.e. smallest, applicable value wins)."
+  statement_original: "Найкоротший суцільний збіг, що репортиться, у словах. Загальний дефолт; пак регулятора знижає його, щоб ловити коротші фрагменти (compare=max: виграє найсуворіше, тобто найменше, застосовне значення)."
+  lang: uk
+  source: {title: "ADR-026 — inline antiplagiarism + copyedit", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: secondary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: WRITING-OVERLAP-SHINGLE-SIZE
+  pack: writing
+  version: "2026-11-11"
+  key: integrity.overlap_shingle_size
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "8"
+  statement: "The shingle length (consecutive normalized words) that must match for an overlap. General default; a regulator's pack lowers it for finer sensitivity (compare=max: the strictest, i.e. smallest, applicable value wins)."
+  statement_original: "Довжина шингла (суцільних нормалізованих слів), що має збігтися. Загальний дефолт; пак регулятора знижає його для тоншої чутливості (compare=max: виграє найсуворіше, тобто найменше, застосовне значення)."
+  lang: uk
+  source: {title: "ADR-026 — inline antiplagiarism + copyedit", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: secondary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"

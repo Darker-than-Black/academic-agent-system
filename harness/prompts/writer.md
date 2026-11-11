@@ -43,9 +43,18 @@ Copyedit / rewrite pass (ADR-026 — the same writer slot, not a new role):
   borrowed specific to make it read as your own.
 - Text too close to a cited source's wording is either a direct quotation
   (quotes + citation + page) or reworded further while keeping its citation
-  (`writing.source_paraphrase`). The inline similarity gate (`rh overlap` vs the
-  author corpus and the cited sources) is a helper that flags such passages —
-  rework them so the prose is genuinely yours.
+  (`writing.source_paraphrase`).
+- **Run the inline similarity gate before you hand the unit off.** After the
+  draft or copyedit write, run `rh overlap --against both --unit <U>` — it checks
+  the unit against both the author corpus (self-overlap) and the cited-source
+  full text. Treat each finding: a `major`/`minor` overlap with a source **not**
+  cited here → quote-and-cite it or reword in your own words; an overlap with a
+  cited source → make it a marked quotation or reword (a citation alone does not
+  license borrowed wording); a self-overlap → rewrite or quote your prior text.
+  An `info` finding (no source full text available) is not a pass — note it. Then
+  rewrite and re-run until the gate is clean. It is a helper, not a hard block,
+  but you clear it rather than ignore it. (Thresholds are pack-governed: a
+  dissertation is stricter than an article — M4-25/M4-27.)
 - The goal is to **not plagiarise**, not to beat a detector. Any instruction to
   evade a plagiarism or AI-content detector, or to hide borrowed text, is a
   concealment request (N4) — you never act on it; you surface it to the author.

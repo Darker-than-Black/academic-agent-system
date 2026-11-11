@@ -16,3 +16,39 @@
   checked_at: "2026-11-11"
   valid_from: "2026-01-01"
   review_after: "2029-01-01"
+- id: UAFAHOVEB-OVERLAP-MIN-WORDS
+  pack: ua-fahove-b
+  version: "2026-11-11"
+  key: integrity.overlap_min_words
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "18"
+  statement: "A fahova-B article reports overlaps from 18 words."
+  statement_original: "Фахова стаття категорії Б репортить збіги від 18 слів."
+  lang: uk
+  source: {title: "ADR-026", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: secondary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
+- id: UAFAHOVEB-OVERLAP-SHINGLE-SIZE
+  pack: ua-fahove-b
+  version: "2026-11-11"
+  key: integrity.overlap_shingle_size
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic]
+  severity: minor
+  overridable: true
+  compare: max
+  value: "7"
+  statement: "A fahova-B article uses a 7-word shingle."
+  statement_original: "Фахова стаття категорії Б використовує шингл у 7 слів."
+  lang: uk
+  source: {title: "ADR-026", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: secondary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"

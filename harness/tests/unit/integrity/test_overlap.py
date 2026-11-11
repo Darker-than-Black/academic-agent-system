@@ -114,10 +114,13 @@ def test_high_ratio_param_controls_severity() -> None:
     assert lo["severity"] == "major" and hi["severity"] == "minor"
 
 
-def test_high_ratio_falls_back_without_object(tmp_path: Path) -> None:
-    # No object.json → resolution fails → conservative default, no crash.
-    ratio, rule = ov._high_ratio(tmp_path)
-    assert ratio == ov.HIGH_RATIO and rule is None
+def test_thresholds_fall_back_without_object(tmp_path: Path) -> None:
+    # No object.json → resolution fails → conservative defaults, no crash.
+    values, refs = ov._thresholds(tmp_path)
+    assert values["high_ratio"] == ov.HIGH_RATIO
+    assert values["min_words"] == ov.MIN_FRAGMENT_WORDS
+    assert values["shingle_size"] == ov.SHINGLE_SIZE
+    assert refs == []
 
 
 def _make_object(tmp_path: Path, kind: str, document_kind: str) -> Path:
@@ -129,9 +132,16 @@ def _make_object(tmp_path: Path, kind: str, document_kind: str) -> Path:
     return folder
 
 
-def test_high_ratio_resolves_article_and_thesis(tmp_path: Path) -> None:
+def test_thresholds_resolve_article_and_thesis(tmp_path: Path) -> None:
     article = _make_object(tmp_path / "a", "article", "article")
     thesis = _make_object(tmp_path / "t", "thesis", "thesis")
-    assert ov._high_ratio(article)[0] == 0.25  # ua-fahove-b tightens 0.30 → 0.25
-    assert ov._high_ratio(thesis)[0] == 0.15  # ua-mon-phd tightens → 0.15
-    assert ov.run(article, against="corpus")["method"]["high_ratio"] == 0.25
+    a_vals, a_refs = ov._thresholds(article)
+    t_vals, _ = ov._thresholds(thesis)
+    # ua-fahove-b tightens the writing-pack defaults (0.30/20/8) → 0.25/18/7.
+    assert (a_vals["high_ratio"], a_vals["min_words"], a_vals["shingle_size"]) == (0.25, 18, 7)
+    # ua-mon-phd is strictest → 0.15/15/6.
+    assert (t_vals["high_ratio"], t_vals["min_words"], t_vals["shingle_size"]) == (0.15, 15, 6)
+    assert a_refs  # the resolved rule ids are recorded
+    method = ov.run(article, against="corpus")["method"]
+    assert method["high_ratio"] == 0.25
+    assert method["min_fragment_words"] == 18 and method["shingle_size"] == 7
