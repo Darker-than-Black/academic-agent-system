@@ -11,6 +11,7 @@ M3-23; the defaults here are conservative.
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 from typing import Any
@@ -69,11 +70,37 @@ def _corpus_shingle_index(corpus: dict[str, str], n: int) -> dict[tuple[str, ...
     return index
 
 
+def load_source_corpus(root: Path) -> dict[str, str]:
+    """Cited-source fulltext keyed by source id (ADR-026).
+
+    Reads ``sources/pagetext/<S-id>.jsonl`` — gitignored foreign fulltext, read
+    only at runtime (H8); the report stores source ids and overlap counts, never
+    the source text. A missing directory yields an empty corpus.
+    """
+    out: dict[str, str] = {}
+    pagetext_dir = root / "sources" / "pagetext"
+    if not pagetext_dir.is_dir():
+        return out
+    for path in sorted(pagetext_dir.glob("*.jsonl")):
+        pages: list[str] = []
+        for line in path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            text = json.loads(line).get("text", "")
+            if text:
+                pages.append(text)
+        if pages:
+            out[path.stem] = "\n".join(pages)
+    return out
+
+
 def find_matches(
     unit_id: str,
     text: str,
     corpus_index: dict[tuple[str, ...], str],
     *,
+    corpus_kind: str = "author",
     n: int = SHINGLE_SIZE,
     min_words: int = MIN_FRAGMENT_WORDS,
 ) -> list[dict[str, Any]]:
@@ -103,6 +130,7 @@ def find_matches(
                     "char_start": char_start,
                     "char_end": char_end,
                     "corpus_doc_id": covered[i],
+                    "corpus_kind": corpus_kind,
                     "shingle_size": n,
                     "overlap_words": overlap_words,
                     "overlap_ratio": ratio,
@@ -131,16 +159,32 @@ def run(
     *,
     unit: str | None = None,
     corpus_dir: Path | None = None,
+    against: str = "corpus",
     n: int = SHINGLE_SIZE,
     min_words: int = MIN_FRAGMENT_WORDS,
 ) -> dict[str, Any]:
-    """Build an overlap report. Empty corpus -> result unknown (NFR-14)."""
-    corpus = load_corpus(corpus_dir) if corpus_dir else {}
+    """Build an overlap report (ADR-026).
+
+    ``against`` selects the corpora: ``corpus`` (the author corpus — self-overlap,
+    FR-30), ``sources`` (cited-source fulltext — copying from a source), or
+    ``both``. An empty *author* corpus never yields a clean pass when the author
+    corpus is one of the selected targets (NFR-14): the result stays ``unknown``.
+    """
+    author_selected = against in ("corpus", "both")
+    source_selected = against in ("sources", "both")
+    author_corpus = load_corpus(corpus_dir) if (author_selected and corpus_dir) else {}
+    source_corpus = load_source_corpus(root) if source_selected else {}
+
+    combined = {
+        **{f"author:{k}": v for k, v in author_corpus.items()},
+        **{f"source:{k}": v for k, v in source_corpus.items()},
+    }
     report: dict[str, Any] = {
         "schema_version": "0.2",
         "run_id": "OV-" + default_clock().now_rfc3339().replace(":", "").replace("-", ""),
+        "against": against,
         "corpus_index_sha256": text_hash(
-            "\n".join(corpus[k] for k in sorted(corpus)).encode("utf-8")
+            "\n".join(combined[k] for k in sorted(combined)).encode("utf-8")
         ),
         "rule_refs": [],
         "method": {
@@ -150,16 +194,37 @@ def run(
         },
         "matches": [],
         "limitations": ["citation detection not applied (cited=false)"],
-        "result": "unknown" if not corpus else "ok",
+        "result": "ok",
     }
-    if not corpus:
+    have_author = author_selected and bool(author_corpus)
+    have_source = source_selected and bool(source_corpus)
+    bodies = _bodies(root, unit) if (have_author or have_source) else {}
+    if have_author:
+        index = _corpus_shingle_index(author_corpus, n)
+        for uid in sorted(bodies):
+            report["matches"].extend(
+                find_matches(
+                    uid, bodies[uid], index, corpus_kind="author", n=n, min_words=min_words
+                )
+            )
+    if have_source:
+        index = _corpus_shingle_index(source_corpus, n)
+        for uid in sorted(bodies):
+            report["matches"].extend(
+                find_matches(
+                    uid, bodies[uid], index, corpus_kind="source", n=n, min_words=min_words
+                )
+            )
+
+    if source_selected and not source_corpus:
+        report["limitations"].append("no cited-source fulltext available")
+    # NFR-14: an empty author corpus is never a clean pass when it is a target.
+    if author_selected and not author_corpus:
         report["limitations"].append("author corpus is empty")
-        return _validated(report)
-    index = _corpus_shingle_index(corpus, n)
-    bodies = _bodies(root, unit)
-    for uid in sorted(bodies):
-        report["matches"].extend(find_matches(uid, bodies[uid], index, n=n, min_words=min_words))
-    if report["matches"]:
+        report["result"] = "unknown"
+    elif source_selected and not author_selected and not source_corpus:
+        report["result"] = "unknown"
+    elif report["matches"]:
         report["result"] = "partial"
     return _validated(report)
 
@@ -174,19 +239,32 @@ def _validated(report: dict[str, Any]) -> dict[str, Any]:
 def findings_from(report: dict[str, Any]) -> list[dict[str, Any]]:
     findings: list[dict[str, Any]] = []
     for m in report["matches"]:
+        kind = m.get("corpus_kind", "author")
+        if kind == "source":
+            reason = (
+                f"{m['unit_id']}: {m['overlap_words']} words"
+                f" ({m['overlap_ratio']:.0%}) too close to cited source {m['corpus_doc_id']!r}"
+            )
+            action = (
+                "Quote it (quotes + citation + page) or reword in your own words"
+                " keeping the citation (writing.source_paraphrase)."
+            )
+        else:
+            reason = (
+                f"{m['unit_id']}: {m['overlap_words']} words"
+                f" ({m['overlap_ratio']:.0%}) overlap author text {m['corpus_doc_id']!r}"
+            )
+            action = "Quote and cite the source, or rewrite the fragment."
         findings.append(
             {
                 "check_id": "integrity.overlap",
                 "severity": m["severity"],
-                "reason": (
-                    f"{m['unit_id']}: {m['overlap_words']} words"
-                    f" ({m['overlap_ratio']:.0%}) overlap {m['corpus_doc_id']!r}"
-                ),
+                "reason": reason,
                 "location": {
                     "ref": f"unit:{m['unit_id']}",
                     "locator": f"{m['char_start']}-{m['char_end']}",
                 },
-                "proposed_action": "Quote and cite the source, or rewrite the fragment.",
+                "proposed_action": action,
             }
         )
     return findings

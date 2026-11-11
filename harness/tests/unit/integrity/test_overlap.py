@@ -58,3 +58,38 @@ def test_run_empty_corpus_is_unknown(tmp_path: Path) -> None:
     report = ov.run(tmp_path, corpus_dir=tmp_path / "missing")
     assert report["result"] == "unknown" and report["matches"] == []
     assert "author corpus is empty" in report["limitations"]
+
+
+def _write_pagetext(root: Path, source_id: str, texts: list[str]) -> None:
+    import json
+
+    d = root / "sources" / "pagetext"
+    d.mkdir(parents=True, exist_ok=True)
+    lines = [
+        json.dumps({"pdf_page": i + 1, "text": t}, ensure_ascii=False) for i, t in enumerate(texts)
+    ]
+    (d / f"{source_id}.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def test_load_source_corpus(tmp_path: Path) -> None:
+    _write_pagetext(tmp_path, "S-0001", ["alpha beta", "gamma delta"])
+    (tmp_path / "sources" / "pagetext" / "S-0002.jsonl").write_text("\n", encoding="utf-8")  # empty
+    corpus = ov.load_source_corpus(tmp_path)
+    assert set(corpus) == {"S-0001"}
+    assert "gamma delta" in corpus["S-0001"]
+
+
+def test_find_matches_tags_source_kind() -> None:
+    idx = _index(_RUN, 3)
+    unit = f"prefix words here {_RUN} tail differs completely now"
+    matches = ov.find_matches("U-AAAAAAAA", unit, idx, corpus_kind="source", n=3, min_words=10)
+    assert matches and matches[0]["corpus_kind"] == "source"
+    reason = ov.findings_from({"matches": matches})[0]["reason"]
+    assert "cited source" in reason
+
+
+def test_run_against_sources_no_fulltext_is_unknown(tmp_path: Path) -> None:
+    report = ov.run(tmp_path, against="sources")
+    assert report["against"] == "sources"
+    assert report["result"] == "unknown"
+    assert "no cited-source fulltext available" in report["limitations"]

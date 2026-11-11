@@ -10,6 +10,7 @@
     "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
     "run_id": { "type": "string", "pattern": "^OV-.+" },
     "snapshot_id": { "type": "string" },
+    "against": { "enum": ["corpus", "sources", "both"] },
     "corpus_index_sha256": { "type": "string" },
     "rule_refs": { "type": "array", "items": { "type": "string" } },
     "method": {
@@ -35,6 +36,7 @@
           "char_start": { "type": "integer", "minimum": 0 },
           "char_end": { "type": "integer", "minimum": 0 },
           "corpus_doc_id": { "type": "string" },
+          "corpus_kind": { "enum": ["author", "source"] },
           "corpus_locator": { "type": "string" },
           "shingle_size": { "type": "integer", "minimum": 1 },
           "overlap_words": { "type": "integer", "minimum": 0 },

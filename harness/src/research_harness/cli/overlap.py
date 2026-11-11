@@ -19,7 +19,12 @@ _COMMAND = "overlap"
 def register(sub: argparse._SubParsersAction) -> None:
     ov = sub.add_parser(_COMMAND, help="Overlap of the current text with the author corpus.")
     ov.add_argument("--unit", help="Limit to one unit id.")
-    ov.add_argument("--against", default="corpus", choices=["corpus"], help="Overlap target.")
+    ov.add_argument(
+        "--against",
+        default="corpus",
+        choices=["corpus", "sources", "both"],
+        help="Overlap target: author corpus (self-overlap), cited sources, or both (ADR-026).",
+    )
 
 
 def handles(command: str) -> bool:
@@ -35,7 +40,7 @@ def route(args: Any, lang: str) -> tuple[dict[str, Any], int]:
     except Exception:
         corpus_dir = None
 
-    report = overlap_mod.run(root, unit=args.unit, corpus_dir=corpus_dir)
+    report = overlap_mod.run(root, unit=args.unit, corpus_dir=corpus_dir, against=args.against)
     findings = overlap_mod.findings_from(report)
     _write_report(root, report)
 

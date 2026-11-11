@@ -11,7 +11,7 @@ produce original scholarly prose that retells sources in the author's own words
 and conclusions, while keeping attribution (H6). The aim is to genuinely not
 plagiarise, never to evade a detector (N4).
 
-## What this card delivers (first slice: rule-as-data + prompt)
+## What this card delivers (slice 1: rule-as-data + prompt; slice 2: overlap vs sources)
 
 - **Rule `writing.source_paraphrase`** in the `writing` pack (integrity, major,
   overridable): text too close to a cited source's wording is quoted (quotes +
@@ -23,19 +23,34 @@ plagiarise, never to evade a detector (N4).
   similarity gate as a helper, and refuse/ surface any detector-evasion
   instruction (N4). Regenerate the Claude Code subagents.
 
+## Slice 2 — overlap vs cited sources (delivered)
+
+- `integrity/overlap.py`: `load_source_corpus(root)` reads `sources/pagetext/
+  <S-id>.jsonl` (gitignored foreign fulltext, runtime-only — the report stores
+  source ids + overlap counts, never source text; H8). `run(..., against=...)`
+  takes `corpus` (author, self-overlap, as before), `sources` (cited-source
+  fulltext), or `both`; matches carry `corpus_kind ∈ {author, source}`; the
+  report records `against`. NFR-14 kept: an empty author corpus never yields a
+  clean pass when the author corpus is a selected target (result `unknown`).
+- `rh overlap --against corpus|sources|both` (`cli/overlap.py`); source findings
+  say "too close to cited source … quote or reword keeping the citation".
+- Schema: `overlap-report.schema.json` gains optional `against` + match
+  `corpus_kind`.
+
 ## Not in this card
 
-Executable: extend `rh overlap` (`integrity/overlap.py`) to compare a drafted
-unit against a **second corpus** — the cited sources (excerpts + `library.sqlite`
-fulltext, runtime-only so no foreign fulltext enters git, H8) — in addition to
-the author corpus; wire it as an inline gate in the writing flow; similarity
-thresholds as rule-pack data (`ua-mon-phd` / `ua-fahove-b`), draft. Optional
-export of clean material for the institution's external service (Unicheck /
-StrikePlagiarism) — the external paid run stays with the author (H9/H11). No
-paid detector is integrated; nothing is rewritten to evade detection (N4).
+Inline auto-trigger of `--against both` inside the writing/review flow and
+per-unit citation resolution (set `cited=true` when the unit actually cites the
+matched source) — follow-up. Similarity thresholds as rule-pack data
+(`ua-mon-phd` / `ua-fahove-b`), draft. Optional export of clean material for the
+institution's external service (Unicheck / StrikePlagiarism) — the external paid
+run stays with the author (H9/H11). No paid detector is integrated; nothing is
+rewritten to evade detection (N4).
 
 ## Tests
 
-`tests/unit/rules`: the `writing` pack still lints clean with the new rule.
-`rh-dev check` green. (Overlap-vs-sources behaviour tests land with the
-executable slice.)
+`tests/unit/rules`: the `writing` pack lints clean with the new rule.
+`tests/unit/integrity/test_overlap.py`: `load_source_corpus` loads pagetext and
+skips empty files; `find_matches` tags `corpus_kind=source` and the finding says
+"cited source"; `rh overlap --against sources` with no fulltext → result
+`unknown` + limitation. `rh-dev check` green.
