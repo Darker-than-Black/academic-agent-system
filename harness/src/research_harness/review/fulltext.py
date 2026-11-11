@@ -9,6 +9,11 @@ integration review (map.md + summaries + these results, review.md). The checks:
   never cited) is rule-pack governed and lands with M3-23.
 - ``fulltext.repeated_fragment`` (major) — a normalized word shingle of
   >= 40 words that occurs in two different units (D16).
+- ``integrity.overlap`` (major/minor) — a unit body too close to a cited
+  source's fulltext, auto-run here so copying is caught in the review flow and
+  not only on a manual ``rh overlap --against sources`` (ADR-026, M4-21). When
+  no cited-source fulltext is available the result is surfaced as ``info``, not
+  a silent pass (H7).
 - glossary consistency — delegated to the glossary module (``fulltext.term_glossary``
   in spec terms; the glossary check owns the finding ids).
 
@@ -21,6 +26,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from research_harness.integrity import overlap as overlap_mod
 from research_harness.sources import registry as registry_mod
 from research_harness.structure import ops
 from research_harness.summaries import glossary as glossary_mod
@@ -130,6 +136,29 @@ def check_repeated_fragment(
     return findings
 
 
+def check_source_overlap(root: Path) -> list[dict[str, Any]]:
+    """Auto-run overlap against cited-source fulltext (ADR-026, M4-21).
+
+    The writing/review flow should catch copying from a cited source without
+    the author remembering to run ``rh overlap --against sources``. We run it
+    here and turn each match into a finding. When no cited-source fulltext is
+    available the overlap result is ``unknown``: we surface an ``info`` finding
+    rather than let the absence read as a clean pass (H7).
+    """
+    report = overlap_mod.run(root, against="sources")
+    if report["result"] == "unknown":
+        return [
+            _f(
+                "integrity.overlap",
+                "info",
+                "cited-source overlap not checked: no source fulltext available"
+                " (ingest sources/pagetext to enable it)",
+                proposed_action="Add cited-source fulltext, then re-run the review.",
+            )
+        ]
+    return overlap_mod.findings_from(report)
+
+
 def run(root: Path) -> list[dict[str, Any]]:
     bodies = _bodies(root)
     # Cite markers carry the source's bib_key (e.g. [[cite:meng2024]]), not its
@@ -141,4 +170,5 @@ def run(root: Path) -> list[dict[str, Any]]:
     findings.extend(check_cite_keys(bodies, source_ids))
     findings.extend(check_repeated_fragment(bodies))
     findings.extend(glossary_mod.check(root))
+    findings.extend(check_source_overlap(root))
     return findings

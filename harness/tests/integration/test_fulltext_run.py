@@ -64,3 +64,34 @@ def test_source_id_is_not_a_valid_cite_key(tmp_path: Path) -> None:
     write_body(folder, _U, f"<!-- {_P} -->\nЗа [[cite:S-0001]].\n", by="author")
     cite_findings = [f for f in ft.run(folder) if f["check_id"] == "fulltext.cite_keys"]
     assert any(f["observed"] == "S-0001" for f in cite_findings)
+
+
+_PASSAGE = " ".join(f"слово{i}" for i in range(30))
+
+
+def _write_pagetext(folder: Path, source_id: str, text: str) -> None:
+    import json
+
+    d = folder / "sources" / "pagetext"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"{source_id}.jsonl").write_text(
+        json.dumps({"pdf_page": 1, "text": text}, ensure_ascii=False) + "\n", "utf-8"
+    )
+
+
+def test_source_overlap_no_fulltext_is_info_not_silent_pass(tmp_path: Path) -> None:
+    # H7: absent cited-source fulltext must surface, never read as a clean pass.
+    folder, _oid = _object(tmp_path)
+    write_body(folder, _U, f"<!-- {_P} -->\nКороткий текст.\n", by="author")
+    ov = [f for f in ft.run(folder) if f["check_id"] == "integrity.overlap"]
+    assert len(ov) == 1 and ov[0]["severity"] == "info"
+    assert "no source fulltext" in ov[0]["reason"]
+
+
+def test_source_overlap_flags_copy_from_cited_source(tmp_path: Path) -> None:
+    folder, _oid = _object(tmp_path)
+    write_body(folder, _U, f"<!-- {_P} -->\n{_PASSAGE}\n", by="author")
+    _write_pagetext(folder, "S-0001", _PASSAGE)
+    ov = [f for f in ft.run(folder) if f["check_id"] == "integrity.overlap"]
+    assert ov and ov[0]["severity"] in ("major", "minor")
+    assert "cited source" in ov[0]["reason"]
