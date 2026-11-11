@@ -96,3 +96,19 @@
   checked_at: "2026-11-09"
   valid_from: "2026-01-01"
   review_after: "2029-01-01"
+- id: WRITING-SOURCE-PARAPHRASE
+  pack: writing
+  version: "2026-11-11"
+  key: writing.source_paraphrase
+  kind: integrity
+  applies_to: [A, T]
+  check: [deterministic, semantic]
+  severity: major
+  overridable: true
+  statement: "Text too close to the wording of a cited source is either a direct quotation (quotes + citation + page) or reworded in the writer's own words while keeping its citation (cite-binding, H6). Borrowed wording is never presented as original; the aim is genuinely original prose, not evading a detector (N4)."
+  statement_original: "Текст, надто близький до формулювання цитованого джерела, оформлюється або прямою цитатою (лапки + посилання + сторінка), або переказується власними словами зі збереженням посилання (cite-binding, H6). Запозичене формулювання ніколи не подається як оригінальне; мета — справді оригінальна проза, а не обхід детектора (N4)."
+  lang: uk
+  source: {title: "ADR-026 — inline antiplagiarism + copyedit", url: "research-harness-spec/stage-0/adr/ADR-026-inline-antiplagiarism-copyedit.md", evidence_level: secondary, accessed_at: "2026-11-11"}
+  checked_at: "2026-11-11"
+  valid_from: "2026-01-01"
+  review_after: "2029-01-01"
