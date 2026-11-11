@@ -38,6 +38,7 @@ def _lit_object(tmp_path: Path):
 def test_packs_lint_clean() -> None:
     assert lint_pack(_RULEPACKS / "literature-narrative") == []
     assert lint_pack(_RULEPACKS / "conceptual") == []
+    assert lint_pack(_RULEPACKS / "mixed") == []
 
 
 def test_topic_only_gets_discovery_plan(tmp_path: Path) -> None:  # T01
@@ -77,17 +78,43 @@ def test_draft_invalid_fields_blocks_cleanly(tmp_path: Path) -> None:  # Finding
 
 
 def test_draft_warns_when_study_kind_has_no_pack(tmp_path: Path) -> None:  # Finding 2
-    # A profile with no protocol pack yet (mixed) must not degrade silently:
-    # draft still writes, but returns a `protocol.no_pack` major warning.
+    # A known profile with no protocol pack yet (empirical_quantitative) must not
+    # degrade silently: draft still writes, but returns a `protocol.no_pack`
+    # major warning.
     ws = Workspace.init(tmp_path / "Projects")
     _oid, folder = create_object(
-        ws, title="Mixed", kind="article", document_kind="article", study_kind="mixed"
+        ws,
+        title="Empirical",
+        kind="article",
+        document_kind="article",
+        study_kind="empirical_quantitative",
     )
     proto, findings, _ = proto_mod.draft(folder, dict(_FIELDS))
     no_pack = [f for f in findings if f["check_id"] == "protocol.no_pack"]
     assert no_pack and no_pack[0]["severity"] == "major"
     assert not any(f["severity"] == "blocker" for f in findings)
     assert proto_mod.latest_version(folder) == 1  # degraded, still drafted
+
+
+def test_mixed_draft_then_freeze_opens_g1(tmp_path: Path) -> None:
+    # The mixed-methods pack validates the review strand plus a conceptual
+    # framework (concepts + argument_structure) and freezes to open G1.
+    ws = Workspace.init(tmp_path / "Projects")
+    _oid, folder = create_object(
+        ws, title="Mixed", kind="thesis", document_kind="thesis", study_kind="mixed"
+    )
+    fields = dict(_FIELDS)
+    fields["concepts"] = ["virtual learning environment", "UDL"]
+    fields["argument_structure"] = "design determines the effect of the tool, not the technology"
+    proto, findings, _ = proto_mod.draft(folder, fields)
+    assert proto["status"] == "draft" and not findings
+    assert not any(f["check_id"] == "protocol.no_pack" for f in findings)
+    # default saturation came from the mixed pack
+    assert proto["saturation_rule"]["batch_size"] == 10
+    frozen, ar_id, f2 = proto_mod.freeze(folder, "uk")
+    assert ar_id is not None and not f2
+    assert frozen["status"] == "frozen"
+    assert requests.open_requests(folder, "G1")
 
 
 def test_draft_no_pack_warning_absent_for_supported_kind(tmp_path: Path) -> None:  # Finding 2

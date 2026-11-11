@@ -1,0 +1,58 @@
+# Protocol configuration for a mixed-methods study (layer 2, draft).
+# Read by research_harness.lab.protocol, NOT by the rules loader (it lives in
+# the pack root, not under rules/). Draft until the author reviews it at G1.
+#
+# A mixed-methods study carries two protocol-level strands that this file
+# governs: an evidence-search / review strand (as in the literature pack) and a
+# conceptual framework (concepts + argument_structure, as in the conceptual
+# pack). The empirical strand itself — sampling, instruments, intervention and
+# statistical analysis — and the ethics of involving participants are governed
+# by separate modules and gates (lab / methodology; A5/GE), NOT by this protocol
+# (H6: this pack does not pretend to validate the empirical design).
+study_kind: mixed
+required_fields:
+  - question
+  - scope
+  - language_scope
+  - period
+  - resources
+  - inclusion
+  - exclusion
+  - synthesis_method
+  - saturation_rule
+  - counter_evidence_rule
+  - limits
+  - concepts
+  - argument_structure
+# Optional advisory field (ADR-025, not required, not a G2 field):
+#   selection_validation — source/author prominence (works count, citations,
+#   h-index, venue) recorded at `rh screen` as ONE signal among others, never the
+#   sole criterion and never a hard reject; stays in the screening log, never in
+#   the manuscript. Enforced advisorily by rule `screening.source_prominence`.
+#   Executable wiring (OpenAlex/S2 metrics → screening.jsonl) is a later slice.
+# `assumptions` stays advisory here (required in the conceptual pack): a
+# mixed-methods study may carry its premises in the empirical design instead.
+# A material change to any g2 field after G1 needs a fresh G2 (02-lifecycle §4).
+g2_fields:
+  - question
+  - scope
+  - resources
+  - inclusion
+  - exclusion
+  - synthesis_method
+  - concepts
+  - argument_structure
+# Default saturation rule (ADR / intake Q-M2-2): stop after 2 batches of 10 add
+# nothing new. The author may override at G1.
+saturation_default:
+  batch_size: 10
+  no_new_items_in_batches: 2
+sources:
+  - title: "02-lifecycle §4 (protocol fields; mixed-methods study)"
+    url: "https://rh.spec/lifecycle.md#protocol"
+    evidence_level: primary
+    accessed_at: "2026-11-11"
+  - title: "07-components (literature review + conceptual components)"
+    url: "https://rh.spec/components.md#literature-review"
+    evidence_level: primary
+    accessed_at: "2026-11-11"

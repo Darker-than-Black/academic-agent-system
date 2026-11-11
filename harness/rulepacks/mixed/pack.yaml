@@ -1,0 +1,7 @@
+id: mixed
+name: "Mixed-methods study protocol"
+version: "2026-11-11"
+layer: 2
+status: draft
+applies_when: {study_kind: [mixed]}
+description: "Protocol requirements and default saturation rule for a mixed-methods study: an evidence-search / review strand plus a conceptual framework. The empirical design (sampling, instruments, analysis) and participant ethics are governed by separate modules and gates (lab/methodology; A5/GE), not by this protocol. Draft until the author reviews it at G1."

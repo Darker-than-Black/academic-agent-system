@@ -23,7 +23,11 @@ from research_harness.sources.policy import resources as policy_resources
 _PROTO_RE = re.compile(r"^protocol-v(\d+)\.yaml$")
 
 # study_kind -> rule-pack directory holding protocol.yaml.
-_PACK_FOR = {"literature": "literature-narrative", "conceptual": "conceptual"}
+_PACK_FOR = {
+    "literature": "literature-narrative",
+    "conceptual": "conceptual",
+    "mixed": "mixed",
+}
 _RULEPACKS = Path(__file__).resolve().parents[3] / "rulepacks"
 
 
@@ -112,7 +116,7 @@ def draft(
     findings: list[dict[str, Any]] = []
     fields = dict(fields or {})
 
-    # A known study_kind with no protocol pack yet (mixed, empirical_*,
+    # A known study_kind with no protocol pack yet (empirical_*,
     # computational_ml) drafts in a degraded mode: no required-field check, no
     # saturation default, no G2 scope fields. Say so instead of degrading
     # silently (Finding 2). Not a blocker here — freeze still blocks on
@@ -125,7 +129,7 @@ def draft(
                 "severity": "major",
                 "reason": (
                     f"study_kind {kind!r} has no protocol pack yet "
-                    "(M2 covers literature, conceptual); drafting without "
+                    "(packs: literature, conceptual, mixed); drafting without "
                     "required-field checks, a saturation default or G2 scope fields"
                 ),
                 "location": {},
@@ -258,7 +262,7 @@ def validate_for_freeze(root: Path) -> tuple[dict[str, Any] | None, list[dict[st
                 "severity": "blocker",
                 "reason": (
                     f"no protocol pack for study_kind {proto['study_kind']!r} "
-                    "(M2 covers literature, conceptual)"
+                    "(packs: literature, conceptual, mixed)"
                 ),
                 "location": {},
                 "proposed_action": "",
